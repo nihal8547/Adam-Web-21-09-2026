@@ -11,14 +11,21 @@ import { Users } from "@/cms/collections/Users";
 import { Media } from "@/cms/collections/Media";
 import { Categories } from "@/cms/collections/Categories";
 import { Services } from "@/cms/collections/Services";
+import { Projects } from "@/cms/collections/Projects";
+import { Vacancies } from "@/cms/collections/Vacancies";
+import { Posts } from "@/cms/collections/Posts";
+import { Testimonials } from "@/cms/collections/Testimonials";
+import { Clients } from "@/cms/collections/Clients";
 import { SiteSettings } from "@/cms/globals/SiteSettings";
 
 // SEO defaults: title/description are auto-filled from the content so every
 // entry ships with SEO metadata out of the box (editable in the SEO section).
-const generateTitle: GenerateTitle = ({ doc }) =>
-  doc?.name ? `${doc.name} | Adam Technical Services` : "Adam Technical Services";
+const generateTitle: GenerateTitle = ({ doc }) => {
+  const name = doc?.name || doc?.title;
+  return name ? `${name} | Adam Technical Services` : "Adam Technical Services";
+};
 const generateDescription: GenerateDescription = ({ doc }) =>
-  doc?.excerpt || doc?.description || "";
+  doc?.excerpt || doc?.summary || doc?.description || "";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -37,7 +44,17 @@ export default buildConfig({
       titleSuffix: "· Adam Technical Services",
     },
   },
-  collections: [Users, Media, Categories, Services],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Services,
+    Projects,
+    Vacancies,
+    Posts,
+    Testimonials,
+    Clients,
+  ],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
@@ -46,7 +63,7 @@ export default buildConfig({
   }),
   plugins: [
     seoPlugin({
-      collections: ["services", "categories"],
+      collections: ["services", "categories", "projects", "vacancies", "posts"],
       uploadsCollection: "media",
       tabbedUI: false,
       generateTitle,

@@ -4,10 +4,11 @@ The site now includes a self-hosted **Payload CMS** admin, embedded in the same
 Next.js app. Content lives in **PostgreSQL**; uploaded media lives on the
 **server's disk** (a Docker volume). The admin panel is at **`/admin`**.
 
-> **Status — Phase 1 & 2 (done):** login/auth + roles, Media library (required
-> alt text), Site Settings, and **Categories (+ sub-categories) and Services**
-> with SEO fields by default (SEO plugin auto-fills meta title/description).
-> **Next phases:** Projects → Vacancies → Blog → Home-page CMS, then wiring the
+> **Status — Phases 1–3 (done):** login/auth + roles, Media library (required
+> alt text), Site Settings, **Categories (+ sub-categories), Services,
+> Projects, Vacancies (careers), Blog posts, Testimonials and Clients** — with
+> SEO fields by default (SEO plugin auto-fills meta title/description).
+> **Next phases:** Home-page CMS (hero/section images + copy) and wiring the
 > public pages to read from the CMS.
 
 ## Migrate the existing content into the CMS (one-time)

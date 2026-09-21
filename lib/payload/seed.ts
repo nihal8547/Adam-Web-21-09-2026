@@ -1,6 +1,11 @@
 import type { Payload } from "payload";
 import { services, serviceSecondaryKeywords } from "@/content/services";
 import { site } from "@/content/site";
+import { projects } from "@/content/projects";
+import { roles } from "@/content/careers";
+import { blogPosts } from "@/content/blog";
+import { testimonials } from "@/content/testimonials";
+import { clients } from "@/content/clients";
 
 /**
  * One-time migration of the typed /content data into the CMS database.
@@ -18,6 +23,25 @@ const FIRE_SLUGS = new Set([
 ]);
 
 const wrap = (values: readonly string[] = []) => values.map((value) => ({ value }));
+
+/** Upsert a doc in a slug-keyed collection (create, or update if slug exists). */
+async function upsertBySlug(
+  payload: Payload,
+  collection: "projects" | "vacancies" | "posts",
+  slug: string,
+  data: Record<string, unknown>,
+): Promise<void> {
+  const existing = await payload.find({
+    collection,
+    where: { slug: { equals: slug } },
+    limit: 1,
+  });
+  if (existing.docs[0]) {
+    await payload.update({ collection, id: existing.docs[0].id, data });
+  } else {
+    await payload.create({ collection, data });
+  }
+}
 
 async function upsertCategory(
   payload: Payload,
@@ -38,7 +62,17 @@ async function upsertCategory(
 }
 
 export async function runSeed(payload: Payload) {
-  const result = { categories: 0, services: 0, related: 0, siteSettings: false };
+  const result = {
+    categories: 0,
+    services: 0,
+    related: 0,
+    projects: 0,
+    vacancies: 0,
+    posts: 0,
+    testimonials: 0,
+    clients: 0,
+    siteSettings: false,
+  };
 
   // 1. Categories (two parents; sub-categories can be added in the admin).
   const fireCatId = await upsertCategory(payload, "Fire Protection", "fire-protection");
@@ -109,7 +143,103 @@ export async function runSeed(payload: Payload) {
     }
   }
 
-  // 4. Site Settings global.
+  // 4. Projects (link servicesUsed to the service IDs seeded above).
+  for (const p of projects) {
+    const servicesUsed = (p.servicesUsed ?? [])
+      .map((s) => slugToId.get(s))
+      .filter((v): v is number | string => v !== undefined);
+    await upsertBySlug(payload, "projects", p.slug, {
+      title: p.title,
+      slug: p.slug,
+      sector: p.sector,
+      serviceLabel: p.service,
+      location: p.location,
+      summary: p.summary,
+      challenge: p.challenge,
+      solution: p.solution,
+      outcome: p.outcome,
+      servicesUsed,
+      meta: { title: `${p.title} | Projects`, description: p.summary },
+    });
+    result.projects += 1;
+  }
+
+  // 5. Vacancies (careers roles).
+  for (const r of roles) {
+    await upsertBySlug(payload, "vacancies", r.slug, {
+      title: r.title,
+      slug: r.slug,
+      department: r.department,
+      employmentType: r.type,
+      location: r.location,
+      datePosted: r.datePosted,
+      summary: r.summary,
+      responsibilities: wrap(r.responsibilities),
+      requirements: wrap(r.requirements),
+      meta: { title: `${r.title} | Careers`, description: r.summary },
+    });
+    result.vacancies += 1;
+  }
+
+  // 6. Blog posts.
+  for (const post of blogPosts) {
+    await upsertBySlug(payload, "posts", post.slug, {
+      title: post.title,
+      slug: post.slug,
+      category: post.category,
+      author: post.author,
+      datePublished: post.datePublished,
+      readingMinutes: post.readingMinutes,
+      excerpt: post.excerpt,
+      body: post.body.map((sec) => ({
+        heading: sec.heading,
+        paragraphs: sec.paragraphs.map((paragraph) => ({ paragraph })),
+      })),
+      meta: { title: post.metaTitle, description: post.metaDescription },
+    });
+    result.posts += 1;
+  }
+
+  // 7. Testimonials (match by author to stay idempotent).
+  for (const [i, t] of testimonials.entries()) {
+    const existing = await payload.find({
+      collection: "testimonials",
+      where: { author: { equals: t.author } },
+      limit: 1,
+    });
+    const data = {
+      heading: t.title,
+      quote: t.quote,
+      author: t.author,
+      role: t.role,
+      rating: 5,
+      order: i,
+    };
+    if (existing.docs[0]) {
+      await payload.update({ collection: "testimonials", id: existing.docs[0].id, data });
+    } else {
+      await payload.create({ collection: "testimonials", data });
+    }
+    result.testimonials += 1;
+  }
+
+  // 8. Clients (match by name).
+  for (const [i, c] of clients.entries()) {
+    const existing = await payload.find({
+      collection: "clients",
+      where: { name: { equals: c.name } },
+      limit: 1,
+    });
+    const data = { name: c.name, order: i };
+    if (existing.docs[0]) {
+      await payload.update({ collection: "clients", id: existing.docs[0].id, data });
+    } else {
+      await payload.create({ collection: "clients", data });
+    }
+    result.clients += 1;
+  }
+
+  // 9. Site Settings global.
   await payload.updateGlobal({
     slug: "site-settings",
     data: {
