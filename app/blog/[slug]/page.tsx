@@ -29,7 +29,15 @@ export async function generateMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
     path: `/blog/${post.slug}`,
-    ogImage: undefined,
+    type: "article",
+    keywords: [post.category],
+    article: {
+      publishedTime: post.datePublished,
+      modifiedTime: post.datePublished,
+      authors: [post.author],
+      section: post.category,
+      tags: [post.category],
+    },
   });
 }
 

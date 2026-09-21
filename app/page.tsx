@@ -179,7 +179,11 @@ export default function HomePage() {
       </section>
 
       {/* Group credibility quote */}
-      <section id="group-credibility" className="bg-[var(--surface-alt)]" aria-label="About Faisal Bin Ejayan Group and Adam Technical Services">
+      <section
+        id="group-credibility"
+        className="bg-[var(--surface-alt)]"
+        aria-label="About Faisal Bin Ejayan Group and Adam Technical Services"
+      >
         <Container className="py-16">
           <Reveal className="mx-auto max-w-4xl text-center">
             <span className="text-[var(--accent)]">
@@ -204,7 +208,11 @@ export default function HomePage() {
       />
 
       {/* Feature blocks */}
-      <section id="expertise" className="bg-[var(--surface)]" aria-label="HVAC services and water leak detection expertise in Qatar">
+      <section
+        id="expertise"
+        className="bg-[var(--surface)]"
+        aria-label="HVAC services and water leak detection expertise in Qatar"
+      >
         <Container className="flex flex-col gap-20 py-16 md:py-24">
           {homeFeatureBlocks.map((block, i) => (
             <FeatureBlock key={block.heading} {...block} reverse={i % 2 === 1} />
@@ -279,16 +287,43 @@ export default function HomePage() {
             as="h2"
           />
           <Reveal>
-            <div role="list" className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>div]:mb-4">
+            <div
+              role="list"
+              className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>div]:mb-4"
+            >
               {[
-                { src: "https://placehold.co/800x600/121212/d4a017.webp?text=Fire+Alarm", alt: "Fire alarm panel installation by Adam Technical Services in Qatar" },
-                { src: "https://placehold.co/800x900/1a1a1a/d4a017.webp?text=Sprinkler+System", alt: "Sprinkler system piping installation in a commercial building, Doha" },
-                { src: "https://placehold.co/800x600/121212/d4a017.webp?text=HVAC+Unit", alt: "HVAC rooftop unit installed by Adam Technical Services in Qatar" },
-                { src: "https://placehold.co/800x700/0d0d0d/d4a017.webp?text=Pump+Room", alt: "Fire fighting pump room with QCDD-certified equipment" },
-                { src: "https://placehold.co/800x600/1a1a1a/d4a017.webp?text=Leak+Detection", alt: "Underground water leak detection service using acoustic sensors in Qatar" },
-                { src: "https://placehold.co/800x900/121212/d4a017.webp?text=MEP+Works", alt: "MEP mechanical electrical plumbing works on a construction site in Doha" },
-                { src: "https://placehold.co/800x600/0d0d0d/d4a017.webp?text=ACMV+System", alt: "ACMV air conditioning and mechanical ventilation system installed in Qatar" },
-                { src: "https://placehold.co/800x700/1a1a1a/d4a017.webp?text=Fire+Suppression", alt: "Fire suppression system installation for industrial facility in Qatar" },
+                {
+                  src: "https://placehold.co/800x600/121212/d4a017.webp?text=Fire+Alarm",
+                  alt: "Fire alarm panel installation by Adam Technical Services in Qatar",
+                },
+                {
+                  src: "https://placehold.co/800x900/1a1a1a/d4a017.webp?text=Sprinkler+System",
+                  alt: "Sprinkler system piping installation in a commercial building, Doha",
+                },
+                {
+                  src: "https://placehold.co/800x600/121212/d4a017.webp?text=HVAC+Unit",
+                  alt: "HVAC rooftop unit installed by Adam Technical Services in Qatar",
+                },
+                {
+                  src: "https://placehold.co/800x700/0d0d0d/d4a017.webp?text=Pump+Room",
+                  alt: "Fire fighting pump room with QCDD-certified equipment",
+                },
+                {
+                  src: "https://placehold.co/800x600/1a1a1a/d4a017.webp?text=Leak+Detection",
+                  alt: "Underground water leak detection service using acoustic sensors in Qatar",
+                },
+                {
+                  src: "https://placehold.co/800x900/121212/d4a017.webp?text=MEP+Works",
+                  alt: "MEP mechanical electrical plumbing works on a construction site in Doha",
+                },
+                {
+                  src: "https://placehold.co/800x600/0d0d0d/d4a017.webp?text=ACMV+System",
+                  alt: "ACMV air conditioning and mechanical ventilation system installed in Qatar",
+                },
+                {
+                  src: "https://placehold.co/800x700/1a1a1a/d4a017.webp?text=Fire+Suppression",
+                  alt: "Fire suppression system installation for industrial facility in Qatar",
+                },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -312,7 +347,11 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="bg-[var(--surface)]" aria-labelledby="testimonials-heading">
+      <section
+        id="testimonials"
+        className="bg-[var(--surface)]"
+        aria-labelledby="testimonials-heading"
+      >
         <Container className="py-16 md:py-20">
           <SectionHeading
             eyebrow="Testimonials"
@@ -327,7 +366,11 @@ export default function HomePage() {
       </section>
 
       {/* Client logo marquee */}
-      <section id="clients" className="bg-[var(--surface-alt)]" aria-label="Trusted clients and partners of Adam Technical Services across Qatar">
+      <section
+        id="clients"
+        className="bg-[var(--surface-alt)]"
+        aria-label="Trusted clients and partners of Adam Technical Services across Qatar"
+      >
         <Container className="py-14">
           <p className="text-center text-[0.85rem] font-semibold uppercase tracking-[0.14em] text-[var(--body)]">
             Trusted by clients and partners across Qatar

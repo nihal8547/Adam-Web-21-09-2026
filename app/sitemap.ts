@@ -2,12 +2,13 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
 import { serviceSlugs } from "@/content/services";
 import { projectSlugs } from "@/content/projects";
-import { blogSlugs } from "@/content/blog";
-import { roleSlugs } from "@/content/careers";
+import { blogPosts } from "@/content/blog";
+import { roles } from "@/content/careers";
 
 /**
  * Auto-generated sitemap with lastModified + priority. Static marketing pages
- * rank highest; dynamic content and legal pages lower.
+ * rank highest; dynamic content uses its real published/updated date so search
+ * engines see accurate freshness signals.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -37,6 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: p.priority,
   }));
 
+  // Service pages — the SEO "spokes", high priority.
   for (const slug of serviceSlugs) {
     entries.push({
       url: absoluteUrl(`/${slug}`),
@@ -45,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     });
   }
+  // Projects.
   for (const slug of projectSlugs) {
     entries.push({
       url: absoluteUrl(`/projects/${slug}`),
@@ -53,18 +56,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     });
   }
-  for (const slug of blogSlugs) {
+  // Blog posts — use each post's published date as lastModified.
+  for (const post of blogPosts) {
     entries.push({
-      url: absoluteUrl(`/blog/${slug}`),
-      lastModified: now,
+      url: absoluteUrl(`/blog/${post.slug}`),
+      lastModified: new Date(post.datePublished),
       changeFrequency: "monthly",
       priority: 0.6,
     });
   }
-  for (const slug of roleSlugs) {
+  // Careers — use each role's posted date.
+  for (const role of roles) {
     entries.push({
-      url: absoluteUrl(`/careers/${slug}`),
-      lastModified: now,
+      url: absoluteUrl(`/careers/${role.slug}`),
+      lastModified: new Date(role.datePosted),
       changeFrequency: "weekly",
       priority: 0.5,
     });

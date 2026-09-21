@@ -26,6 +26,16 @@ type BuildMetadataArgs = {
   /** Set true on legal/utility pages we don't want indexed heavily. */
   noindex?: boolean;
   keywords?: string[];
+  /** OpenGraph object type. Use "article" for blog posts. */
+  type?: "website" | "article";
+  /** Article-only OpenGraph metadata (ISO dates). */
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    authors?: string[];
+    section?: string;
+    tags?: string[];
+  };
 };
 
 /**
@@ -40,10 +50,38 @@ export function buildMetadata({
   ogImage,
   noindex,
   keywords,
+  type = "website",
+  article,
 }: BuildMetadataArgs): Metadata {
   const url = absoluteUrl(path);
   const image =
     ogImage ?? absoluteUrl(`/og?title=${encodeURIComponent(title.replace(/\s*\|.*$/, ""))}`);
+
+  const openGraph: Metadata["openGraph"] =
+    type === "article"
+      ? {
+          type: "article",
+          siteName: site.legalName,
+          locale: "en_QA",
+          title,
+          description,
+          url,
+          images: [{ url: image, width: 1200, height: 630, alt: title }],
+          publishedTime: article?.publishedTime,
+          modifiedTime: article?.modifiedTime ?? article?.publishedTime,
+          authors: article?.authors,
+          section: article?.section,
+          tags: article?.tags,
+        }
+      : {
+          type: "website",
+          siteName: site.legalName,
+          locale: "en_QA",
+          title,
+          description,
+          url,
+          images: [{ url: image, width: 1200, height: 630, alt: title }],
+        };
 
   return {
     title,
@@ -60,16 +98,14 @@ export function buildMetadata({
     },
     robots: noindex
       ? { index: false, follow: true }
-      : { index: true, follow: true, "max-image-preview": "large" },
-    openGraph: {
-      type: "website",
-      siteName: site.legalName,
-      locale: "en_QA",
-      title,
-      description,
-      url,
-      images: [{ url: image, width: 1200, height: 630, alt: title }],
-    },
+      : {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+    openGraph,
     twitter: {
       card: "summary_large_image",
       title,

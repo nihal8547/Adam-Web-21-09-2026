@@ -9,6 +9,14 @@ import { absoluteUrl, SITE_URL } from "@/lib/seo";
 const ORG_ID = `${SITE_URL}/#organization`;
 const LOCALBUSINESS_ID = `${SITE_URL}/#localbusiness`;
 
+/** Publisher/organization logo as an ImageObject (Google rich-results req). */
+const LOGO_IMAGE = {
+  "@type": "ImageObject",
+  url: absoluteUrl("/logo.png"),
+  width: 512,
+  height: 512,
+};
+
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -18,7 +26,8 @@ export function organizationSchema() {
     legalName: site.legalName,
     parentOrganization: { "@type": "Organization", name: site.group },
     url: SITE_URL,
-    logo: absoluteUrl("/logo.svg"),
+    logo: LOGO_IMAGE,
+    image: absoluteUrl("/logo.png"),
     email: site.email,
     telephone: site.phone.display,
     faxNumber: site.fax,
@@ -39,7 +48,8 @@ export function localBusinessSchema() {
     "@type": ["LocalBusiness", "GeneralContractor"],
     "@id": LOCALBUSINESS_ID,
     name: site.legalName,
-    image: absoluteUrl("/logo.svg"),
+    image: absoluteUrl("/logo.png"),
+    logo: LOGO_IMAGE,
     url: SITE_URL,
     telephone: site.phone.display,
     email: site.email,
@@ -141,9 +151,13 @@ export function articleSchema(input: {
     description: input.description,
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
-    author: { "@type": "Person", name: input.author },
-    publisher: { "@id": ORG_ID },
-    mainEntityOfPage: absoluteUrl(input.path),
+    author: { "@type": "Organization", name: input.author, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: site.legalName,
+      logo: LOGO_IMAGE,
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(input.path) },
     image: input.image ? absoluteUrl(input.image) : absoluteUrl("/og"),
   };
 }

@@ -7,6 +7,7 @@ import JsonLd from "@/components/JsonLd";
 import { organizationSchema, localBusinessSchema, websiteSchema } from "@/lib/jsonld";
 import { SITE_URL } from "@/lib/seo";
 import { site } from "@/content/site";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 /**
  * Self-hosted via next/font — no render-blocking Google Fonts request.
@@ -38,9 +39,15 @@ export const metadata: Metadata = {
   creator: site.legalName,
   publisher: site.group,
   formatDetection: { telephone: true, email: true, address: true },
+  manifest: "/manifest.webmanifest",
+  category: "Fire Protection & MEP Contractor",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/favicon.svg" }],
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/logo.png", sizes: "512x512" }],
+    shortcut: [{ url: "/favicon.svg" }],
   },
 };
 
@@ -49,8 +56,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 };
-
-import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
