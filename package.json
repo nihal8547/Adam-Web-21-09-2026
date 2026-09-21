@@ -12,9 +12,16 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "next": "15.5.4",
+    "@payloadcms/db-postgres": "^3.90.1",
+    "@payloadcms/next": "^3.90.1",
+    "@payloadcms/plugin-seo": "^3.90.1",
+    "@payloadcms/richtext-lexical": "^3.90.1",
+    "graphql": "^16.14.2",
+    "next": "~15.4.11",
+    "payload": "^3.90.1",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
@@ -23,7 +30,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "eslint": "^9.20.0",
-    "eslint-config-next": "15.5.4",
+    "eslint-config-next": "~15.4.11",
     "eslint-config-prettier": "^10.1.1",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.13",

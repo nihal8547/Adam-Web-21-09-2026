@@ -1,0 +1,28 @@
+# Nginx reverse proxy for adam.qa → the Docker app on 127.0.0.1:3000.
+# Put this in /etc/nginx/sites-available/adam.qa and symlink to sites-enabled,
+# then run certbot to add the HTTPS block automatically:
+#   sudo certbot --nginx -d adam.qa -d www.adam.qa
+#
+# certbot will inject the SSL directives and a :443 server block. This file is
+# the starting HTTP config.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name adam.qa www.adam.qa;
+
+    # Allow large media uploads through the proxy to Payload.
+    client_max_body_size 25m;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300s;
+    }
+}

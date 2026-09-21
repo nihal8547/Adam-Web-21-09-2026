@@ -31,6 +31,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# payload cms — uploaded media (stored on a persistent volume in production)
+/media
+/public/media
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
