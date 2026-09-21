@@ -18,9 +18,9 @@ export default function manifest(): MetadataRoute.Manifest {
     dir: "ltr",
     categories: ["business", "utilities"],
     icons: [
-      { src: "/LogoBT.png", sizes: "any", type: "image/png", purpose: "any" },
-      { src: "/LogoBT.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/LogoBT.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/LogoBT.png", sizes: "72x70", type: "image/png", purpose: "any" },
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
   };
 }

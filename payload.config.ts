@@ -28,12 +28,12 @@ import { buildEmail } from "@/lib/payload/email";
 
 // SEO defaults: title/description are auto-filled from the content so every
 // entry ships with SEO metadata out of the box (editable in the SEO section).
-const generateTitle: GenerateTitle = ({ doc }) => {
+const generateTitle: GenerateTitle = ({ doc }: { doc: Record<string, unknown> }) => {
   const name = doc?.name || doc?.title;
-  return name ? `${name} | Adam Technical Services` : "Adam Technical Services";
+  return name ? `${String(name)} | Adam Technical Services` : "Adam Technical Services";
 };
-const generateDescription: GenerateDescription = ({ doc }) =>
-  doc?.excerpt || doc?.summary || doc?.description || "";
+const generateDescription: GenerateDescription = ({ doc }: { doc: Record<string, unknown> }) =>
+  String(doc?.excerpt || doc?.summary || doc?.description || "");
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -83,6 +83,9 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || "" },
+    // Auto-create / sync all tables on startup — safe for self-hosted Docker.
+    // Remove this and use migration files before deploying to production.
+    push: true,
   }),
   // SMTP in production (droplet); console preview in dev when unset.
   email: buildEmail(),

@@ -27,4 +27,8 @@ ENV PAYLOAD_MEDIA_DIR=/app/media
 RUN mkdir -p /app/media
 
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+
+# Use startup script: runs Payload schema push then starts Next.js
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
