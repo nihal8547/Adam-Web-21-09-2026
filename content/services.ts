@@ -961,6 +961,7 @@ export const featuredServices = services.filter((s) => s.featured).slice(0, 6);
  */
 export const serviceSecondaryKeywords: Record<string, string[]> = {
   "fire-protection-services-qatar": [
+    "top fire protection company in Qatar",
     "fire fighting company in Qatar",
     "QCDD approved fire protection Qatar",
     "fire safety company Qatar",

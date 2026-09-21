@@ -18,6 +18,7 @@ export const metadata: Metadata = buildMetadata({
     "Explore Adam Technical Services in Qatar: fire protection, alarms, pumps, sprinklers, fire stop, leak detection, HVAC, ACMV and electrical — QCDD certified.",
   path: "/services",
   keywords: [
+    "top fire protection company in Qatar",
     "MEP company in Qatar",
     "fire protection company in Qatar",
     "fire fighting company in Qatar",

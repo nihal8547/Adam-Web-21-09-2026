@@ -33,6 +33,7 @@ export const metadata: Metadata = buildMetadata({
     "QCDD-certified fire protection company in Qatar. Fire alarms, pumps, sprinklers, leak detection, HVAC & ACMV — designed, installed & maintained to NFPA standards.",
   path: "/",
   keywords: [
+    "top fire protection company in Qatar",
     "fire protection company in Qatar",
     "fire fighting company in Qatar",
     "QCDD approved fire protection Qatar",
