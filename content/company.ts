@@ -5,7 +5,7 @@
  */
 
 export const hero = {
-  eyebrow: "QCDD-Certified · Fire Protection · MEP · Qatar",
+  eyebrow: "",
   // Keyword-rich H1 kept for SEO even though the hero reads short/minimal.
   h1: "Top Fire Protection & Leak Detection Services in Qatar",
   // Short supporting line (NAFFCO-style minimal hero copy).

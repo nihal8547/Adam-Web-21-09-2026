@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Container from "@/components/Container";
-import { Button } from "@/components/Button";
 import { hero } from "@/content/company";
 
 /**
@@ -58,33 +57,18 @@ export default function Hero() {
 
       {/* Minimal overlaid content, bottom-left */}
       <Container className="relative z-10 w-full pb-16 md:pb-20 lg:pb-24">
-        <span className="hero-fade-1 eyebrow gold-rule !text-[var(--color-brand-300)] text-sm md:text-base [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
-          {hero.eyebrow}
-        </span>
         <h1
-          className="hero-fade-2 mt-3 max-w-[18ch] text-2xl md:text-3xl font-bold !text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]"
+          className="hero-fade-1 mt-3 max-w-[18ch] text-2xl md:text-3xl font-bold !text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]"
           style={{ color: "#ffffff" }}
         >
           {hero.h1}
         </h1>
         <p
-          className="hero-fade-3 mt-3 max-w-[45ch] text-sm md:text-base font-semibold !text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.4)]"
+          className="hero-fade-2 mt-3 max-w-[45ch] text-sm md:text-base font-semibold !text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.4)]"
           style={{ color: "rgba(255, 255, 255, 0.9)" }}
         >
           {hero.sub}
         </p>
-        <div className="hero-fade-4 mt-5 flex flex-wrap gap-3">
-          <Button href={hero.primaryCta.href} size="lg">
-            {hero.primaryCta.label} →
-          </Button>
-          <Button
-            href={hero.secondaryCta.href}
-            size="lg"
-            className="border border-white text-white hover:bg-white hover:text-[var(--color-ink-900)]"
-          >
-            {hero.secondaryCta.label}
-          </Button>
-        </div>
       </Container>
     </section>
   );

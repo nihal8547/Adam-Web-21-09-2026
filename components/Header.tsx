@@ -46,7 +46,7 @@ export default function Header() {
         className={cn(
           "transition-colors duration-300",
           isTransparent
-            ? "border-b border-white/15 bg-black/35 backdrop-blur-sm text-white"
+            ? "border-b-0 bg-black/35 backdrop-blur-sm text-white"
             : "border-b border-[var(--color-brand-100)] bg-[var(--color-brand-50)] text-[var(--ink-700)]"
         )}
       >
@@ -100,7 +100,7 @@ export default function Header() {
         className={cn(
           "transition-all duration-300",
           isTransparent
-            ? "border-b border-white/10 bg-transparent text-white"
+            ? "border-b-0 bg-transparent text-white"
             : "border-b border-[var(--border)] shadow-[var(--shadow-card)]"
         )}
       >

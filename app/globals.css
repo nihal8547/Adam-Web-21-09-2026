@@ -114,11 +114,11 @@
     font-weight: 700;
     text-wrap: balance;
   }
-}
 
-a {
-  color: inherit;
-  text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 /* Focus — visible gold ring, 2px offset (a11y) */

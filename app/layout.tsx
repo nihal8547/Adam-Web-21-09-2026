@@ -43,11 +43,12 @@ export const metadata: Metadata = {
   category: "Fire Protection & MEP Contractor",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+      { url: "/LogoBT.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico" },
     ],
-    apple: [{ url: "/logo.png", sizes: "512x512" }],
-    shortcut: [{ url: "/favicon.svg" }],
+    apple: [{ url: "/LogoBT.png", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/LogoBT.png" }],
   },
 };
 
