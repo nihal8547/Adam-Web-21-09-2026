@@ -11,22 +11,22 @@ import { site } from "@/content/site";
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[var(--surface)]">
-      {/* Utility bar */}
-      <div className="border-b border-[var(--border)] bg-[var(--color-ink-900)] text-[var(--on-invert)]">
+      {/* Utility bar — light gold wash */}
+      <div className="border-b border-[var(--color-brand-100)] bg-[var(--color-brand-50)] text-[var(--ink-700)]">
         <Container className="flex h-9 items-center justify-between gap-4 text-[0.8rem]">
           <div className="flex items-center gap-4">
             <a
               href={site.phone.href}
-              className="inline-flex items-center gap-1.5 transition-colors hover:text-[var(--on-invert-accent)]"
+              className="inline-flex items-center gap-1.5 font-semibold text-[var(--subheading)] transition-colors hover:text-[var(--accent-strong)]"
             >
-              <Icon name="phone" size={15} />
-              <span className="font-medium">{site.phone.display}</span>
+              <Icon name="phone" size={15} className="text-[var(--accent-strong)]" />
+              <span>{site.phone.display}</span>
             </a>
             <a
               href={`mailto:${site.email}`}
-              className="hidden items-center gap-1.5 transition-colors hover:text-[var(--on-invert-accent)] sm:inline-flex"
+              className="hidden items-center gap-1.5 font-medium text-[var(--subheading)] transition-colors hover:text-[var(--accent-strong)] sm:inline-flex"
             >
-              <Icon name="mail" size={15} />
+              <Icon name="mail" size={15} className="text-[var(--accent-strong)]" />
               <span>{site.email}</span>
             </a>
           </div>

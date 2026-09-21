@@ -63,12 +63,12 @@ export default function StatCounter({
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-[var(--font-display)] text-[length:var(--text-4xl)] font-bold leading-none text-[var(--color-brand-500)]">
+      <div className="font-[var(--font-display)] text-[length:var(--text-4xl)] font-bold leading-none text-[var(--color-brand-700)]">
         {prefix}
         {display.toLocaleString("en-US")}
         {suffix}
       </div>
-      <div className="mt-2 text-[0.95rem] font-medium text-white/80">{label}</div>
+      <div className="mt-2 text-[0.95rem] font-semibold text-[var(--subheading)]">{label}</div>
     </div>
   );
 }

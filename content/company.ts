@@ -5,12 +5,33 @@
  */
 
 export const hero = {
-  eyebrow: "Fire Protection · HVAC · ACMV · MEP",
+  eyebrow: "QCDD-Certified · Fire Protection · MEP · Qatar",
+  // Keyword-rich H1 kept for SEO even though the hero reads short/minimal.
   h1: "Top Fire Protection & Leak Detection Services in Qatar",
-  sub: "Redefining Technical Excellence in Fire Protection, HVAC & ACMV Systems in Qatar",
+  // Short supporting line (NAFFCO-style minimal hero copy).
+  sub: "Fire · HVAC · ACMV · MEP — engineered to NFPA standards.",
+  // Longer descriptive paragraph — moved out of the hero into the About band
+  // below so the hero stays minimal and the background stays visible.
   body: "From hidden underground leaks to complete fire protection systems, we safeguard people and property across Qatar. Our specialists locate leaks in fire-fighting and potable water lines using acoustic sensors and thermal imaging — non-destructive, no-dig, and precise — while our QCDD-certified engineers design, install and maintain the systems that keep your building safe.",
   primaryCta: { label: "Get Started", href: "/request-for-quotation" },
   secondaryCta: { label: "Call Now", href: "tel:+97441400922" },
+  /**
+   * Full-bleed hero background. Set `video` to an .mp4/.webm path in /public to
+   * play a muted looping background video; leave it "" to show the poster image
+   * only. `poster` is always used as the image fallback / first frame (LCP).
+   * Swap these for real assets before launch — no code change needed.
+   */
+  media: {
+    video: "", // e.g. "/videos/hero.mp4"
+    poster: "/images/hero-engineering.svg",
+    posterAlt: "Adam Technical Services fire protection and MEP engineers on site in Doha, Qatar",
+  },
+  /** Gold quick-access bar riding the bottom of the hero (NAFFCO motif). */
+  quickAccess: [
+    { icon: "shield", label: "QCDD Certified", sub: "Civil Defence approved", href: "/about-us" },
+    { icon: "clock", label: "24/7 Emergency", sub: "Rapid response in Qatar", href: "/contact-us" },
+    { icon: "grid", label: "1000+ Projects", sub: "Delivered across Doha", href: "/projects" },
+  ],
 };
 
 /** Stat band — figures taken directly from the brief (§4 Home ³). */

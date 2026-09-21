@@ -36,6 +36,12 @@ export type Service = {
   related: string[];
   /** Featured on the home services grid? */
   featured?: boolean;
+  /**
+   * Optional background image for the NAFFCO-style image tile. When unset, the
+   * tile falls back to a branded gold/ink gradient. Swap in real photography
+   * per service before launch — no code change needed.
+   */
+  image?: string;
 };
 
 const INSTALL_PROCESS = [

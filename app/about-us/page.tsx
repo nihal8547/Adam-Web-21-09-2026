@@ -67,8 +67,8 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Stats */}
-      <section className="bg-[var(--color-ink-900)]">
+      {/* Stats — gold-tinted band */}
+      <section className="border-y border-[var(--color-brand-100)] bg-[linear-gradient(180deg,var(--color-brand-50),var(--color-brand-100))]">
         <Container className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-3">
           {stats.map((s) => (
             <StatCounter key={s.label} {...s} />

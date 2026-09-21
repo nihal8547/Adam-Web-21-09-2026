@@ -156,6 +156,14 @@ None fabricate statistics, client names, certifications or testimonials beyond t
 - **Imagery** (`/public/images/*.svg`, `/public/logo.svg`): generated placeholder artwork. Replace
   with real photography (raster AVIF/WebP recommended) and the official logo. Then remove
   `dangerouslyAllowSVG` from `next.config.ts` if no longer needed.
+- **Hero background (video or photo)**: the homepage hero (`components/Hero.tsx`) is driven by
+  `hero.media` in `content/company.ts`. Drop an `.mp4`/`.webm` into `/public` and set
+  `media.video` to play a muted, looping background video; leave it `""` to show `media.poster`
+  (the image) only. The poster is always the LCP image / video first frame. The `<h1>` stays real
+  text over the media (not baked into the image) so hero SEO is preserved.
+- **Service tile images** (`content/services.ts` → each service's optional `image`): the homepage
+  service tiles and projects use the NAFFCO-style overlay-on-image treatment; set a per-service
+  `image` path to use real photography, otherwise a branded gold/ink gradient is shown.
 - **Client logos** (`content/clients.ts`): 19 neutral placeholders — swap in real client logos.
 - **Projects** (`content/projects.ts`): representative case studies with no real client names or
   invented metrics — replace with real case studies.

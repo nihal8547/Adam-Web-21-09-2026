@@ -94,18 +94,21 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
             </ul>
           </section>
 
-          {/* Compliance panel */}
+          {/* Compliance panel — gold-tinted (light) */}
           <section aria-labelledby="compliance-heading" className="mt-14">
-            <div className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--color-ink-900)] p-8 text-[var(--on-invert)]">
-              <span className="eyebrow text-[var(--on-invert-accent)]">Compliance</span>
-              <h2 id="compliance-heading" className="mt-2 text-[length:var(--text-2xl)] text-white">
+            <div className="rounded-[var(--radius-md)] border border-[var(--color-brand-100)] border-l-[3px] border-l-[var(--color-brand-500)] bg-[linear-gradient(135deg,var(--color-brand-50),var(--surface))] p-8">
+              <span className="eyebrow">Compliance</span>
+              <h2
+                id="compliance-heading"
+                className="mt-2 text-[length:var(--text-2xl)] text-[var(--heading)]"
+              >
                 Approvals & Standards
               </h2>
               <ul className="mt-5 flex flex-wrap gap-2.5">
                 {service.compliance.standards.map((std) => (
                   <li
                     key={std}
-                    className="rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 text-[0.85rem] font-medium text-white/90"
+                    className="rounded-full border border-[var(--color-brand-100)] bg-[var(--surface)] px-3.5 py-1.5 text-[0.85rem] font-medium text-[var(--subheading)]"
                   >
                     {std}
                   </li>
@@ -113,14 +116,14 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
               </ul>
               {service.compliance.brands?.map((group) => (
                 <div key={group.label} className="mt-5">
-                  <p className="text-[0.8rem] font-semibold uppercase tracking-wide text-[var(--on-invert-accent)]">
+                  <p className="text-[0.8rem] font-semibold uppercase tracking-wide text-[var(--accent-strong)]">
                     {group.label}
                   </p>
                   <ul className="mt-2 flex flex-wrap gap-2.5">
                     {group.items.map((brand) => (
                       <li
                         key={brand}
-                        className="rounded-[var(--radius-sm)] bg-white/10 px-3 py-1.5 text-[0.85rem] font-semibold text-white"
+                        className="rounded-[var(--radius-sm)] bg-[var(--color-brand-500)] px-3 py-1.5 text-[0.85rem] font-semibold text-[var(--color-ink-900)]"
                       >
                         {brand}
                       </li>
