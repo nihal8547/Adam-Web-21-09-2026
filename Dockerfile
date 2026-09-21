@@ -9,17 +9,18 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends openssl ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
-ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install dependencies first (better layer caching).
+# Install dependencies first (better layer caching). Include dev dependencies for building.
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 # Build. DATABASE_URI/PAYLOAD_SECRET are NOT required at build time (the config
 # tolerates empty values); they are provided at runtime via the environment.
 COPY . .
 RUN npm run build
+
+ENV NODE_ENV=production
 
 # Media is written to a mounted volume at runtime.
 ENV PAYLOAD_MEDIA_DIR=/app/media
