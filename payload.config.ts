@@ -3,11 +3,22 @@ import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { seoPlugin } from "@payloadcms/plugin-seo";
+import type { GenerateTitle, GenerateDescription } from "@payloadcms/plugin-seo/types";
 import sharp from "sharp";
 
 import { Users } from "@/cms/collections/Users";
 import { Media } from "@/cms/collections/Media";
+import { Categories } from "@/cms/collections/Categories";
+import { Services } from "@/cms/collections/Services";
 import { SiteSettings } from "@/cms/globals/SiteSettings";
+
+// SEO defaults: title/description are auto-filled from the content so every
+// entry ships with SEO metadata out of the box (editable in the SEO section).
+const generateTitle: GenerateTitle = ({ doc }) =>
+  doc?.name ? `${doc.name} | Adam Technical Services` : "Adam Technical Services";
+const generateDescription: GenerateDescription = ({ doc }) =>
+  doc?.excerpt || doc?.description || "";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,13 +37,22 @@ export default buildConfig({
       titleSuffix: "· Adam Technical Services",
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Categories, Services],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || "" },
   }),
+  plugins: [
+    seoPlugin({
+      collections: ["services", "categories"],
+      uploadsCollection: "media",
+      tabbedUI: false,
+      generateTitle,
+      generateDescription,
+    }),
+  ],
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

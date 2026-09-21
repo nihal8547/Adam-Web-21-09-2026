@@ -4,11 +4,26 @@ The site now includes a self-hosted **Payload CMS** admin, embedded in the same
 Next.js app. Content lives in **PostgreSQL**; uploaded media lives on the
 **server's disk** (a Docker volume). The admin panel is at **`/admin`**.
 
-> **Status — Phase 1 (done):** login/auth, roles (admin/editor), Media library
-> (with required alt text), and Site Settings (NAP, hours, socials).
-> **Next phases:** Categories → Services → Projects → Vacancies → Blog →
-> Home-page CMS, each with SEO fields by default, then wiring the public pages
-> to read from the CMS.
+> **Status — Phase 1 & 2 (done):** login/auth + roles, Media library (required
+> alt text), Site Settings, and **Categories (+ sub-categories) and Services**
+> with SEO fields by default (SEO plugin auto-fills meta title/description).
+> **Next phases:** Projects → Vacancies → Blog → Home-page CMS, then wiring the
+> public pages to read from the CMS.
+
+## Migrate the existing content into the CMS (one-time)
+
+The current site content (9 services, 2 categories, site settings) can be
+imported into the database in one call. With the app running and the first
+admin created:
+
+```bash
+curl -X POST "https://www.adam.qa/api/seed?secret=$PAYLOAD_SECRET"
+# → {"ok":true,"categories":2,"services":9,"related":9,"siteSettings":true}
+```
+
+It is idempotent (safe to re-run; matches by slug). The guard secret is
+`SEED_SECRET` if set, otherwise `PAYLOAD_SECRET`. Remove the route once migrated
+if you prefer.
 
 ---
 
