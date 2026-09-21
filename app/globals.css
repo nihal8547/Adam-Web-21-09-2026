@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+/* ==================================================================
+   ADAM TECHNICAL SERVICES — DESIGN TOKENS
+   "Premium Corporate": ~70% white, ~20% ink, ~10% gold accent.
+   Gold (#D4A017) is an ACCENT only — never white text on gold.
+   ================================================================== */
+
+@theme {
+  /* Brand — medium-dark yellow (gold) scale */
+  --color-brand-50: #fdf9ec;
+  --color-brand-100: #f8efce;
+  --color-brand-300: #e3c05a;
+  --color-brand-500: #d4a017; /* PRIMARY */
+  --color-brand-600: #b8860b; /* hover / pressed */
+  --color-brand-700: #8c6508; /* deep gold */
+
+  /* Ink — neutrals */
+  --color-ink-900: #121212;
+  --color-ink-700: #2b2b2b;
+  --color-ink-500: #545454;
+  --color-ink-200: #e6e6e6;
+
+  /* Surfaces */
+  --color-white: #ffffff;
+  --color-off-white: #fafaf7;
+
+  /* Semantic */
+  --color-alert-600: #c0392b; /* emergency / 24-7 badge ONLY */
+
+  /* Fonts (bound to next/font CSS variables in layout) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-arabic: var(--font-plex-arabic), var(--font-inter), sans-serif;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 12px;
+
+  /* Fluid type scale (clamp) — 14 → 72 */
+  --text-eyebrow: 0.8125rem; /* 13px */
+  --text-xs: 0.875rem; /* 14 */
+  --text-sm: 1rem; /* 16 */
+  --text-base: 1.125rem; /* 18 */
+  --text-lg: 1.25rem; /* 20 */
+  --text-xl: 1.5rem; /* 24 */
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2rem); /* 28–32 */
+  --text-3xl: clamp(2rem, 1.5rem + 2.4vw, 2.625rem); /* 32–42 */
+  --text-4xl: clamp(2.5rem, 1.8rem + 3.4vw, 3.5rem); /* 40–56 */
+  --text-5xl: clamp(3rem, 2rem + 4.8vw, 4.5rem); /* 48–72 */
+
+  /* Shadows — barely-there */
+  --shadow-card: 0 1px 2px rgba(18, 18, 18, 0.06);
+  --shadow-hover: 0 8px 24px rgba(18, 18, 18, 0.08);
+
+  /* Container */
+  --container-site: 1280px;
+}
+
+/* ------------------------------------------------------------------
+   Semantic surface/text roles — support light + dark via variables.
+   ------------------------------------------------------------------ */
+:root {
+  --surface: var(--color-white);
+  --surface-alt: var(--color-off-white);
+  --surface-wash: var(--color-brand-50);
+  --surface-invert: var(--color-ink-900);
+  --border: var(--color-ink-200);
+  --heading: var(--color-ink-900);
+  --subheading: var(--color-ink-700);
+  --body: var(--color-ink-500);
+  --accent: var(--color-brand-500);
+  --accent-strong: var(--color-brand-700);
+  --on-invert: var(--color-white);
+  --on-invert-accent: var(--color-brand-300);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #0d0d0d;
+    --surface-alt: #141414;
+    --surface-wash: #1a160c;
+    --surface-invert: #000000;
+    --border: #2c2c2c;
+    --heading: #f5f5f0;
+    --subheading: #d8d8d2;
+    --body: #b3b3ad;
+    --accent: var(--color-brand-300);
+    --accent-strong: var(--color-brand-300);
+    --on-invert: #f5f5f0;
+    --on-invert-accent: var(--color-brand-300);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface: #0d0d0d;
+  --surface-alt: #141414;
+  --surface-wash: #1a160c;
+  --surface-invert: #000000;
+  --border: #2c2c2c;
+  --heading: #f5f5f0;
+  --subheading: #d8d8d2;
+  --body: #b3b3ad;
+  --accent: var(--color-brand-300);
+  --accent-strong: var(--color-brand-300);
+  --on-invert: #f5f5f0;
+  --on-invert-accent: var(--color-brand-300);
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--body);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus — visible gold ring, 2px offset (a11y) */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilities / motifs
+   ------------------------------------------------------------------ */
+
+/* Eyebrow label — gold, uppercase, tracked */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+/* 3px gold rule under section eyebrows (signature motif) */
+.gold-rule::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin-top: 0.75rem;
+  background-color: var(--accent);
+  border-radius: 999px;
+}
+
+/* Prose body max-width 68ch */
+.prose-measure {
+  max-width: 68ch;
+}
+
+/* Scroll-in reveal (progressively enhanced via IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Logo marquee animation */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-brand-500);
+  color: var(--color-ink-900);
+  font-weight: 600;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
