@@ -35,8 +35,17 @@ export const metadata: Metadata = buildMetadata({
   keywords: [
     "fire protection company in Qatar",
     "fire fighting company in Qatar",
-    "MEP company in Qatar",
+    "QCDD approved fire protection Qatar",
+    "fire alarm system Qatar",
+    "fire fighting pump Qatar",
+    "fire sprinkler system Qatar",
+    "underground water leak detection Qatar",
     "HVAC company in Qatar",
+    "AC service and maintenance Qatar",
+    "MEP company in Qatar",
+    "ACMV company Qatar",
+    "annual maintenance contract AMC Qatar",
+    "fire protection company in Doha",
   ],
 });
 

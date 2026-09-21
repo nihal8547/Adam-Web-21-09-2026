@@ -181,7 +181,7 @@ export const services: Service[] = [
       "Addressable and conventional fire alarm systems — supplied, installed, integrated and maintained to QCDD and NFPA standards.",
     intro: [
       "A reliable fire alarm system is the first line of defence in any building. Adam Technical Services designs, installs, integrates and maintains addressable and conventional fire alarm systems across Qatar, giving occupants the earliest possible warning and giving you a QCDD-compliant, fully documented installation.",
-      "We work with trusted, UL/FM-listed brands including Honeywell, Simplex and Shield, and integrate detection with voice evacuation, BMS and access control so your life-safety systems act as one.",
+      "We work with trusted, UL/FM-listed brands including Honeywell, Simplex and Shield, and integrate detection with voice evacuation, BMS and access control so your life-safety systems act as one. Our QCDD-approved fire alarm maintenance in Qatar and annual maintenance contracts (AMC) keep the system tested, certified and ready.",
     ],
     included: [
       {
@@ -564,7 +564,7 @@ export const services: Service[] = [
       "Non-destructive underground leak detection using acoustic sensors and thermal imaging — pinpoint fire-line and potable-water leaks without digging.",
     intro: [
       "Hidden underground leaks waste water, undermine fire-fighting reliability and quietly damage structures and foundations. Adam Technical Services provides expert underground water leak detection across Qatar, pinpointing leaks in fire-fighting lines and potable water lines without excavation.",
-      "Using acoustic sensors and thermal imaging, our specialists locate the exact position of a leak so it can be repaired precisely — no-dig, non-destructive, and far cheaper than exploratory excavation.",
+      "Using acoustic sensors and thermal imaging, our specialists provide precise acoustic leak detection in Qatar, locating the exact position of a leak so it can be repaired precisely — no-dig, non-destructive, and far cheaper than exploratory excavation.",
     ],
     included: [
       {
@@ -671,7 +671,7 @@ export const services: Service[] = [
       "VRF, chilled-water, FAHU and ventilation systems — designed, installed and maintained 24/7 for comfort, air quality and energy efficiency.",
     intro: [
       "In Qatar's climate, HVAC is not a luxury — it is essential infrastructure. Adam Technical Services is an expert HVAC company in Qatar, delivering heating, ventilation and air-conditioning systems that keep buildings comfortable, healthy and energy-efficient all year round.",
-      "We design, install, commission and maintain the full range of systems — VRF, chilled water, fresh-air handling units (FAHU) and ventilation — with 24/7 support to keep them running when it matters most.",
+      "We design, install, commission and maintain the full range of systems — VRF, chilled water, fresh-air handling units (FAHU) and ventilation — with 24/7 support to keep them running when it matters most. From complete AC service and maintenance in Qatar to fast AC repair in Doha, we keep your cooling reliable and efficient.",
     ],
     included: [
       {
@@ -730,6 +730,10 @@ export const services: Service[] = [
         a: "VRF/VRV, chilled-water systems with chillers, AHUs and FCUs, FAHU fresh-air units and full ventilation and ductwork.",
       },
       {
+        q: "Do you provide AC service, maintenance and repair in Qatar?",
+        a: "Yes. We provide AC service and maintenance in Qatar and fast AC repair in Doha — from routine servicing and preventive maintenance to breakdown repairs, backed by 24/7 support.",
+      },
+      {
         q: "Do you offer 24/7 HVAC maintenance?",
         a: "Yes. Our preventive maintenance contracts include scheduled servicing and 24/7 emergency response across Qatar.",
       },
@@ -768,7 +772,7 @@ export const services: Service[] = [
       "Air Conditioning & Mechanical Ventilation — integrated ACMV design, installation and maintenance for comfort, safety and indoor air quality.",
     intro: [
       "ACMV — Air Conditioning and Mechanical Ventilation — is the backbone of a comfortable, safe and healthy building. Adam Technical Services is a specialist ACMV system company in Qatar, integrating air conditioning with mechanical ventilation, smoke control and fresh-air systems into one coordinated whole.",
-      "From car-park ventilation and smoke extraction to comfort cooling and pressurisation, we design, install and maintain ACMV systems that meet Qatar's codes and keep occupants safe and comfortable.",
+      "From car-park ventilation and smoke extraction to comfort cooling, we design, install and maintain smoke control and pressurization systems in Qatar and complete ACMV systems that meet Qatar's codes and keep occupants safe and comfortable.",
     ],
     included: [
       {
@@ -948,3 +952,75 @@ export function getService(slug: string): Service | undefined {
 
 /** Featured subset for the home services grid (6 cards). */
 export const featuredServices = services.filter((s) => s.featured).slice(0, 6);
+
+/**
+ * Secondary keywords per service — competitor-validated Qatar search terms
+ * (QCDD approved, AMC, AC service/repair, acoustic, smoke control, Doha
+ * variants). Fed into each service page's `keywords` metadata alongside the
+ * primary keyword. On-page copy carries the important ones too.
+ */
+export const serviceSecondaryKeywords: Record<string, string[]> = {
+  "fire-protection-services-qatar": [
+    "fire fighting company in Qatar",
+    "QCDD approved fire protection Qatar",
+    "fire safety company Qatar",
+    "fire protection company in Doha",
+    "annual maintenance contract AMC Qatar",
+  ],
+  "fire-alarm-system-installation-maintenance": [
+    "fire alarm maintenance Qatar",
+    "fire alarm AMC Qatar",
+    "QCDD approved fire alarm Qatar",
+    "addressable fire alarm system Doha",
+  ],
+  "fire-fighting-pump-qatar": [
+    "fire pump maintenance Qatar",
+    "diesel fire pump Qatar",
+    "NFPA 20 fire pump Doha",
+    "QCDD approved fire pump Qatar",
+  ],
+  "fire-sprinkler-system-qatar": [
+    "automatic sprinkler system Qatar",
+    "fire suppression system Qatar",
+    "NFPA 13 sprinkler Doha",
+    "sprinkler AMC Qatar",
+  ],
+  "fire-stop-insulation-technologies-services-qatar": [
+    "passive fire protection Qatar",
+    "fire stopping Qatar",
+    "penetration sealing Doha",
+    "fire rated compartmentation Qatar",
+  ],
+  "underground-leakage-detection-system-service-qatar": [
+    "acoustic leak detection Qatar",
+    "water leak detection Doha",
+    "fire line leak detection Qatar",
+    "non-destructive leak detection Qatar",
+  ],
+  "hvac-services-qatar": [
+    "HVAC contractor Qatar",
+    "AC service and maintenance Qatar",
+    "AC repair Doha",
+    "chilled water VRF FAHU Qatar",
+    "HVAC maintenance company Doha",
+  ],
+  "acmv-system-company-in-qatar": [
+    "air conditioning and mechanical ventilation Qatar",
+    "smoke control system Qatar",
+    "pressurization system Doha",
+    "car park ventilation Qatar",
+  ],
+  "electrical-services-qatar": [
+    "electrical contractor Qatar",
+    "MEP contractor in Qatar",
+    "LV distribution Doha",
+    "emergency lighting Qatar",
+  ],
+};
+
+/** Primary + secondary keywords for a service page's metadata. */
+export function getServiceKeywords(slug: string): string[] {
+  const svc = getService(slug);
+  if (!svc) return [];
+  return [svc.primaryKeyword, ...(serviceSecondaryKeywords[slug] ?? [])];
+}
