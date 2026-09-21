@@ -6,6 +6,19 @@ import { roles } from "@/content/careers";
 import { blogPosts } from "@/content/blog";
 import { testimonials } from "@/content/testimonials";
 import { clients } from "@/content/clients";
+import {
+  hero,
+  stats,
+  whatDrivesUs,
+  whatMakesUsBetter,
+  groupCredibility,
+  qcddBand,
+  homeFeatureBlocks,
+  about,
+  whyChooseUs,
+  qcddPage,
+  internationalWorking,
+} from "@/content/company";
 
 /**
  * One-time migration of the typed /content data into the CMS database.
@@ -72,7 +85,9 @@ export async function runSeed(payload: Payload) {
     testimonials: 0,
     clients: 0,
     siteSettings: false,
+    globals: false,
   };
+  const para = (arr: readonly string[]) => arr.map((paragraph) => ({ paragraph }));
 
   // 1. Categories (two parents; sub-categories can be added in the admin).
   const fireCatId = await upsertCategory(payload, "Fire Protection", "fire-protection");
@@ -267,6 +282,98 @@ export async function runSeed(payload: Payload) {
     },
   });
   result.siteSettings = true;
+
+  // 10. Home page global.
+  await payload.updateGlobal({
+    slug: "home",
+    data: {
+      heroEyebrow: hero.eyebrow,
+      heroH1: hero.h1,
+      heroSub: hero.sub,
+      primaryCtaLabel: hero.primaryCta.label,
+      primaryCtaHref: hero.primaryCta.href,
+      secondaryCtaLabel: hero.secondaryCta.label,
+      secondaryCtaHref: hero.secondaryCta.href,
+      heroVideo: hero.media.video,
+      quickAccess: hero.quickAccess.map((q) => ({
+        icon: q.icon,
+        label: q.label,
+        sub: q.sub,
+        href: q.href,
+      })),
+      stats: stats.map((s) => ({
+        text: s.text,
+        value: s.value,
+        prefix: s.prefix,
+        suffix: s.suffix,
+        label: s.label,
+      })),
+      whoEyebrow: whatDrivesUs.eyebrow,
+      whoHeading: whatDrivesUs.heading,
+      whoBody: para(whatDrivesUs.body),
+      differentiators: whatMakesUsBetter.map((c) => ({
+        icon: c.icon,
+        title: c.title,
+        desc: c.desc,
+      })),
+      credibilityQuote: groupCredibility,
+      qcddEyebrow: qcddBand.eyebrow,
+      qcddHeading: qcddBand.heading,
+      qcddBody: qcddBand.body,
+      qcddCtaLabel: qcddBand.cta.label,
+      qcddCtaHref: qcddBand.cta.href,
+      featureBlocks: homeFeatureBlocks.map((b) => ({
+        eyebrow: b.eyebrow,
+        heading: b.heading,
+        body: para(b.body),
+        bullets: wrap(b.bullets),
+        ctaLabel: b.cta.label,
+        ctaHref: b.cta.href,
+      })),
+    },
+  });
+
+  // 11. About page global.
+  await payload.updateGlobal({
+    slug: "about-page",
+    data: {
+      heroEyebrow: about.hero.eyebrow,
+      heroHeading: about.hero.heading,
+      heroBody: about.hero.body,
+      storyHeading: about.story.heading,
+      storyBody: para(about.story.body),
+      missionHeading: about.mission.heading,
+      missionBody: about.mission.body,
+      visionHeading: about.vision.heading,
+      visionBody: about.vision.body,
+      whyChooseUs: whyChooseUs.map((f) => ({ q: f.q, a: f.a })),
+    },
+  });
+
+  // 12. QCDD page global.
+  await payload.updateGlobal({
+    slug: "qcdd-page",
+    data: {
+      intro: para(qcddPage.intro),
+      checklist: wrap(qcddPage.checklist),
+      timeline: qcddPage.timeline.map((t) => ({ title: t.title, desc: t.desc })),
+      faqs: qcddPage.faqs.map((f) => ({ q: f.q, a: f.a })),
+    },
+  });
+
+  // 13. Contact page global.
+  await payload.updateGlobal({
+    slug: "contact-page",
+    data: {
+      internationalEyebrow: internationalWorking.eyebrow,
+      internationalHeading: internationalWorking.heading,
+      internationalItems: internationalWorking.items.map((i) => ({
+        title: i.title,
+        desc: i.desc,
+      })),
+    },
+  });
+  result.globals = true;
 
   return result;
 }

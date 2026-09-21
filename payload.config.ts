@@ -17,6 +17,8 @@ import { Posts } from "@/cms/collections/Posts";
 import { Testimonials } from "@/cms/collections/Testimonials";
 import { Clients } from "@/cms/collections/Clients";
 import { SiteSettings } from "@/cms/globals/SiteSettings";
+import { HomePage } from "@/cms/globals/HomePage";
+import { AboutPage, QcddPage, ContactPage } from "@/cms/globals/ContentPages";
 
 // SEO defaults: title/description are auto-filled from the content so every
 // entry ships with SEO metadata out of the box (editable in the SEO section).
@@ -55,7 +57,7 @@ export default buildConfig({
     Testimonials,
     Clients,
   ],
-  globals: [SiteSettings],
+  globals: [SiteSettings, HomePage, AboutPage, QcddPage, ContactPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
