@@ -1,0 +1,32 @@
+# Local development database ONLY — a throwaway PostgreSQL for `npm run dev`.
+# (Production uses the full stack in docker-compose.yml.)
+#
+#   npm run db:up      # start Postgres in the background
+#   npm run dev        # run the site + admin against it
+#   npm run db:down    # stop it (data is kept in the pgdata-dev volume)
+#
+# Payload creates and migrates its own tables automatically in dev — you do
+# not run any migration tool by hand.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: adam-dev-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adam
+      POSTGRES_PASSWORD: adam
+      POSTGRES_DB: adam_cms
+    ports:
+      # Host 5432 → container 5432. Override the host port if 5432 is taken:
+      #   ADAM_DB_PORT=5544 npm run db:up   (then set it in DATABASE_URI too)
+      - "${ADAM_DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adam -d adam_cms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata-dev:

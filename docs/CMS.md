@@ -38,24 +38,48 @@ first login.
 
 ---
 
-## 1. Run it locally
+## 1. Run it locally (one command for the database)
 
-Prereqs: Node 20+ and a PostgreSQL 14+ database.
+Prereqs: Node 20+ and **Docker Desktop running** (the database runs in Docker;
+you do not install PostgreSQL yourself).
 
 ```bash
-cp .env.example .env.local        # or .env
-# set at minimum:
-#   DATABASE_URI=postgresql://user:pass@localhost:5432/adam_cms
-#   PAYLOAD_SECRET=<node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
 npm install
-npm run dev
+npm run setup       # creates .env (generated secret) + starts the dev database
+npm run dev         # http://localhost:3000  (admin at /admin)
+npm run seed        # first time only: import content + create the admin user
 ```
 
-Open **http://localhost:3000/admin** — on first run it prompts you to create the
-first admin user. Payload creates its database tables automatically in dev.
+`npm run setup` writes a `.env` (only if you don't have one) pointing at the
+dev database from `docker-compose.dev.yml`, and starts it. The default admin
+from that `.env` is **admin@adam.qa / changeme123** — change it after first
+login. Payload creates its own tables automatically; there is no manual
+migration step.
+
+Database controls:
+
+| Command            | What it does                                   |
+| ------------------ | ---------------------------------------------- |
+| `npm run db:up`    | start the dev PostgreSQL (Docker)              |
+| `npm run db:down`  | stop it (data kept in the `pgdata-dev` volume) |
+| `npm run db:reset` | wipe and recreate an empty database            |
+| `npm run db:logs`  | tail the database logs                         |
+
+> **Seeing "Application error" or "can't reach its database" at `/admin`?**
+> The admin needs the database running. Run `npm run db:up` (make sure Docker
+> Desktop is started), then `npm run dev`. The error screen now spells this out
+> instead of showing a blank page. If port 5432 is already in use, start the DB
+> on another port: `ADAM_DB_PORT=5544 npm run db:up` and set the same port in
+> `DATABASE_URI` in `.env`.
+
+> **Note on ORMs:** Payload manages its own schema (via Drizzle) through the
+> `@payloadcms/db-postgres` adapter — you don't add Prisma or run a separate
+> migration tool. Just point `DATABASE_URI` at a PostgreSQL database.
 
 Public site is unchanged and still fast: the admin bundle is only loaded under
-`/admin`, never on the marketing pages.
+`/admin`, never on the marketing pages. Even with the database down, the public
+pages keep rendering from the typed `/content` fallback — only `/admin` needs
+the DB.
 
 ---
 

@@ -41,9 +41,32 @@ npm run start          # serve the production build
 npm run lint           # ESLint (next/core-web-vitals + typescript + prettier)
 npm run format         # Prettier write
 npm run format:check   # Prettier check
+
+# Backend / CMS admin (needs Docker running):
+npm run setup          # create .env + start the dev database
+npm run db:up          # start the dev PostgreSQL (Docker)
+npm run db:down        # stop it
+npm run seed           # import content + create the first admin (run dev first)
 ```
 
 Node 20+ required (developed on Node 22).
+
+### Admin / CMS at `/admin`
+
+The public site runs with no database (it falls back to the typed `/content`
+files), but the **Payload admin at `/admin` needs PostgreSQL**. To use it
+locally, with **Docker running**:
+
+```bash
+npm run setup          # writes .env + starts the dev database
+npm run dev            # http://localhost:3000/admin
+npm run seed           # first time: content + admin (admin@adam.qa / changeme123)
+```
+
+If `/admin` shows **"Application error"** it means the database isn't reachable
+— run `npm run db:up` (start Docker Desktop first). Full guide: `docs/CMS.md`.
+Payload manages its own schema via the `@payloadcms/db-postgres` adapter — no
+Prisma or manual migrations.
 
 ---
 

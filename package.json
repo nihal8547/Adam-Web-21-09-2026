@@ -9,7 +9,13 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:up": "docker compose -f docker-compose.dev.yml up -d --wait",
+    "db:down": "docker compose -f docker-compose.dev.yml down",
+    "db:logs": "docker compose -f docker-compose.dev.yml logs -f db",
+    "db:reset": "docker compose -f docker-compose.dev.yml down -v && docker compose -f docker-compose.dev.yml up -d --wait",
+    "setup": "node scripts/setup-env.mjs && npm run db:up",
+    "seed": "node scripts/seed.mjs"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.90.1",
