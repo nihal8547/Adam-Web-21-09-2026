@@ -1,9 +1,15 @@
 import { site, socialSameAs } from "@/content/site";
+import { services } from "@/content/services";
 import { absoluteUrl, SITE_URL } from "@/lib/seo";
 
 /**
  * JSON-LD schema builders. Each returns a plain object rendered by <JsonLd>.
  * Validate output in Google's Rich Results Test before launch.
+ *
+ * Beyond classic SEO, these feed AI/answer engines (GEO/AIO): a well-formed
+ * entity graph — offer catalog, expertise, contact point and service area —
+ * lets ChatGPT, Perplexity, Gemini and Google AI Overviews extract and cite
+ * the business accurately.
  */
 
 const ORG_ID = `${SITE_URL}/#organization`;
@@ -17,6 +23,64 @@ const LOGO_IMAGE = {
   height: 512,
 };
 
+/** Cities/areas served — helps local + generative engines place the business. */
+const AREA_SERVED = [
+  { "@type": "Country", name: "Qatar" },
+  { "@type": "City", name: "Doha" },
+  { "@type": "City", name: "Al Sadd" },
+  { "@type": "City", name: "West Bay" },
+  { "@type": "City", name: "Lusail" },
+  { "@type": "City", name: "Al Wakrah" },
+  { "@type": "City", name: "Mesaieed" },
+];
+
+/** Topics of expertise — a strong entity signal for AI answer engines. */
+const KNOWS_ABOUT = [
+  "Fire protection",
+  "Fire alarm systems",
+  "Fire fighting pumps",
+  "Fire sprinkler systems",
+  "Fire stop insulation / passive fire protection",
+  "Underground water leak detection",
+  "HVAC",
+  "ACMV",
+  "Electrical services",
+  "MEP contracting",
+  "QCDD (Qatar Civil Defence) approvals",
+  "NFPA standards",
+  "QCDD license renewal",
+];
+
+/** Structured contact point (customer service). */
+const CONTACT_POINT = {
+  "@type": "ContactPoint",
+  telephone: site.phone.display,
+  email: site.email,
+  contactType: "customer service",
+  areaServed: "QA",
+  availableLanguage: ["English", "Arabic"],
+};
+
+/** OfferCatalog listing every service — lets AI enumerate the full offering. */
+function offerCatalog() {
+  return {
+    "@type": "OfferCatalog",
+    name: `${site.legalName} Services`,
+    itemListElement: services.map((s) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: s.name,
+        description: s.metaDescription,
+        url: absoluteUrl(`/${s.slug}`),
+        serviceType: s.name,
+        provider: { "@id": ORG_ID },
+        areaServed: { "@type": "Country", name: "Qatar" },
+      },
+    })),
+  };
+}
+
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -24,6 +88,9 @@ export function organizationSchema() {
     "@id": ORG_ID,
     name: site.legalName,
     legalName: site.legalName,
+    alternateName: "Adam Technical Services Qatar",
+    description: site.description,
+    slogan: site.tagline,
     parentOrganization: { "@type": "Organization", name: site.group },
     url: SITE_URL,
     logo: LOGO_IMAGE,
@@ -32,13 +99,18 @@ export function organizationSchema() {
     telephone: site.phone.display,
     faxNumber: site.fax,
     sameAs: socialSameAs,
+    foundingLocation: { "@type": "Place", name: "Doha, Qatar" },
+    numberOfEmployees: { "@type": "QuantitativeValue", minValue: 100 },
+    knowsAbout: KNOWS_ABOUT,
+    contactPoint: CONTACT_POINT,
     address: {
       "@type": "PostalAddress",
       streetAddress: `${site.address.line1}, ${site.address.line2}`,
       addressLocality: site.address.city,
       addressCountry: "QA",
     },
-    areaServed: { "@type": "Country", name: "Qatar" },
+    areaServed: AREA_SERVED,
+    hasOfferCatalog: offerCatalog(),
   };
 }
 
@@ -55,7 +127,11 @@ export function localBusinessSchema() {
     email: site.email,
     faxNumber: site.fax,
     priceRange: "$$",
+    description: site.description,
+    slogan: site.tagline,
     parentOrganization: { "@type": "Organization", name: site.group },
+    knowsAbout: KNOWS_ABOUT,
+    contactPoint: CONTACT_POINT,
     address: {
       "@type": "PostalAddress",
       streetAddress: `${site.address.line1}, ${site.address.line2}`,
@@ -67,13 +143,34 @@ export function localBusinessSchema() {
       latitude: site.address.geo.lat,
       longitude: site.address.geo.lng,
     },
-    areaServed: { "@type": "Country", name: "Qatar" },
+    areaServed: AREA_SERVED,
     sameAs: socialSameAs,
+    hasOfferCatalog: offerCatalog(),
     openingHoursSpecification: site.openingHoursSpec.map((o) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: o.days,
       opens: o.opens,
       closes: o.closes,
+    })),
+  };
+}
+
+/**
+ * ItemList of all services — lets crawlers and AI answer engines enumerate the
+ * catalogue directly. Rendered on the /services hub page.
+ */
+export function servicesItemListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Fire Protection & MEP Services in Qatar",
+    itemListOrder: "https://schema.org/ItemListUnordered",
+    numberOfItems: services.length,
+    itemListElement: services.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: absoluteUrl(`/${s.slug}`),
+      name: s.name,
     })),
   };
 }

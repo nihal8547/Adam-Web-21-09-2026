@@ -6,7 +6,9 @@ import ServiceCard from "@/components/ServiceCard";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import CTABand from "@/components/CTABand";
 import Reveal from "@/components/Reveal";
+import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
+import { servicesItemListSchema } from "@/lib/jsonld";
 import { services } from "@/content/services";
 import { servicesProcess } from "@/content/company";
 
@@ -21,6 +23,7 @@ export const metadata: Metadata = buildMetadata({
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={servicesItemListSchema()} />
       <Breadcrumbs crumbs={[{ name: "Services", path: "/services" }]} />
 
       <section className="bg-[var(--surface-alt)]">
