@@ -4,27 +4,37 @@ The site now includes a self-hosted **Payload CMS** admin, embedded in the same
 Next.js app. Content lives in **PostgreSQL**; uploaded media lives on the
 **server's disk** (a Docker volume). The admin panel is at **`/admin`**.
 
-> **Status — Phases 1–3 (done):** login/auth + roles, Media library (required
-> alt text), Site Settings, **Categories (+ sub-categories), Services,
-> Projects, Vacancies (careers), Blog posts, Testimonials and Clients** — with
-> SEO fields by default (SEO plugin auto-fills meta title/description).
-> **Next phases:** Home-page CMS (hero/section images + copy) and wiring the
-> public pages to read from the CMS.
+> **Status — complete:** login/auth + roles, Media library (required alt text),
+> Site Settings, **Categories (+ sub-categories), Services, Projects, Vacancies
+> (careers), Blog posts, Testimonials and Clients**, plus **Home-page and page
+> content globals** (hero/section images + copy) — all with SEO fields by
+> default (the SEO plugin auto-fills meta title/description). Every public page
+> reads from the CMS with a fall back to the typed `/content` files when the
+> database is empty, edits revalidate the live pages instantly, and email
+> (password reset / verification) is wired to SMTP.
 
 ## Migrate the existing content into the CMS (one-time)
 
-The current site content (9 services, 2 categories, site settings) can be
-imported into the database in one call. With the app running and the first
-admin created:
+All of the current site content (categories, 9 services + related links, 6
+projects, 3 vacancies, 3 blog posts, 8 testimonials, 19 clients, Site Settings
+and the four page globals) is imported into the database in one call:
 
 ```bash
 curl -X POST "https://www.adam.qa/api/seed?secret=$PAYLOAD_SECRET"
-# → {"ok":true,"categories":2,"services":9,"related":9,"siteSettings":true}
+# → {"ok":true,"categories":2,"services":9,"related":9,"projects":6,
+#    "vacancies":3,"posts":3,"testimonials":8,"clients":19,
+#    "siteSettings":true,"globals":true,"adminCreated":true}
 ```
 
 It is idempotent (safe to re-run; matches by slug). The guard secret is
 `SEED_SECRET` if set, otherwise `PAYLOAD_SECRET`. Remove the route once migrated
 if you prefer.
+
+**First admin, hands-free:** if `ADMIN_EMAIL` and `ADMIN_PASSWORD` are set and
+no user exists yet, the same seed call creates that admin (`adminCreated:true`)
+so a fresh deploy needs no interactive setup. Leave them unset to use Payload's
+"create first user" screen at `/admin` instead. Unset/rotate the password after
+first login.
 
 ---
 
@@ -91,11 +101,24 @@ Point the **adam.qa** DNS A record (and `www`) at the droplet's IP first.
 
 ## 3. Backups (important)
 
-- **Database:** `docker compose exec db pg_dump -U adam adam_cms > backup-$(date +%F).sql`
-  (schedule via cron). Restore: `docker compose exec -T db psql -U adam adam_cms < backup.sql`.
-- **Media:** the `media` Docker volume — back it up with
-  `docker run --rm -v adam_media:/m -v $PWD:/b alpine tar czf /b/media-$(date +%F).tgz -C /m .`
-  (adjust the volume name from `docker volume ls`).
+A ready-to-use script backs up both the database and the media volume and
+prunes old copies:
+
+```bash
+./deploy/backup.sh          # writes ./backups/db-*.sql.gz and media-*.tgz
+```
+
+Schedule it nightly with cron (keeps 14 days by default; `KEEP_DAYS` overrides):
+
+```cron
+30 2 * * * cd /root/adam && ./deploy/backup.sh >> /var/log/adam-backup.log 2>&1
+```
+
+**Restore:**
+
+- **Database:** `gunzip -c backups/db-YYYY-MM-DD_HHMM.sql.gz | docker compose exec -T db psql -U adam adam_cms`
+- **Media:** `docker run --rm -v adam_media:/m -v $PWD/backups:/b alpine tar xzf /b/media-YYYY-MM-DD_HHMM.tgz -C /m`
+  (confirm the volume name with `docker volume ls`).
 
 ---
 
@@ -111,5 +134,12 @@ Point the **adam.qa** DNS A record (and `www`) at the droplet's IP first.
 - **Media path:** `PAYLOAD_MEDIA_DIR` (default `./media`, `/app/media` in
   Docker) — a persistent volume. Uploads never touch git.
 - **Next version:** pinned to 15.4.x for Payload 3 peer compatibility.
-- **Email:** no email adapter is configured yet, so password-reset emails print
-  to the server console. Add Resend/SMTP before go-live if you want reset links.
+- **Email:** the nodemailer adapter (`lib/payload/email.ts`) sends Payload's
+  password-reset / verification mail over SMTP when `SMTP_HOST` / `SMTP_USER` /
+  `SMTP_PASSWORD` are set. When they are unset (local dev) Payload logs a
+  preview URL to the console instead of sending, so no mail server is needed to
+  develop. Set the SMTP vars in `.env` before go-live so reset links work.
+- **Revalidation:** content collections and globals carry an `afterChange` /
+  `afterDelete` hook (`cms/hooks/revalidate.ts`) that calls `revalidatePath`, so
+  an edit in `/admin` refreshes the live pages without a redeploy. ISR
+  (`revalidate = 3600`) is the fallback baseline.

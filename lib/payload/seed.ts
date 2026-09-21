@@ -37,6 +37,33 @@ const FIRE_SLUGS = new Set([
 
 const wrap = (values: readonly string[] = []) => values.map((value) => ({ value }));
 
+/**
+ * Create the first admin user from ADMIN_EMAIL / ADMIN_PASSWORD when the Users
+ * collection is empty, so a fresh droplet deploy can be bootstrapped without the
+ * interactive form. No-op if any user already exists or the env vars are unset
+ * (in which case Payload shows its "create first user" screen at /admin).
+ * Returns true only when it actually created a user.
+ */
+async function ensureFirstAdmin(payload: Payload): Promise<boolean> {
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!email || !password) return false;
+
+  const existing = await payload.find({ collection: "users", limit: 1 });
+  if (existing.totalDocs > 0) return false;
+
+  await payload.create({
+    collection: "users",
+    data: {
+      email,
+      password,
+      name: process.env.ADMIN_NAME || "Administrator",
+      role: "admin",
+    },
+  });
+  return true;
+}
+
 /** Upsert a doc in a slug-keyed collection (create, or update if slug exists). */
 async function upsertBySlug(
   payload: Payload,
@@ -86,8 +113,12 @@ export async function runSeed(payload: Payload) {
     clients: 0,
     siteSettings: false,
     globals: false,
+    adminCreated: false,
   };
   const para = (arr: readonly string[]) => arr.map((paragraph) => ({ paragraph }));
+
+  // 0. Bootstrap the first admin user (env-driven) if none exists yet.
+  result.adminCreated = await ensureFirstAdmin(payload);
 
   // 1. Categories (two parents; sub-categories can be added in the admin).
   const fireCatId = await upsertCategory(payload, "Fire Protection", "fire-protection");

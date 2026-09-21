@@ -24,6 +24,7 @@ import {
   revalidateAfterDelete,
   revalidateGlobalAfterChange,
 } from "@/cms/hooks/revalidate";
+import { buildEmail } from "@/lib/payload/email";
 
 // SEO defaults: title/description are auto-filled from the content so every
 // entry ships with SEO metadata out of the box (editable in the SEO section).
@@ -83,6 +84,8 @@ export default buildConfig({
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || "" },
   }),
+  // SMTP in production (droplet); console preview in dev when unset.
+  email: buildEmail(),
   plugins: [
     seoPlugin({
       collections: ["services", "categories", "projects", "vacancies", "posts"],
