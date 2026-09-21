@@ -1,16 +1,18 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
-import { serviceSlugs } from "@/content/services";
-import { projectSlugs } from "@/content/projects";
-import { blogPosts } from "@/content/blog";
-import { roles } from "@/content/careers";
+import { getServiceSlugs } from "@/lib/cms/services";
+import { getProjectSlugs } from "@/lib/cms/projects";
+import { getAllPosts } from "@/lib/cms/blog";
+import { getAllRoles } from "@/lib/cms/careers";
 
 /**
- * Auto-generated sitemap with lastModified + priority. Static marketing pages
- * rank highest; dynamic content uses its real published/updated date so search
- * engines see accurate freshness signals.
+ * Auto-generated sitemap with lastModified + priority. Slugs come from the CMS
+ * (with a fallback to the typed content) so new services/projects/posts/roles
+ * appear automatically. Blog/careers use their real published/posted dates.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPages: Array<{
@@ -31,6 +33,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms-of-service", priority: 0.3, freq: "yearly" },
   ];
 
+  const [serviceSlugs, projectSlugs, posts, roles] = await Promise.all([
+    getServiceSlugs(),
+    getProjectSlugs(),
+    getAllPosts(),
+    getAllRoles(),
+  ]);
+
   const entries: MetadataRoute.Sitemap = staticPages.map((p) => ({
     url: absoluteUrl(p.path),
     lastModified: now,
@@ -38,7 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: p.priority,
   }));
 
-  // Service pages — the SEO "spokes", high priority.
   for (const slug of serviceSlugs) {
     entries.push({
       url: absoluteUrl(`/${slug}`),
@@ -47,7 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     });
   }
-  // Projects.
   for (const slug of projectSlugs) {
     entries.push({
       url: absoluteUrl(`/projects/${slug}`),
@@ -56,8 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     });
   }
-  // Blog posts — use each post's published date as lastModified.
-  for (const post of blogPosts) {
+  for (const post of posts) {
     entries.push({
       url: absoluteUrl(`/blog/${post.slug}`),
       lastModified: new Date(post.datePublished),
@@ -65,7 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     });
   }
-  // Careers — use each role's posted date.
   for (const role of roles) {
     entries.push({
       url: absoluteUrl(`/careers/${role.slug}`),

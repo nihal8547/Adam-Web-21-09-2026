@@ -1,24 +1,26 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServiceDetailTemplate from "@/components/ServiceDetailTemplate";
-import { getService, getServiceKeywords } from "@/content/services";
+import { getServiceBySlug } from "@/lib/cms/services";
 import { buildMetadata } from "@/lib/seo";
 
 const SLUG = "fire-stop-insulation-technologies-services-qatar";
 
-export function generateMetadata(): Metadata {
-  const service = getService(SLUG);
+export const revalidate = 3600;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const service = await getServiceBySlug(SLUG);
   if (!service) return {};
   return buildMetadata({
     title: service.metaTitle,
     description: service.metaDescription,
     path: `/${service.slug}`,
-    keywords: getServiceKeywords(service.slug),
+    keywords: [service.primaryKeyword, ...service.secondaryKeywords],
   });
 }
 
-export default function Page() {
-  const service = getService(SLUG);
+export default async function Page() {
+  const service = await getServiceBySlug(SLUG);
   if (!service) notFound();
   return <ServiceDetailTemplate service={service} />;
 }

@@ -4,6 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogList from "@/components/BlogList";
 import CTABand from "@/components/CTABand";
 import { buildMetadata } from "@/lib/seo";
+import { getAllPosts } from "@/lib/cms/blog";
 
 export const revalidate = 3600;
 
@@ -14,7 +15,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/blog",
 });
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = await getAllPosts();
   return (
     <>
       <Breadcrumbs crumbs={[{ name: "Blog", path: "/blog" }]} />
@@ -34,7 +36,7 @@ export default function BlogPage() {
 
       <section className="bg-[var(--surface)]">
         <Container className="py-16">
-          <BlogList />
+          <BlogList posts={posts} />
         </Container>
       </section>
 

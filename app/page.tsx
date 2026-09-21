@@ -14,18 +14,12 @@ import Reveal from "@/components/Reveal";
 import Icon, { type IconName } from "@/components/Icon";
 import { Button } from "@/components/Button";
 import { buildMetadata } from "@/lib/seo";
-import { featuredServices } from "@/content/services";
-import { projects } from "@/content/projects";
-import {
-  stats,
-  whatDrivesUs,
-  whatMakesUsBetter,
-  groupCredibility,
-  qcddBand,
-  homeFeatureBlocks,
-} from "@/content/company";
-import { testimonials } from "@/content/testimonials";
-import { clients } from "@/content/clients";
+import { getFeaturedServices } from "@/lib/cms/services";
+import { getAllProjects } from "@/lib/cms/projects";
+import { getHome } from "@/lib/cms/home";
+import { getTestimonials, getClients } from "@/lib/cms/misc";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Adam Technical Services | Fire Protection & MEP in Qatar",
@@ -50,12 +44,21 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function HomePage() {
-  const showcaseProjects = projects.slice(0, 3);
+export default async function HomePage() {
+  const [home, featuredServices, allProjects, testimonials, clients] = await Promise.all([
+    getHome(),
+    getFeaturedServices(),
+    getAllProjects(),
+    getTestimonials(),
+    getClients(),
+  ]);
+  const { stats, whatDrivesUs, whatMakesUsBetter, groupCredibility, qcddBand, homeFeatureBlocks } =
+    home;
+  const showcaseProjects = allProjects.slice(0, 3);
 
   return (
     <>
-      <Hero />
+      <Hero hero={home.hero} />
 
       {/* Stat band — gold-tinted 6-column credentials grid */}
       <section

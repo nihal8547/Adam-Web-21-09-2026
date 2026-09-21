@@ -3,20 +3,22 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { projects, sectors } from "@/content/projects";
-import { services } from "@/content/services";
+import { sectors, type Project } from "@/content/projects";
 import { cn } from "@/lib/cn";
 
 /**
  * Filterable projects grid — filter by sector and by service. Client component
- * (interactive filters). All projects render server-side first (SEO-friendly);
+ * (interactive filters). Projects are passed from the server (CMS or content);
  * filtering only hides/shows client-side.
  */
-export default function ProjectsGrid() {
+export default function ProjectsGrid({ projects }: { projects: Project[] }) {
   const [sector, setSector] = useState<string>("All");
   const [service, setService] = useState<string>("All");
 
-  const serviceOptions = useMemo(() => ["All", ...services.map((s) => s.name)], []);
+  const serviceOptions = useMemo(
+    () => ["All", ...Array.from(new Set(projects.map((p) => p.service).filter(Boolean)))],
+    [projects],
+  );
 
   const filtered = projects.filter(
     (p) =>

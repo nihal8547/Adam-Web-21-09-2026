@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Container from "@/components/Container";
-import { hero } from "@/content/company";
+import { hero as fallbackHero } from "@/content/company";
+
+type HeroData = {
+  h1: string;
+  sub: string;
+  media: { video: string; poster: string; posterAlt: string };
+};
 
 /**
  * Home hero — NAFFCO-style full-bleed background (video or photo) with minimal
@@ -10,7 +16,7 @@ import { hero } from "@/content/company";
  * SEO: the <h1> is real text over the media (not baked into an image) and keeps
  * the primary keyword. Set hero.media.video to switch the background to video.
  */
-export default function Hero() {
+export default function Hero({ hero = fallbackHero }: { hero?: HeroData }) {
   const { media } = hero;
   return (
     <section className="relative isolate flex h-screen min-h-[600px] items-end overflow-hidden text-white">

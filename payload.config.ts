@@ -19,6 +19,11 @@ import { Clients } from "@/cms/collections/Clients";
 import { SiteSettings } from "@/cms/globals/SiteSettings";
 import { HomePage } from "@/cms/globals/HomePage";
 import { AboutPage, QcddPage, ContactPage } from "@/cms/globals/ContentPages";
+import {
+  revalidateAfterChange,
+  revalidateAfterDelete,
+  revalidateGlobalAfterChange,
+} from "@/cms/hooks/revalidate";
 
 // SEO defaults: title/description are auto-filled from the content so every
 // entry ships with SEO metadata out of the box (editable in the SEO section).
@@ -39,6 +44,25 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
  * collections (Categories, Services, Projects, Vacancies, Blog) and the SEO
  * plugin are added in later phases.
  */
+// Inject a site-revalidation hook into every content collection/global so
+// edits publish to the live site immediately (Users/Media excluded).
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const withRevalidate = (c: any) => ({
+  ...c,
+  hooks: {
+    ...(c.hooks ?? {}),
+    afterChange: [...(c.hooks?.afterChange ?? []), revalidateAfterChange],
+    afterDelete: [...(c.hooks?.afterDelete ?? []), revalidateAfterDelete],
+  },
+});
+const withRevalidateGlobal = (g: any) => ({
+  ...g,
+  hooks: {
+    ...(g.hooks ?? {}),
+    afterChange: [...(g.hooks?.afterChange ?? []), revalidateGlobalAfterChange],
+  },
+});
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -49,15 +73,11 @@ export default buildConfig({
   collections: [
     Users,
     Media,
-    Categories,
-    Services,
-    Projects,
-    Vacancies,
-    Posts,
-    Testimonials,
-    Clients,
+    ...[Categories, Services, Projects, Vacancies, Posts, Testimonials, Clients].map(
+      withRevalidate,
+    ),
   ],
-  globals: [SiteSettings, HomePage, AboutPage, QcddPage, ContactPage],
+  globals: [SiteSettings, HomePage, AboutPage, QcddPage, ContactPage].map(withRevalidateGlobal),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({

@@ -9,8 +9,10 @@ import Reveal from "@/components/Reveal";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { servicesItemListSchema } from "@/lib/jsonld";
-import { services } from "@/content/services";
+import { getAllServices } from "@/lib/cms/services";
 import { servicesProcess } from "@/content/company";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Services | Fire Protection, HVAC & MEP in Qatar",
@@ -30,7 +32,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getAllServices();
   return (
     <>
       <JsonLd data={servicesItemListSchema()} />

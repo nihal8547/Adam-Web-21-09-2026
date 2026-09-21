@@ -8,7 +8,9 @@ import Reveal from "@/components/Reveal";
 import Icon from "@/components/Icon";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/content/site";
-import { internationalWorking } from "@/content/company";
+import { getContactPage } from "@/lib/cms/pages";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact Us | Adam Technical Services Qatar",
@@ -17,7 +19,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/contact-us",
 });
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const internationalWorking = await getContactPage();
   return (
     <>
       <Breadcrumbs crumbs={[{ name: "Contact Us", path: "/contact-us" }]} />

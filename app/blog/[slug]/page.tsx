@@ -9,12 +9,13 @@ import Icon from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { articleSchema } from "@/lib/jsonld";
-import { getBlogPost, blogPosts, blogSlugs } from "@/content/blog";
+import { getPostBySlug, getAllPosts, getPostSlugs } from "@/lib/cms/blog";
 
 export const revalidate = 3600;
 
-export function generateStaticParams() {
-  return blogSlugs.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -23,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return {};
   return buildMetadata({
     title: post.metaTitle,
@@ -51,10 +52,11 @@ function anchor(s: string): string {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const allPosts = await getAllPosts();
+  const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
   const dateStr = new Date(post.datePublished).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",

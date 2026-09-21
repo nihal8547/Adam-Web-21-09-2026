@@ -4,8 +4,9 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import CTABand from "@/components/CTABand";
 import { buildMetadata } from "@/lib/seo";
+import { getAllProjects } from "@/lib/cms/projects";
 
-// ISR — regenerate the portfolio periodically (ready for a CMS swap).
+// ISR — regenerate the portfolio periodically; reads from the CMS.
 export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
@@ -15,7 +16,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/projects",
 });
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getAllProjects();
   return (
     <>
       <Breadcrumbs crumbs={[{ name: "Projects", path: "/projects" }]} />
@@ -35,7 +37,7 @@ export default function ProjectsPage() {
 
       <section className="bg-[var(--surface)]">
         <Container className="py-16">
-          <ProjectsGrid />
+          <ProjectsGrid projects={projects} />
         </Container>
       </section>
 

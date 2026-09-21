@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { blogPosts, blogCategories } from "@/content/blog";
+import { type BlogPost } from "@/content/blog";
 import { cn } from "@/lib/cn";
 
-/** Blog card grid with a category filter (client). */
-export default function BlogList() {
+/** Blog card grid with a category filter (client). Posts passed from server. */
+export default function BlogList({ posts }: { posts: BlogPost[] }) {
   const [category, setCategory] = useState<string>("All");
-  const filtered =
-    category === "All" ? blogPosts : blogPosts.filter((p) => p.category === category);
+  const blogCategories = useMemo(() => Array.from(new Set(posts.map((p) => p.category))), [posts]);
+  const filtered = category === "All" ? posts : posts.filter((p) => p.category === category);
 
   return (
     <div>

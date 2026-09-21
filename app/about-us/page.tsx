@@ -10,7 +10,10 @@ import Icon from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { faqSchema } from "@/lib/jsonld";
-import { about, whyChooseUs, stats, qcddBand } from "@/content/company";
+import { stats, qcddBand } from "@/content/company";
+import { getAboutPage } from "@/lib/cms/pages";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "About Us | Adam Technical Services Qatar",
@@ -19,7 +22,9 @@ export const metadata: Metadata = buildMetadata({
   path: "/about-us",
 });
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const about = await getAboutPage();
+  const whyChooseUs = about.whyChooseUs;
   return (
     <>
       <JsonLd data={faqSchema(whyChooseUs)} />

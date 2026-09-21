@@ -7,12 +7,13 @@ import Icon from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { jobPostingSchema } from "@/lib/jsonld";
-import { getRole, roleSlugs } from "@/content/careers";
+import { getRoleBySlug, getRoleSlugs } from "@/lib/cms/careers";
 
 export const revalidate = 3600;
 
-export function generateStaticParams() {
-  return roleSlugs.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getRoleSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -21,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const role = getRole(slug);
+  const role = await getRoleBySlug(slug);
   if (!role) return {};
   return buildMetadata({
     title: `${role.title} | Careers`.slice(0, 60),
@@ -32,7 +33,7 @@ export async function generateMetadata({
 
 export default async function RolePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const role = getRole(slug);
+  const role = await getRoleBySlug(slug);
   if (!role) notFound();
 
   return (

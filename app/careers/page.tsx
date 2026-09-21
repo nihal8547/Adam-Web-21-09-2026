@@ -7,7 +7,8 @@ import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import Icon from "@/components/Icon";
 import { buildMetadata } from "@/lib/seo";
-import { culture, roles } from "@/content/careers";
+import { culture } from "@/content/careers";
+import { getAllRoles } from "@/lib/cms/careers";
 
 export const revalidate = 3600;
 
@@ -18,7 +19,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/careers",
 });
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const roles = await getAllRoles();
   return (
     <>
       <Breadcrumbs crumbs={[{ name: "Careers", path: "/careers" }]} />

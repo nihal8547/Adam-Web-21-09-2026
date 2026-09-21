@@ -8,13 +8,14 @@ import CTABand from "@/components/CTABand";
 import Icon from "@/components/Icon";
 import { Button } from "@/components/Button";
 import { buildMetadata } from "@/lib/seo";
-import { getProject, projects, projectSlugs } from "@/content/projects";
+import { getProjectBySlug, getAllProjects, getProjectSlugs } from "@/lib/cms/projects";
 import { getService } from "@/content/services";
 
 export const revalidate = 3600;
 
-export function generateStaticParams() {
-  return projectSlugs.map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -23,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) return {};
   return buildMetadata({
     title: `${project.title} | Projects`.slice(0, 60),
@@ -35,14 +36,15 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) notFound();
 
   const used = project.servicesUsed
     .map((s) => getService(s))
     .filter((s): s is NonNullable<ReturnType<typeof getService>> => Boolean(s));
 
-  const more = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const allProjects = await getAllProjects();
+  const more = allProjects.filter((p) => p.slug !== project.slug).slice(0, 3);
 
   return (
     <>

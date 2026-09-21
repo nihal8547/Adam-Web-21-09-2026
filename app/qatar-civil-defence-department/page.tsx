@@ -11,7 +11,9 @@ import Icon from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { faqSchema, serviceSchema } from "@/lib/jsonld";
-import { qcddPage } from "@/content/company";
+import { getQcddPage } from "@/lib/cms/pages";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "QCDD License Renewal in Qatar | Adam",
@@ -21,7 +23,8 @@ export const metadata: Metadata = buildMetadata({
   keywords: ["QCDD license renewal Qatar"],
 });
 
-export default function QcddPage() {
+export default async function QcddPage() {
+  const qcddPage = await getQcddPage();
   return (
     <>
       <JsonLd
