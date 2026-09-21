@@ -23,7 +23,7 @@ export const hero = {
    */
   media: {
     video: "", // e.g. "/videos/hero.mp4"
-    poster: "/images/hero-engineering.svg",
+    poster: "/images/hero-bg.jpg",
     posterAlt: "Adam Technical Services fire protection and MEP engineers on site in Doha, Qatar",
   },
   /** Gold quick-access bar riding the bottom of the hero (NAFFCO motif). */
@@ -34,11 +34,22 @@ export const hero = {
   ],
 };
 
-/** Stat band — figures taken directly from the brief (§4 Home ³). */
-export const stats = [
+export interface StatItem {
+  value?: number;
+  text?: string;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+}
+
+/** Stat band — 6 key metrics & credentials. */
+export const stats: StatItem[] = [
   { value: 1, prefix: "#", suffix: "", label: "Qatar firm for safety" },
-  { value: 100, prefix: "", suffix: "+", label: "Employees" },
+  { text: "QCDD", label: "Civil Defence approved" },
+  { text: "24/7", label: "Emergency response" },
   { value: 1000, prefix: "", suffix: "+", label: "Successful projects" },
+  { value: 100, prefix: "", suffix: "+", label: "Qualified employees" },
+  { text: "100%", label: "NFPA compliant" },
 ];
 
 export const whatDrivesUs = {

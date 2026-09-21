@@ -1,8 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import Container from "@/components/Container";
 import { Button } from "@/components/Button";
-import Icon, { type IconName } from "@/components/Icon";
 import { hero } from "@/content/company";
 
 /**
@@ -16,9 +14,9 @@ import { hero } from "@/content/company";
 export default function Hero() {
   const { media } = hero;
   return (
-    <section className="relative isolate flex min-h-[560px] items-end overflow-hidden text-white md:min-h-[620px]">
+    <section className="relative isolate flex h-screen min-h-[600px] items-end overflow-hidden text-white">
       {/* Background media (video if provided, else poster image) */}
-      <div aria-hidden className="absolute inset-0 -z-20 bg-[var(--color-ink-900)]">
+      <div aria-hidden className="absolute inset-0 -z-20 bg-white">
         {media.video ? (
           <video
             className="h-full w-full object-cover"
@@ -42,13 +40,13 @@ export default function Hero() {
         )}
       </div>
 
-      {/* Light legibility scrim — fades in near the bottom only */}
+      {/* Dark legibility scrim — for white text readability */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(180deg, rgba(15,14,12,0.10) 0%, rgba(15,14,12,0) 26%, rgba(15,14,12,0) 50%, rgba(15,14,12,0.62) 88%, rgba(15,14,12,0.80) 100%)",
+            "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.72) 85%, rgba(0,0,0,0.85) 100%)",
         }}
       />
 
@@ -59,52 +57,35 @@ export default function Hero() {
       />
 
       {/* Minimal overlaid content, bottom-left */}
-      <Container className="relative z-10 w-full pb-28 md:pb-32">
-        <span className="eyebrow gold-rule !text-[var(--color-brand-300)] [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
+      <Container className="relative z-10 w-full pb-16 md:pb-20 lg:pb-24">
+        <span className="hero-fade-1 eyebrow gold-rule !text-[var(--color-brand-300)] text-sm md:text-base [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
           {hero.eyebrow}
         </span>
-        <h1 className="mt-4 max-w-[15ch] text-[length:var(--text-4xl)] text-white [text-shadow:0_2px_20px_rgba(0,0,0,0.45)]">
+        <h1
+          className="hero-fade-2 mt-3 max-w-[18ch] text-2xl md:text-3xl font-bold !text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]"
+          style={{ color: "#ffffff" }}
+        >
           {hero.h1}
         </h1>
-        <p className="mt-4 max-w-[40ch] text-[length:var(--text-lg)] font-semibold text-white/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+        <p
+          className="hero-fade-3 mt-3 max-w-[45ch] text-sm md:text-base font-semibold !text-white/90 [text-shadow:0_1px_8px_rgba(0,0,0,0.4)]"
+          style={{ color: "rgba(255, 255, 255, 0.9)" }}
+        >
           {hero.sub}
         </p>
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="hero-fade-4 mt-5 flex flex-wrap gap-3">
           <Button href={hero.primaryCta.href} size="lg">
             {hero.primaryCta.label} →
           </Button>
           <Button
             href={hero.secondaryCta.href}
             size="lg"
-            className="border border-white/70 text-white hover:bg-white hover:text-[var(--color-ink-900)]"
+            className="border border-white text-white hover:bg-white hover:text-[var(--color-ink-900)]"
           >
             {hero.secondaryCta.label}
           </Button>
         </div>
       </Container>
-
-      {/* Gold quick-access bar */}
-      <div className="absolute inset-x-0 bottom-0 z-10 bg-[var(--color-brand-500)]">
-        <Container className="grid grid-cols-1 sm:grid-cols-3">
-          {hero.quickAccess.map((q, i) => (
-            <Link
-              key={q.label}
-              href={q.href}
-              className={`flex items-center gap-3 px-1 py-4 text-[var(--color-ink-900)] transition-colors hover:bg-[var(--color-brand-600)] sm:px-4 ${
-                i < hero.quickAccess.length - 1 ? "sm:border-r sm:border-[rgba(18,18,18,0.12)]" : ""
-              }`}
-            >
-              <Icon name={q.icon as IconName} size={22} className="shrink-0" />
-              <span className="font-[var(--font-display)] text-[0.95rem] font-bold leading-tight">
-                {q.label}
-                <span className="block font-[var(--font-inter)] text-[0.72rem] font-medium text-[rgba(18,18,18,0.7)]">
-                  {q.sub}
-                </span>
-              </span>
-            </Link>
-          ))}
-        </Container>
-      </div>
     </section>
   );
 }

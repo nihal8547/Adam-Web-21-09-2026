@@ -67,11 +67,18 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Stats — gold-tinted band */}
+      {/* Stats — gold-tinted 6-column credentials grid */}
       <section className="border-y border-[var(--color-brand-100)] bg-[linear-gradient(180deg,var(--color-brand-50),var(--color-brand-100))]">
-        <Container className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-3">
-          {stats.map((s) => (
-            <StatCounter key={s.label} {...s} />
+        <Container className="grid grid-cols-2 gap-y-8 gap-x-4 py-12 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`flex flex-col justify-center ${
+                i < stats.length - 1 ? "lg:border-r lg:border-[var(--color-brand-300)]/35" : ""
+              }`}
+            >
+              <StatCounter {...s} />
+            </div>
           ))}
         </Container>
       </section>

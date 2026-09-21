@@ -1,19 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Icon from "@/components/Icon";
 import type { Testimonial } from "@/content/testimonials";
 import { cn } from "@/lib/cn";
 
+const INTERVAL = 6000;
+
 /**
- * Testimonials slider. Auto-advances no faster than 6s (brief), pauses on hover
- * and when the tab is hidden, respects prefers-reduced-motion, and exposes
- * prev/next + dot controls. Gracefully handles a single testimonial.
+ * Auto-advancing testimonial carousel — no dots, no prev/next buttons.
+ * Fades between slides every 6s, pauses on hover, respects prefers-reduced-motion.
+ * A thin gold progress bar beneath each card shows time remaining.
  */
 export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
   const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
   const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
   const count = items.length;
+  const startRef = useRef<number>(Date.now());
+  const rafRef = useRef<number | null>(null);
+
+  // Animate gold progress bar via requestAnimationFrame
+  const animateProgress = () => {
+    const elapsed = Date.now() - startRef.current;
+    const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+    setProgress(pct);
+    if (pct < 100) {
+      rafRef.current = requestAnimationFrame(animateProgress);
+    }
+  };
 
   useEffect(() => {
     if (count <= 1 || paused) return;
@@ -21,9 +37,28 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % count), 6000);
-    return () => clearInterval(id);
-  }, [count, paused]);
+
+    startRef.current = Date.now();
+    setProgress(0);
+    rafRef.current = requestAnimationFrame(animateProgress);
+
+    const id = setInterval(() => {
+      // Fade out → swap → fade in
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % count);
+        startRef.current = Date.now();
+        setProgress(0);
+        setVisible(true);
+      }, 400);
+    }, INTERVAL);
+
+    return () => {
+      clearInterval(id);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count, paused, index]);
 
   const active = items[index];
   if (!active) return null;
@@ -34,9 +69,16 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
-      aria-label="Client testimonials"
+      aria-label="Client testimonials — auto-advancing"
     >
-      <figure className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-card)] sm:p-10">
+      <figure
+        className={cn(
+          "rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-card)] sm:p-10 transition-opacity duration-[400ms]",
+          visible ? "opacity-100" : "opacity-0",
+        )}
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <span className="text-[var(--accent)]">
           <Icon name="quote" size={40} />
         </span>
@@ -47,7 +89,7 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
         </div>
         <blockquote className="mt-4">
           <p className="text-[length:var(--text-xl)] font-medium leading-relaxed text-[var(--heading)]">
-            “{active.quote}”
+            &ldquo;{active.quote}&rdquo;
           </p>
         </blockquote>
         <figcaption className="mt-6">
@@ -58,43 +100,20 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
             {active.role} · {active.title}
           </span>
         </figcaption>
-      </figure>
 
-      {count > 1 ? (
-        <div className="mt-6 flex items-center justify-center gap-4">
-          <button
-            type="button"
-            aria-label="Previous testimonial"
-            onClick={() => setIndex((i) => (i - 1 + count) % count)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--heading)] transition-colors hover:border-[var(--accent)]"
+        {/* Gold progress bar — no dots, no buttons */}
+        {count > 1 && (
+          <div
+            className="mt-6 h-0.5 w-full overflow-hidden rounded-full bg-[var(--border)]"
+            aria-hidden
           >
-            <Icon name="arrow-right" size={18} className="rotate-180" />
-          </button>
-          <div className="flex gap-2" role="tablist">
-            {items.map((t, i) => (
-              <button
-                key={t.author + i}
-                role="tab"
-                aria-selected={i === index}
-                aria-label={`Go to testimonial ${i + 1}`}
-                onClick={() => setIndex(i)}
-                className={cn(
-                  "h-2.5 w-2.5 rounded-full transition-colors",
-                  i === index ? "bg-[var(--color-brand-500)]" : "bg-[var(--border)]",
-                )}
-              />
-            ))}
+            <div
+              className="h-full bg-[var(--color-brand-500)]"
+              style={{ width: `${progress}%` }}
+            />
           </div>
-          <button
-            type="button"
-            aria-label="Next testimonial"
-            onClick={() => setIndex((i) => (i + 1) % count)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--heading)] transition-colors hover:border-[var(--accent)]"
-          >
-            <Icon name="arrow-right" size={18} />
-          </button>
-        </div>
-      ) : null}
+        )}
+      </figure>
     </div>
   );
 }

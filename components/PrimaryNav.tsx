@@ -14,7 +14,7 @@ import { cn } from "@/lib/cn";
  * drawer. Client component (interactive menu + focus management) — the only
  * interactive nav per the brief.
  */
-export default function PrimaryNav() {
+export default function PrimaryNav({ isTransparent = false }: { isTransparent?: boolean }) {
   const pathname = usePathname();
   const [megaOpen, setMegaOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -65,18 +65,25 @@ export default function PrimaryNav() {
                     aria-expanded={megaOpen}
                     aria-haspopup="true"
                     onClick={() => setMegaOpen((v) => !v)}
+                    style={isTransparent ? { color: "#ffffff" } : undefined}
                     className={cn(
                       "flex items-center gap-1 rounded-[var(--radius-sm)] px-3 py-2 text-[0.95rem] font-medium transition-colors",
-                      isActive(item.href)
-                        ? "text-[var(--accent-strong)]"
-                        : "text-[var(--subheading)] hover:text-[var(--accent-strong)]",
+                      isTransparent
+                        ? "!text-white hover:text-[var(--color-brand-300)]"
+                        : isActive(item.href)
+                          ? "text-[var(--accent-strong)]"
+                          : "text-[var(--subheading)] hover:text-[var(--accent-strong)]",
                     )}
                   >
                     {item.label}
                     <Icon
                       name="chevron-down"
                       size={16}
-                      className={cn("transition-transform", megaOpen && "rotate-180")}
+                      className={cn(
+                        "transition-transform",
+                        megaOpen && "rotate-180",
+                        isTransparent ? "!text-white" : "text-current"
+                      )}
                     />
                   </button>
                   {megaOpen ? (
@@ -120,11 +127,14 @@ export default function PrimaryNav() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
+                  style={isTransparent ? { color: "#ffffff" } : undefined}
                   className={cn(
                     "rounded-[var(--radius-sm)] px-3 py-2 text-[0.95rem] font-medium transition-colors",
-                    isActive(item.href)
-                      ? "text-[var(--accent-strong)]"
-                      : "text-[var(--subheading)] hover:text-[var(--accent-strong)]",
+                    isTransparent
+                      ? "!text-white hover:text-[var(--color-brand-300)]"
+                      : isActive(item.href)
+                        ? "text-[var(--accent-strong)]"
+                        : "text-[var(--subheading)] hover:text-[var(--accent-strong)]",
                   )}
                 >
                   {item.label}
@@ -145,7 +155,10 @@ export default function PrimaryNav() {
       {/* Mobile toggle */}
       <button
         type="button"
-        className="inline-flex items-center justify-center rounded-[var(--radius-sm)] p-2 text-[var(--heading)] lg:hidden"
+        className={cn(
+          "inline-flex items-center justify-center rounded-[var(--radius-sm)] p-2 lg:hidden transition-colors",
+          isTransparent ? "text-white" : "text-[var(--heading)]",
+        )}
         aria-label={mobileOpen ? "Close menu" : "Open menu"}
         aria-expanded={mobileOpen}
         onClick={() => setMobileOpen((v) => !v)}

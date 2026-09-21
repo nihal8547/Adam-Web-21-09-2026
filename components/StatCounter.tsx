@@ -8,12 +8,14 @@ import { useEffect, useRef, useState } from "react";
  */
 export default function StatCounter({
   value,
+  text,
   prefix = "",
   suffix = "",
   label,
   durationMs = 1600,
 }: {
-  value: number;
+  value?: number;
+  text?: string;
   prefix?: string;
   suffix?: string;
   label: string;
@@ -24,6 +26,7 @@ export default function StatCounter({
   const started = useRef(false);
 
   useEffect(() => {
+    if (value === undefined) return;
     const el = ref.current;
     if (!el) return;
 
@@ -62,13 +65,13 @@ export default function StatCounter({
   }, [value, durationMs]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="font-[var(--font-display)] text-[length:var(--text-4xl)] font-bold leading-none text-[var(--color-brand-700)]">
-        {prefix}
-        {display.toLocaleString("en-US")}
-        {suffix}
+    <div ref={ref} className="text-center px-2">
+      <div className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-[2.35rem] xl:text-[2.6rem] font-bold leading-none text-[var(--color-brand-700)]">
+        {text ? text : `${prefix}${display.toLocaleString("en-US")}${suffix}`}
       </div>
-      <div className="mt-2 text-[0.95rem] font-semibold text-[var(--subheading)]">{label}</div>
+      <div className="mt-2 text-[0.8rem] sm:text-[0.875rem] font-semibold text-[var(--subheading)] leading-snug">
+        {label}
+      </div>
     </div>
   );
 }

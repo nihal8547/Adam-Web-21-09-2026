@@ -76,74 +76,44 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --surface: #0d0d0d;
-    --surface-alt: #141414;
-    --surface-wash: #1a160c;
-    --surface-invert: #000000;
-    --border: #2c2c2c;
-    --heading: #f5f5f0;
-    --subheading: #d8d8d2;
-    --body: #b3b3ad;
-    --accent: var(--color-brand-300);
-    --accent-strong: var(--color-brand-300);
-    --on-invert: #f5f5f0;
-    --on-invert-accent: var(--color-brand-300);
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme="dark"] {
-  --surface: #0d0d0d;
-  --surface-alt: #141414;
-  --surface-wash: #1a160c;
-  --surface-invert: #000000;
-  --border: #2c2c2c;
-  --heading: #f5f5f0;
-  --subheading: #d8d8d2;
-  --body: #b3b3ad;
-  --accent: var(--color-brand-300);
-  --accent-strong: var(--color-brand-300);
-  --on-invert: #f5f5f0;
-  --on-invert-accent: var(--color-brand-300);
-  color-scheme: dark;
-}
+/* Dark mode overrides have been removed to enforce a global light theme (white background) */
 
 /* ------------------------------------------------------------------
    Base
    ------------------------------------------------------------------ */
-* {
-  border-color: var(--border);
-}
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  background-color: var(--surface);
-  color: var(--body);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  body {
+    background-color: var(--surface);
+    color: var(--body);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  color: var(--heading);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  font-weight: 700;
-  text-wrap: balance;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--heading);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-weight: 700;
+    text-wrap: balance;
+  }
 }
 
 a {
@@ -255,4 +225,43 @@ a {
 }
 .skip-link:focus {
   left: 0;
+}
+
+/* Hero text fade-up entrance transition */
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-1 {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.hero-fade-2 {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.hero-fade-3 {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+.hero-fade-4 {
+  animation: heroFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade-1,
+  .hero-fade-2,
+  .hero-fade-3,
+  .hero-fade-4 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

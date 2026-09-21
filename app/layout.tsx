@@ -50,6 +50,8 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+import WhatsAppWidget from "@/components/WhatsAppWidget";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={`${sora.variable} ${inter.variable}`}>
@@ -61,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <WhatsAppWidget />
       </body>
     </html>
   );

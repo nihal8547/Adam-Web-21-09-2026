@@ -87,7 +87,6 @@ export const primaryNav = [
   { label: "QCDD Renewal", href: "/qatar-civil-defence-department" },
   { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
-  { label: "Contact", href: "/contact-us" },
 ] as const;
 
 export const trustBadges = [
