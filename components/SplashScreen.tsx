@@ -3,72 +3,49 @@
 import { useEffect, useState } from "react";
 
 /**
- * Welcome splash shown when the site first opens: a full white screen with
- * "Welcome" (Nunito) and the greeting in Arabic, Hindi and Malayalam, which
- * then fades away to reveal the site. Shown once per browser session so it
- * doesn't repeat on every navigation. Purely decorative (aria-hidden), and it
- * collapses instantly for visitors who prefer reduced motion.
+ * Welcome splash shown every time the site opens (and on refresh): a full
+ * white screen that shows the greeting one word at a time in the centre —
+ * "Welcome" (Nunito), then Arabic, Hindi and Malayalam — each fading in and
+ * being replaced by the next, before the whole splash fades away to reveal the
+ * site. Purely decorative (aria-hidden).
  */
-const GREETINGS = [
-  { label: "أهلاً وسهلاً", lang: "ar", dir: "rtl" as const },
-  { label: "स्वागत है", lang: "hi", dir: "ltr" as const },
-  { label: "സ്വാഗതം", lang: "ml", dir: "ltr" as const },
+const WORDS = [
+  { t: "Welcome", lang: "en", dir: "ltr" as const },
+  { t: "أهلاً وسهلاً", lang: "ar", dir: "rtl" as const },
+  { t: "स्वागत है", lang: "hi", dir: "ltr" as const },
+  { t: "സ്വാഗതം", lang: "ml", dir: "ltr" as const },
 ];
 
-const HOLD_MS = 2200; // greetings visible before the fade-out starts
-const FADE_MS = 600; // fade-out duration
+const STEP_MS = 650; // time each word is on screen
+const FADE_MS = 500; // final fade-out of the whole splash
 
 export default function SplashScreen() {
+  const [index, setIndex] = useState(0);
   const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem("adam_splash_seen") === "1";
-    } catch {
-      /* sessionStorage unavailable (private mode) — just show it */
+    if (index < WORDS.length - 1) {
+      const next = setTimeout(() => setIndex((i) => i + 1), STEP_MS);
+      return () => clearTimeout(next);
     }
-    if (seen) {
-      setShow(false);
-      return;
-    }
-
-    try {
-      sessionStorage.setItem("adam_splash_seen", "1");
-    } catch {
-      /* ignore */
-    }
-
-    const fadeTimer = setTimeout(() => setLeaving(true), HOLD_MS);
-    const doneTimer = setTimeout(() => setShow(false), HOLD_MS + FADE_MS);
+    // Last word shown → fade the whole splash out, then unmount.
+    const fade = setTimeout(() => setLeaving(true), STEP_MS);
+    const done = setTimeout(() => setShow(false), STEP_MS + FADE_MS);
     return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(doneTimer);
+      clearTimeout(fade);
+      clearTimeout(done);
     };
-  }, []);
+  }, [index]);
 
   if (!show) return null;
 
+  const word = WORDS[index];
   return (
     <div className={`splash${leaving ? " splash--leaving" : ""}`} aria-hidden="true">
-      <div className="splash__inner">
-        <span className="splash__welcome">Welcome</span>
-        <span className="splash__rule" />
-        <div className="splash__greetings">
-          {GREETINGS.map((g, i) => (
-            <span
-              key={g.lang}
-              className="splash__greet"
-              lang={g.lang}
-              dir={g.dir}
-              style={{ animationDelay: `${0.35 + i * 0.25}s` }}
-            >
-              {g.label}
-            </span>
-          ))}
-        </div>
-      </div>
+      <span key={index} className="splash__word" lang={word.lang} dir={word.dir}>
+        {word.t}
+      </span>
     </div>
   );
 }

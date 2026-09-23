@@ -8,7 +8,7 @@ export const site = {
   legalName: "Adam Technical Services",
   shortName: "Adam Technical Services",
   group: "Faisal Bin Ejayan Group And Partners",
-  tagline: "Redefining Technical Excellence in Fire Protection, HVAC & ACMV Systems in Qatar",
+  tagline: "Fire Protection, HVAC & ACMV Excellence in Qatar",
   description:
     "QCDD-certified fire protection and MEP contractor in Doha, Qatar — fire alarm systems, fire fighting pumps, sprinkler systems, underground water leak detection, HVAC, ACMV and electrical services.",
 

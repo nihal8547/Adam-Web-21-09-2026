@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Sora, Inter, Nunito } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,27 +11,13 @@ import { site } from "@/content/site";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 /**
- * Self-hosted via next/font — no render-blocking Google Fonts request.
- * 2 families / 4 weights total to respect the performance budget.
+ * The site uses the standard system font stack everywhere (set in globals.css)
+ * — no render-blocking webfont request. Nunito is loaded only for the welcome
+ * splash screen shown on load.
  */
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-sora",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-// Nunito — used for the welcome splash screen shown on first load.
 const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["700", "800"],
   variable: "--font-nunito",
   display: "swap",
 });
@@ -69,7 +55,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={`${sora.variable} ${inter.variable} ${nunito.variable}`}>
+    <html lang="en" dir="ltr" className={nunito.variable}>
       <body>
         <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
         <SplashScreen />

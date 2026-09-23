@@ -28,10 +28,15 @@
   /* Semantic */
   --color-alert-600: #c0392b; /* emergency / 24-7 badge ONLY */
 
-  /* Fonts (bound to next/font CSS variables in layout) */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
-  --font-arabic: var(--font-plex-arabic), var(--font-inter), sans-serif;
+  /* Fonts — standard system font stack everywhere (fast, native, no webfont
+     download). Nunito (--font-nunito, loaded in layout) is used only for the
+     welcome splash. */
+  --font-standard:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-sans: var(--font-standard);
+  --font-display: var(--font-standard);
+  --font-arabic: ui-sans-serif, system-ui, "Segoe UI", Tahoma, Arial, sans-serif;
 
   /* Radii */
   --radius-sm: 4px;
@@ -89,6 +94,12 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
@@ -267,9 +278,10 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Welcome splash screen (components/SplashScreen.tsx) — shown once per session
-   on first load: full white background, "Welcome" in Nunito plus the greeting
-   in Arabic, Hindi and Malayalam, then fades away to reveal the site.
+   Welcome splash screen (components/SplashScreen.tsx) — shown on every load /
+   refresh: full white background, the greeting cycles one word at a time in
+   the centre (Welcome in Nunito, then Arabic, Hindi, Malayalam), then the
+   whole splash fades away to reveal the site.
 --------------------------------------------------------------------------- */
 .splash {
   position: fixed;
@@ -282,67 +294,28 @@
 }
 
 .splash--leaving {
-  animation: splashFadeOut 0.6s ease forwards;
+  animation: splashFadeOut 0.5s ease forwards;
 }
 
-.splash__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.splash__welcome {
+.splash__word {
   font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
   font-weight: 800;
-  font-size: clamp(2.75rem, 9vw, 5.5rem);
-  line-height: 1;
+  font-size: clamp(2.5rem, 9vw, 5.25rem);
+  line-height: 1.05;
   letter-spacing: -0.02em;
+  text-align: center;
   color: var(--color-ink-900);
-  opacity: 0;
-  animation: splashRise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
+  animation: splashWord 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.splash__rule {
-  width: 0;
-  height: 3px;
-  margin: 20px 0 22px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-brand-500), var(--color-brand-700));
-  animation: splashRule 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-}
-
-.splash__greetings {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px 28px;
-}
-
-.splash__greet {
-  font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.15rem, 4vw, 1.7rem);
-  color: var(--color-brand-600);
-  opacity: 0;
-  animation: splashRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes splashRise {
+@keyframes splashWord {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px) scale(0.98);
   }
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@keyframes splashRule {
-  to {
-    width: 72px;
   }
 }
 
@@ -354,14 +327,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash__welcome,
-  .splash__rule,
-  .splash__greet {
+  .splash__word {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-  .splash__rule {
-    width: 72px !important;
   }
 }

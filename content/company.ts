@@ -1,7 +1,7 @@
 /**
- * Reusable marketing copy blocks (home, about, QCDD). Kept verbatim from the
- * project brief where the brief supplied "source copy". No statistics,
- * certifications or testimonials beyond those in the brief.
+ * Reusable marketing copy blocks (home, about, QCDD). Copy is kept short and
+ * minimal by design; SEO keywords (QCDD, NFPA, Qatar, service names) are
+ * retained. No statistics, certifications or testimonials beyond the brief.
  */
 
 export const hero = {
@@ -12,7 +12,7 @@ export const hero = {
   sub: "Fire · HVAC · ACMV · MEP — engineered to NFPA standards.",
   // Longer descriptive paragraph — moved out of the hero into the About band
   // below so the hero stays minimal and the background stays visible.
-  body: "From hidden underground leaks to complete fire protection systems, we safeguard people and property across Qatar. Our specialists locate leaks in fire-fighting and potable water lines using acoustic sensors and thermal imaging — non-destructive, no-dig, and precise — while our QCDD-certified engineers design, install and maintain the systems that keep your building safe.",
+  body: "QCDD-certified engineers protecting people and property across Qatar — from underground leak detection to complete fire protection systems.",
   primaryCta: { label: "Get Started", href: "/request-for-quotation" },
   secondaryCta: { label: "Call Now", href: "tel:+97441400922" },
   /**
@@ -56,8 +56,8 @@ export const whatDrivesUs = {
   eyebrow: "What Drives Us",
   heading: "Trusted Fire Protection Company in Qatar",
   body: [
-    "Adam Technical Services is a trusted name in fire safety across Qatar. Our QCDD-certified team designs, installs and maintains Fire Alarm Systems, Fire Fighting Pumps and Sprinkler Systems — and pinpoints hidden leaks with our Underground Water Leak Detection service.",
-    "We bring engineering discipline to life safety: correct design, certified equipment and documented maintenance, so every system passes Civil Defence inspection and performs when it matters.",
+    "QCDD-certified specialists in Fire Alarm Systems, Fire Fighting Pumps, Sprinkler Systems and Underground Water Leak Detection.",
+    "Correct design, certified equipment, documented maintenance — every system passes Civil Defence inspection.",
   ],
 };
 
@@ -65,29 +65,29 @@ export const whatDrivesUs = {
 export const whatMakesUsBetter = [
   {
     title: "Expert Team",
-    desc: "A QCDD-certified team of engineers and technicians with deep experience in fire protection, HVAC, ACMV and MEP across Qatar.",
+    desc: "QCDD-certified engineers across fire protection, HVAC, ACMV and MEP in Qatar.",
     icon: "team",
   },
   {
     title: "Comprehensive Coverage",
-    desc: "From fire alarms, pumps and sprinklers to leak detection, HVAC and electrical — a single accountable partner for your whole building.",
+    desc: "Fire alarms, pumps, sprinklers, leak detection, HVAC and electrical — one accountable partner.",
     icon: "grid",
   },
   {
     title: "Reliable Support",
-    desc: "Annual maintenance contracts and 24/7 emergency response keep your systems compliant, dependable and ready.",
+    desc: "Annual maintenance contracts and 24/7 emergency response keep systems compliant.",
     icon: "support",
   },
 ];
 
-/** Group credibility quote (brief §4 Home ⁶ — verbatim). */
+/** Group credibility quote. */
 export const groupCredibility =
-  'Adam Technical Services is a Building Maintenance and Contracting company under the "Faisal Bin Ejayan Group And Partners" in Qatar, one of the group\'s pioneer establishments, officially registered as a Building Maintenance and Contracting firm.';
+  'A Building Maintenance and Contracting company under the "Faisal Bin Ejayan Group And Partners" in Qatar — one of the group\'s pioneer establishments.';
 
 export const qcddBand = {
   eyebrow: "QCDD License Renewal",
   heading: "Qatar Civil Defence License Renewal Made Simple",
-  body: "Keep your building compliant without the paperwork burden. We manage QCDD (Qatar Civil Defence Department) license renewals end to end — inspection, documentation, remediation and submission — so your fire safety certificate stays valid and your operations stay open.",
+  body: "We manage QCDD license renewals end to end — inspection, documentation, remediation and submission — so your fire safety certificate stays valid.",
   cta: { label: "Know More", href: "/qatar-civil-defence-department" },
 };
 
@@ -97,8 +97,8 @@ export const homeFeatureBlocks = [
     eyebrow: "HVAC",
     heading: "Expert HVAC Company in Qatar",
     body: [
-      "We design, install and maintain VRF, chilled-water and FAHU systems that keep buildings cool, healthy and efficient in Qatar's demanding climate.",
-      "With 24/7 maintenance and smart controls, your HVAC performs reliably and economically all year round.",
+      "VRF, chilled-water and FAHU systems designed, installed and maintained for Qatar's climate.",
+      "24/7 maintenance and smart controls for reliable, efficient performance.",
     ],
     bullets: ["VRF & VRV systems", "Chilled water plant", "FAHU & ventilation", "24/7 maintenance"],
     cta: { label: "Explore HVAC", href: "/hvac-services-qatar" },
@@ -109,8 +109,8 @@ export const homeFeatureBlocks = [
     eyebrow: "Leak Detection",
     heading: "Expert Water Leak Detection Services",
     body: [
-      "Our specialists locate hidden leaks in fire-fighting and potable water lines using acoustic sensors and thermal imaging — non-destructive and no-dig.",
-      "We pinpoint the exact leak location so repairs are targeted, protecting your water supply, your fire system's pressure and your property.",
+      "Hidden leaks located in fire-fighting and potable water lines with acoustic sensors and thermal imaging — no-dig, non-destructive.",
+      "Exact leak location for targeted repairs that protect supply, pressure and property.",
     ],
     bullets: [
       "Acoustic sensors",
@@ -132,23 +132,23 @@ export const homeFeatureBlocks = [
 export const about = {
   hero: {
     eyebrow: "Who We Are",
-    heading: "Empowering global innovations through exceptional engineering design.",
-    body: "Adam Technical Services is a QCDD-certified fire protection and MEP contractor based in Doha, Qatar — trusted by developers, facilities teams and industry to keep buildings safe, comfortable and compliant.",
+    heading: "Engineering excellence for a safer Qatar.",
+    body: "A QCDD-certified fire protection and MEP contractor in Doha, Qatar — keeping buildings safe, comfortable and compliant.",
   },
   story: {
     heading: "Our Story",
     body: [
-      "Founded by Qatari and Indian entrepreneurs and serving Doha and the wider country, Adam Technical Services was established to bring engineering rigour and dependable service to fire protection and building services in Qatar.",
-      'As a Building Maintenance and Contracting company under the "Faisal Bin Ejayan Group And Partners", we combine the backing of one of the group\'s pioneer establishments with a specialist focus on life safety and MEP.',
+      "Founded by Qatari and Indian entrepreneurs to bring engineering rigour to fire protection and building services in Qatar.",
+      'A Building Maintenance and Contracting company under the "Faisal Bin Ejayan Group And Partners", focused on life safety and MEP.',
     ],
   },
   mission: {
     heading: "Our Mission",
-    body: "To protect people and property across Qatar with fire protection and building services engineered to the highest standards — designed correctly, installed with certified equipment, and maintained reliably.",
+    body: "Protect people and property across Qatar with fire and building systems designed correctly, installed with certified equipment and maintained reliably.",
   },
   vision: {
     heading: "Our Vision",
-    body: "To be Qatar's most trusted partner for fire protection, HVAC, ACMV and MEP — known for engineering excellence, compliance and 24/7 dependability.",
+    body: "To be Qatar's most trusted partner for fire protection, HVAC, ACMV and MEP.",
   },
 };
 
@@ -156,35 +156,35 @@ export const about = {
 export const whyChooseUs = [
   {
     q: "Are you QCDD certified?",
-    a: "Yes. Adam Technical Services is a QCDD-certified contractor, qualified to design, install and certify fire protection systems to Qatar Civil Defence Department requirements.",
+    a: "Yes — a QCDD-certified contractor qualified to design, install and certify fire protection systems to Qatar Civil Defence requirements.",
   },
   {
     q: "What services do you provide?",
-    a: "Fire protection, fire alarm systems, fire fighting pumps, sprinkler systems, fire stop insulation, underground water leak detection, HVAC, ACMV and electrical services — a complete life-safety and MEP capability.",
+    a: "Fire protection, fire alarms, fire fighting pumps, sprinklers, fire stop insulation, underground water leak detection, HVAC, ACMV and electrical.",
   },
   {
     q: "Do you offer annual maintenance contracts?",
-    a: "Yes. We provide tailored AMCs covering inspection, testing, certification and 24/7 emergency support so your systems stay compliant and dependable.",
+    a: "Yes — AMCs covering inspection, testing, certification and 24/7 emergency support.",
   },
   {
     q: "Which standards do you work to?",
-    a: "We design and install to NFPA standards and QCDD requirements, using UL/FM-listed equipment throughout.",
+    a: "NFPA standards and QCDD requirements, using UL/FM-listed equipment.",
   },
   {
     q: "Do you handle QCDD license renewals?",
-    a: "Yes. We manage Civil Defence license renewals end to end — inspection, documentation, remediation and submission — so your certificate stays valid.",
+    a: "Yes — Civil Defence renewals end to end: inspection, documentation, remediation and submission.",
   },
   {
     q: "What areas do you serve?",
-    a: "We serve Doha and the wider Qatar, working on residential, commercial, industrial and high-rise projects.",
+    a: "Doha and across Qatar — residential, commercial, industrial and high-rise projects.",
   },
   {
     q: "Can you locate hidden water leaks?",
-    a: "Yes. Our specialists use acoustic sensors and thermal imaging to pinpoint leaks in fire-fighting and potable water lines without digging.",
+    a: "Yes — acoustic sensors and thermal imaging pinpoint leaks in fire and potable lines without digging.",
   },
   {
     q: "How quickly can you respond to emergencies?",
-    a: "Clients on active maintenance contracts benefit from our 24/7 emergency response team across Qatar.",
+    a: "Clients on active maintenance contracts get 24/7 emergency response across Qatar.",
   },
 ];
 
@@ -192,11 +192,11 @@ export const whyChooseUs = [
 export const servicesProcess = [
   {
     title: "Consultation",
-    desc: "We assess your site, risk and requirements against QCDD and NFPA standards.",
+    desc: "Site, risk and requirements assessed against QCDD and NFPA standards.",
   },
   {
     title: "Design",
-    desc: "Detailed engineering, calculations and drawings prepared for Civil Defence approval.",
+    desc: "Engineering, calculations and drawings for Civil Defence approval.",
   },
   {
     title: "Installation",
@@ -215,15 +215,15 @@ export const internationalWorking = {
   items: [
     {
       title: "Global delivery strategy",
-      desc: "A structured, engineering-led approach that scales from a single system to a full building programme.",
+      desc: "An engineering-led approach that scales from one system to a full building programme.",
     },
     {
       title: "Diverse time zones",
-      desc: "We coordinate across time zones to keep projects moving and stakeholders aligned.",
+      desc: "Coordinated across time zones to keep projects moving.",
     },
     {
       title: "Efficient project delivery",
-      desc: "Clear scopes, documented milestones and accountable handover — delivered on time.",
+      desc: "Clear scopes, documented milestones, accountable handover — on time.",
     },
   ],
 };
@@ -231,8 +231,8 @@ export const internationalWorking = {
 /** QCDD page content. */
 export const qcddPage = {
   intro: [
-    "The Qatar Civil Defence Department (QCDD) requires buildings to hold a valid fire safety certificate, renewed on schedule. Letting it lapse can halt operations and expose you to liability. Adam Technical Services manages the whole QCDD license renewal process so your building stays compliant and open.",
-    "As a QCDD-certified contractor, we know exactly what Civil Defence expects — from system inspection to documentation and submission — and we handle it for you.",
+    "The Qatar Civil Defence Department (QCDD) requires a valid fire safety certificate, renewed on schedule. We manage the whole QCDD license renewal so your building stays compliant and open.",
+    "As a QCDD-certified contractor, we know exactly what Civil Defence expects — and handle it for you.",
   ],
   checklist: [
     "Current fire safety certificate and building details",
@@ -245,41 +245,41 @@ export const qcddPage = {
   timeline: [
     {
       title: "Assessment",
-      desc: "We review your certificate status, systems and documentation to scope the renewal.",
+      desc: "We review certificate status, systems and documentation to scope the renewal.",
     },
     {
       title: "Inspection & Testing",
-      desc: "We inspect and test fire systems and identify any non-compliances to rectify.",
+      desc: "We inspect and test fire systems and identify non-compliances.",
     },
     {
       title: "Remediation",
-      desc: "We correct defects and bring systems up to current QCDD requirements.",
+      desc: "We correct defects and meet current QCDD requirements.",
     },
     {
       title: "Documentation & Submission",
-      desc: "We compile the required records and submit the renewal to Civil Defence.",
+      desc: "We compile the records and submit the renewal to Civil Defence.",
     },
   ],
   faqs: [
     {
       q: "What is QCDD license renewal?",
-      a: "It is the periodic renewal of your building's fire safety certificate with the Qatar Civil Defence Department, confirming your fire protection systems are compliant and maintained.",
+      a: "Periodic renewal of your building's fire safety certificate with the Qatar Civil Defence Department, confirming systems are compliant and maintained.",
     },
     {
       q: "How often must I renew?",
-      a: "Certificates are issued for a fixed term and must be renewed before they expire; we track this and manage the renewal on your behalf.",
+      a: "Certificates run for a fixed term and must be renewed before they expire; we track this and manage it for you.",
     },
     {
       q: "What happens if my certificate lapses?",
-      a: "An expired certificate can halt operations and create liability. We help you renew on time and rectify any issues that would block approval.",
+      a: "An expired certificate can halt operations and create liability. We renew on time and rectify blocking issues.",
     },
     {
       q: "Can you fix issues found during inspection?",
-      a: "Yes. We remediate defects — from alarm faults to pump or sprinkler issues and fire-stopping — and re-test before submission.",
+      a: "Yes — we remediate alarm, pump, sprinkler and fire-stopping defects, then re-test before submission.",
     },
     {
       q: "Do I need a maintenance contract?",
-      a: "An AMC keeps your systems compliant year-round and makes renewal straightforward, with the test records QCDD requires already in place.",
+      a: "An AMC keeps systems compliant year-round and keeps the test records QCDD requires already in place.",
     },
   ],
 };

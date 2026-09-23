@@ -78,8 +78,8 @@ export const services: Service[] = [
     excerpt:
       "End-to-end fire protection — detection, suppression, pumps and passive systems — designed, installed and maintained to QCDD and NFPA standards.",
     intro: [
-      "Adam Technical Services is a trusted fire protection company in Qatar, delivering complete life-safety systems for residential, commercial and industrial buildings across Doha and the wider country. From the first risk assessment to ongoing annual maintenance, our QCDD-certified team designs and installs fire protection that keeps people, property and operations safe.",
-      "We engineer every system to NFPA standards and Qatar Civil Defence Department (QCDD) requirements, using UL/FM-listed equipment and manufacturer-trained technicians. Whether you need a new build fitted out, an existing system upgraded, or a compliant AMC to keep your Civil Defence certificate current, we are your single accountable partner.",
+      "A trusted fire protection company in Qatar — complete life-safety systems for residential, commercial and industrial buildings across Doha.",
+      "Designed and installed to NFPA standards and QCDD requirements with UL/FM-listed equipment, plus AMC to keep your Civil Defence certificate current.",
     ],
     included: [
       {
@@ -180,8 +180,8 @@ export const services: Service[] = [
     excerpt:
       "Addressable and conventional fire alarm systems — supplied, installed, integrated and maintained to QCDD and NFPA standards.",
     intro: [
-      "A reliable fire alarm system is the first line of defence in any building. Adam Technical Services designs, installs, integrates and maintains addressable and conventional fire alarm systems across Qatar, giving occupants the earliest possible warning and giving you a QCDD-compliant, fully documented installation.",
-      "We work with trusted, UL/FM-listed brands including Honeywell, Simplex and Shield, and integrate detection with voice evacuation, BMS and access control so your life-safety systems act as one. Our QCDD-approved fire alarm maintenance in Qatar and annual maintenance contracts (AMC) keep the system tested, certified and ready.",
+      "Addressable and conventional fire alarm systems designed, installed and maintained across Qatar — the earliest warning, fully QCDD-compliant and documented.",
+      "UL/FM-listed brands (Honeywell, Simplex, Shield), integrated with voice evacuation, BMS and access control, and kept ready with QCDD-approved AMC.",
     ],
     included: [
       {
@@ -278,8 +278,8 @@ export const services: Service[] = [
     excerpt:
       "Diesel, electric and jockey fire pump sets sized to your hydraulic demand and certified to QCDD and NFPA 20.",
     intro: [
-      "The fire pump is the heart of a building's fire protection — it delivers water at the pressure and flow that sprinklers, hydrants and hose reels need to work. Adam Technical Services supplies, installs and maintains complete fire fighting pump sets in Qatar, sized precisely to your hydraulic demand and certified to QCDD and NFPA 20.",
-      "We work with leading pump manufacturers including Grundfos, NAFFCO and Aurora, and deliver turnkey pump rooms — pumps, controllers, pipework, valves and testing — ready for Civil Defence approval.",
+      "Complete fire fighting pump sets supplied, installed and maintained in Qatar — sized to your hydraulic demand and certified to QCDD and NFPA 20.",
+      "Turnkey pump rooms from leading makers (Grundfos, NAFFCO, Aurora) — pumps, controllers, pipework, valves and testing, ready for Civil Defence approval.",
     ],
     included: [
       {
@@ -373,8 +373,8 @@ export const services: Service[] = [
     excerpt:
       "Wet, dry and pre-action automatic sprinkler systems, hydraulically designed to NFPA 13 and approved by QCDD.",
     intro: [
-      "Automatic sprinklers control and suppress fire at its source, protecting life and limiting damage before the fire brigade arrives. Adam Technical Services designs, installs and maintains fire sprinkler systems across Qatar — hydraulically calculated to NFPA 13 and approved by the Qatar Civil Defence Department.",
-      "From wet-pipe systems for occupied buildings to dry-pipe and pre-action systems for car parks, cold stores and sensitive areas, we engineer the right sprinkler solution for your hazard classification.",
+      "Fire sprinkler systems designed, installed and maintained across Qatar — hydraulically calculated to NFPA 13 and approved by the Qatar Civil Defence Department.",
+      "Wet-pipe, dry-pipe and pre-action systems engineered to your hazard classification — occupied buildings, car parks, cold stores and sensitive areas.",
     ],
     included: [
       {
@@ -466,8 +466,8 @@ export const services: Service[] = [
     excerpt:
       "Passive fire protection — fire-stop sealing of penetrations and joints that contains fire and smoke to protect escape routes.",
     intro: [
-      "When fire breaks out, passive fire protection buys the time people need to escape and firefighters need to respond. Adam Technical Services delivers fire stop insulation technologies and services across Qatar — sealing the penetrations, joints and voids that would otherwise let fire and smoke spread between compartments.",
-      "Every fire-rated wall and floor is only as good as the seals around the cables, pipes and ducts that pass through it. We restore that compartmentation with tested, certified fire-stop systems installed to QCDD requirements.",
+      "Fire stop insulation technologies and services across Qatar — sealing the penetrations, joints and voids that let fire and smoke spread between compartments.",
+      "Tested, certified fire-stop systems installed to QCDD requirements, restoring the compartmentation of every fire-rated wall and floor.",
     ],
     included: [
       {
@@ -563,8 +563,8 @@ export const services: Service[] = [
     excerpt:
       "Non-destructive underground leak detection using acoustic sensors and thermal imaging — pinpoint fire-line and potable-water leaks without digging.",
     intro: [
-      "Hidden underground leaks waste water, undermine fire-fighting reliability and quietly damage structures and foundations. Adam Technical Services provides expert underground water leak detection across Qatar, pinpointing leaks in fire-fighting lines and potable water lines without excavation.",
-      "Using acoustic sensors and thermal imaging, our specialists provide precise acoustic leak detection in Qatar, locating the exact position of a leak so it can be repaired precisely — no-dig, non-destructive, and far cheaper than exploratory excavation.",
+      "Expert underground water leak detection across Qatar — pinpointing leaks in fire-fighting and potable water lines without excavation.",
+      "Acoustic sensors and thermal imaging locate the exact leak position for precise acoustic leak detection in Qatar — no-dig, non-destructive and far cheaper than digging.",
     ],
     included: [
       {
@@ -670,8 +670,8 @@ export const services: Service[] = [
     excerpt:
       "VRF, chilled-water, FAHU and ventilation systems — designed, installed and maintained 24/7 for comfort, air quality and energy efficiency.",
     intro: [
-      "In Qatar's climate, HVAC is not a luxury — it is essential infrastructure. Adam Technical Services is an expert HVAC company in Qatar, delivering heating, ventilation and air-conditioning systems that keep buildings comfortable, healthy and energy-efficient all year round.",
-      "We design, install, commission and maintain the full range of systems — VRF, chilled water, fresh-air handling units (FAHU) and ventilation — with 24/7 support to keep them running when it matters most. From complete AC service and maintenance in Qatar to fast AC repair in Doha, we keep your cooling reliable and efficient.",
+      "An expert HVAC company in Qatar — heating, ventilation and air-conditioning that keeps buildings comfortable, healthy and energy-efficient year round.",
+      "VRF, chilled water, FAHU and ventilation designed, installed and maintained, with 24/7 AC service and maintenance in Qatar and fast AC repair in Doha.",
     ],
     included: [
       {
@@ -771,8 +771,8 @@ export const services: Service[] = [
     excerpt:
       "Air Conditioning & Mechanical Ventilation — integrated ACMV design, installation and maintenance for comfort, safety and indoor air quality.",
     intro: [
-      "ACMV — Air Conditioning and Mechanical Ventilation — is the backbone of a comfortable, safe and healthy building. Adam Technical Services is a specialist ACMV system company in Qatar, integrating air conditioning with mechanical ventilation, smoke control and fresh-air systems into one coordinated whole.",
-      "From car-park ventilation and smoke extraction to comfort cooling, we design, install and maintain smoke control and pressurization systems in Qatar and complete ACMV systems that meet Qatar's codes and keep occupants safe and comfortable.",
+      "A specialist ACMV system company in Qatar — air conditioning integrated with mechanical ventilation, smoke control and fresh-air systems as one coordinated whole.",
+      "From car-park ventilation and smoke extraction to comfort cooling, we design, install and maintain smoke control and pressurization systems in Qatar to local codes.",
     ],
     included: [
       {
@@ -863,8 +863,8 @@ export const services: Service[] = [
     excerpt:
       "Power distribution, lighting, containment and controls — safe, code-compliant electrical installations for every building type.",
     intro: [
-      "Reliable, safe electrical infrastructure powers every other system in a building. As part of our MEP capability in Qatar, Adam Technical Services delivers electrical services — power distribution, lighting, containment, controls and testing — for commercial, residential and industrial projects.",
-      "We install to the local wiring regulations and coordinate electrical works with fire protection, HVAC and ACMV so the whole building performs as one integrated system.",
+      "Electrical services as part of our MEP capability in Qatar — power distribution, lighting, containment, controls and testing for commercial, residential and industrial projects.",
+      "Installed to local wiring regulations and coordinated with fire protection, HVAC and ACMV so the whole building performs as one.",
     ],
     included: [
       {
