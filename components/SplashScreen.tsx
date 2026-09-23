@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
  * protection company. Purely decorative (aria-hidden).
  */
 const WORDS = [
-  { t: "Welcome", lang: "en", dir: "ltr" as const },
+  { t: "WELCOME", lang: "en", dir: "ltr" as const },
   { t: "أهلاً وسهلاً", lang: "ar", dir: "rtl" as const },
   { t: "स्वागत है", lang: "hi", dir: "ltr" as const },
   { t: "സ്വാഗതം", lang: "ml", dir: "ltr" as const },
@@ -21,15 +21,16 @@ const SPRAY_MS = 950; // hose rises and sprays
 const WASH_MS = 600; // splash washed away
 
 // Deterministic water droplets (no Math.random → no hydration mismatch).
-const DROPS = Array.from({ length: 26 }, (_, i) => {
-  const angle = (i / 25) * Math.PI; // 0..π fan
-  const x = Math.round(Math.cos(angle) * (55 + (i % 5) * 26));
+// High count, high rise and short duration → a forceful, high-pressure jet.
+const DROPS = Array.from({ length: 46 }, (_, i) => {
+  const angle = (i / 45) * Math.PI; // 0..π fan
+  const x = Math.round(Math.cos(angle) * (70 + (i % 6) * 34));
   return {
     x,
-    rise: 44 + (i % 6) * 8, // vh
-    delay: Number(((i % 10) * 0.06).toFixed(2)),
-    dur: Number((0.7 + (i % 4) * 0.12).toFixed(2)),
-    size: 5 + (i % 3) * 3,
+    rise: 72 + (i % 6) * 12, // vh — shoots high, off the top
+    delay: Number(((i % 14) * 0.035).toFixed(3)), // tight → dense stream
+    dur: Number((0.5 + (i % 4) * 0.09).toFixed(3)), // short → fast/forceful
+    size: 5 + (i % 4) * 3,
   };
 });
 
@@ -79,6 +80,7 @@ export default function SplashScreen() {
 
       {spraying && (
         <div className="splash__scene">
+          <span className="splash__jet" />
           <div className="splash__spray">
             {DROPS.map((d, i) => (
               <span
