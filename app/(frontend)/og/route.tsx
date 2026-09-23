@@ -22,7 +22,7 @@ export function GET(req: Request) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "#121212",
+        background: "#0f1e3d",
         padding: "72px",
         fontFamily: "sans-serif",
       }}
@@ -33,11 +33,11 @@ export function GET(req: Request) {
             width: 64,
             height: 64,
             borderRadius: 14,
-            background: "#D4A017",
+            background: "#c9a24b",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#121212",
+            color: "#0f1e3d",
             fontSize: 40,
             fontWeight: 800,
           }}
@@ -55,7 +55,7 @@ export function GET(req: Request) {
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <div style={{ width: 88, height: 6, background: "#D4A017", borderRadius: 3 }} />
+        <div style={{ width: 88, height: 6, background: "#c9a24b", borderRadius: 3 }} />
         <span
           style={{ color: "#fff", fontSize: 60, fontWeight: 800, lineHeight: 1.1, maxWidth: 980 }}
         >

@@ -262,7 +262,7 @@ export default async function HomePage() {
                     className="absolute inset-0 -z-10"
                     style={{
                       background:
-                        "linear-gradient(0deg, rgba(15,14,12,0.82) 0%, rgba(15,14,12,0.28) 45%, rgba(15,14,12,0.08) 100%)",
+                        "linear-gradient(0deg, rgba(15,30,61,0.82) 0%, rgba(15,30,61,0.28) 45%, rgba(15,30,61,0.08) 100%)",
                     }}
                   />
                   <span className="absolute right-4 top-4 rounded-full bg-white/15 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-wide">
@@ -306,35 +306,35 @@ export default async function HomePage() {
             >
               {[
                 {
-                  src: "https://placehold.co/800x600/121212/d4a017.webp?text=Fire+Alarm",
+                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=Fire+Alarm",
                   alt: "Fire alarm panel installation by Adam Technical Services in Qatar",
                 },
                 {
-                  src: "https://placehold.co/800x900/1a1a1a/d4a017.webp?text=Sprinkler+System",
+                  src: "https://placehold.co/800x900/16294f/c9a24b.webp?text=Sprinkler+System",
                   alt: "Sprinkler system piping installation in a commercial building, Doha",
                 },
                 {
-                  src: "https://placehold.co/800x600/121212/d4a017.webp?text=HVAC+Unit",
+                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=HVAC+Unit",
                   alt: "HVAC rooftop unit installed by Adam Technical Services in Qatar",
                 },
                 {
-                  src: "https://placehold.co/800x700/0d0d0d/d4a017.webp?text=Pump+Room",
+                  src: "https://placehold.co/800x700/0f1e3d/c9a24b.webp?text=Pump+Room",
                   alt: "Fire fighting pump room with QCDD-certified equipment",
                 },
                 {
-                  src: "https://placehold.co/800x600/1a1a1a/d4a017.webp?text=Leak+Detection",
+                  src: "https://placehold.co/800x600/16294f/c9a24b.webp?text=Leak+Detection",
                   alt: "Underground water leak detection service using acoustic sensors in Qatar",
                 },
                 {
-                  src: "https://placehold.co/800x900/121212/d4a017.webp?text=MEP+Works",
+                  src: "https://placehold.co/800x900/0f1e3d/c9a24b.webp?text=MEP+Works",
                   alt: "MEP mechanical electrical plumbing works on a construction site in Doha",
                 },
                 {
-                  src: "https://placehold.co/800x600/0d0d0d/d4a017.webp?text=ACMV+System",
+                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=ACMV+System",
                   alt: "ACMV air conditioning and mechanical ventilation system installed in Qatar",
                 },
                 {
-                  src: "https://placehold.co/800x700/1a1a1a/d4a017.webp?text=Fire+Suppression",
+                  src: "https://placehold.co/800x700/16294f/c9a24b.webp?text=Fire+Suppression",
                   alt: "Fire suppression system installation for industrial facility in Qatar",
                 },
               ].map((item, i) => (
