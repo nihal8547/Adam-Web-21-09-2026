@@ -73,42 +73,52 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
     >
       <figure
         className={cn(
-          "rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-card)] sm:p-10 transition-opacity duration-[400ms]",
+          "relative overflow-hidden rounded-[20px] bg-[var(--color-navy-900)] p-8 text-white shadow-[0_24px_60px_-24px_rgba(15,30,61,0.55)] sm:p-12 transition-opacity duration-[400ms]",
           visible ? "opacity-100" : "opacity-0",
         )}
         aria-live="polite"
         aria-atomic="true"
       >
-        <span className="text-[var(--accent)]">
+        {/* Oversized gold quote mark watermark */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-2 -top-6 font-serif text-[9rem] leading-none text-[var(--color-brand-500)]/15 select-none"
+        >
+          &rdquo;
+        </span>
+        <span className="text-[var(--color-brand-300)]">
           <Icon name="quote" size={40} />
         </span>
-        <div className="mt-4 flex gap-1 text-[var(--color-brand-500)]" aria-hidden>
+        <div className="mt-4 flex gap-1 text-[var(--color-brand-300)]" aria-hidden>
           {Array.from({ length: 5 }).map((_, i) => (
             <Icon key={i} name="star" size={18} />
           ))}
         </div>
-        <blockquote className="mt-4">
-          <p className="text-[length:var(--text-xl)] font-medium leading-relaxed text-[var(--heading)]">
+        <blockquote className="mt-5">
+          <p className="text-[length:var(--text-xl)] font-medium leading-relaxed text-white">
             &ldquo;{active.quote}&rdquo;
           </p>
         </blockquote>
-        <figcaption className="mt-6">
-          <span className="block font-[var(--font-display)] text-[1.05rem] font-semibold text-[var(--heading)]">
-            {active.author}
+        <figcaption className="mt-7 flex items-center gap-4">
+          <span
+            aria-hidden
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[1.1rem] font-bold text-[var(--color-navy-900)]"
+          >
+            {active.author.charAt(0)}
           </span>
-          <span className="text-[0.9rem] text-[var(--body)]">
-            {active.role} · {active.title}
+          <span>
+            <span className="block text-[1.05rem] font-semibold text-white">{active.author}</span>
+            <span className="text-[0.9rem] text-white/65">
+              {active.role} · {active.title}
+            </span>
           </span>
         </figcaption>
 
         {/* Gold progress bar — no dots, no buttons */}
         {count > 1 && (
-          <div
-            className="mt-6 h-0.5 w-full overflow-hidden rounded-full bg-[var(--border)]"
-            aria-hidden
-          >
+          <div className="mt-7 h-0.5 w-full overflow-hidden rounded-full bg-white/15" aria-hidden>
             <div
-              className="h-full bg-[var(--color-brand-500)]"
+              className="h-full bg-[var(--color-brand-500)] transition-[width] duration-100"
               style={{ width: `${progress}%` }}
             />
           </div>

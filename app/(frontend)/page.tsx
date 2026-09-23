@@ -248,7 +248,7 @@ export default async function HomePage() {
               <Reveal as="li" key={p.slug} delay={(i % 3) * 80}>
                 <Link
                   href={`/projects/${p.slug}`}
-                  className="group relative isolate flex min-h-[240px] overflow-hidden rounded-[var(--radius-md)] text-white shadow-[var(--shadow-card)]"
+                  className="group relative isolate flex min-h-[280px] overflow-hidden rounded-[18px] text-white shadow-[var(--shadow-card)] ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)] hover:ring-2 hover:ring-[var(--color-brand-500)]/60"
                 >
                   <Image
                     src={p.image}
@@ -341,17 +341,24 @@ export default async function HomePage() {
                 <div
                   key={i}
                   role="listitem"
-                  className="group overflow-hidden rounded-[var(--radius-md)] shadow-[var(--shadow-card)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-hover)]"
+                  className="group relative overflow-hidden rounded-[16px] shadow-[var(--shadow-card)] ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)] hover:ring-2 hover:ring-[var(--color-brand-500)]/60"
                 >
                   <Image
                     src={item.src}
                     alt={item.alt}
                     width={800}
                     height={600}
-                    className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    className="w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
                     unoptimized
                     loading="lazy"
                   />
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-navy-900)]/90 via-[var(--color-navy-900)]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-3 p-4 text-[0.82rem] font-medium leading-snug text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                    {item.alt}
+                  </span>
                 </div>
               ))}
             </div>
@@ -395,13 +402,27 @@ export default async function HomePage() {
       </section>
 
       {/* Let's Connect */}
-      <section id="contact" className="bg-[var(--surface)]" aria-labelledby="contact-heading">
-        <Container className="py-16 md:py-20">
+      <section
+        id="contact"
+        className="relative overflow-hidden bg-[var(--color-navy-900)]"
+        aria-labelledby="contact-heading"
+      >
+        {/* subtle gold glow accents */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[var(--color-brand-500)]/10 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[var(--color-brand-500)]/10 blur-3xl"
+        />
+        <Container className="relative py-16 md:py-24">
           <SectionHeading
             eyebrow="Let's Connect"
             title="Two ways to get started"
             align="center"
             as="h2"
+            invert
           />
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
             {[
@@ -423,16 +444,14 @@ export default async function HomePage() {
               <Link
                 key={path.href}
                 href={path.href}
-                className="group flex flex-col rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-8 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)]"
+                className="group relative flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-brand-500)]/40 hover:bg-white/[0.07]"
               >
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)]">
+                <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-brand-500)] text-[var(--color-navy-900)] transition-transform duration-300 group-hover:scale-110">
                   <Icon name={path.icon} size={26} />
                 </span>
-                <h3 className="mt-4 text-[1.3rem] font-semibold text-[var(--heading)]">
-                  {path.title}
-                </h3>
-                <p className="mt-2 text-[var(--body)]">{path.desc}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-[var(--accent-strong)]">
+                <h3 className="mt-5 text-[1.35rem] font-semibold text-white">{path.title}</h3>
+                <p className="mt-2 text-white/70">{path.desc}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-[var(--color-brand-300)]">
                   {path.cta}
                   <Icon
                     name="arrow-right"

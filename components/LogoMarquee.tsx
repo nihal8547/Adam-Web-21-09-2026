@@ -11,7 +11,7 @@ export default function LogoMarquee({ items }: { items: ClientLogo[] }) {
   const track2 = [...items, ...items].reverse();
 
   return (
-    <div className="w-full bg-stone-100 py-10 relative overflow-hidden flex flex-col gap-6">
+    <div className="relative flex w-full flex-col gap-6 overflow-hidden py-4">
       <div
         className="group relative overflow-hidden"
         style={{
@@ -27,19 +27,25 @@ export default function LogoMarquee({ items }: { items: ClientLogo[] }) {
             <li
               key={`${client.name}-1-${i}`}
               aria-hidden={i >= items.length}
-              className="relative mix-blend-multiply shadow-md shadow-gray-200 flex h-[150px] w-[150px] shrink-0 items-center justify-center rounded-lg bg-white p-4 transition-transform hover:scale-105"
+              className="group/logo relative flex h-[130px] w-[170px] shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-brand-500)]/50 hover:shadow-[var(--shadow-hover)]"
             >
               {client.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={client.logo} alt={client.name} className="max-h-full max-w-full object-contain" />
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="max-h-full max-w-full object-contain"
+                />
               ) : (
-                <span className="text-center text-[0.85rem] font-semibold text-[var(--body)]">{client.name}</span>
+                <span className="text-center text-[0.85rem] font-semibold text-[var(--body)]">
+                  {client.name}
+                </span>
               )}
             </li>
           ))}
         </ul>
       </div>
-      
+
       <div
         className="group relative overflow-hidden"
         style={{
@@ -55,13 +61,19 @@ export default function LogoMarquee({ items }: { items: ClientLogo[] }) {
             <li
               key={`${client.name}-2-${i}`}
               aria-hidden={i >= items.length}
-              className="relative mix-blend-multiply shadow-md shadow-gray-200 flex h-[150px] w-[150px] shrink-0 items-center justify-center rounded-lg bg-white p-4 transition-transform hover:scale-105"
+              className="group/logo relative flex h-[130px] w-[170px] shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] bg-white p-5 shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-brand-500)]/50 hover:shadow-[var(--shadow-hover)]"
             >
               {client.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={client.logo} alt={client.name} className="max-h-full max-w-full object-contain" />
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="max-h-full max-w-full object-contain"
+                />
               ) : (
-                <span className="text-center text-[0.85rem] font-semibold text-[var(--body)]">{client.name}</span>
+                <span className="text-center text-[0.85rem] font-semibold text-[var(--body)]">
+                  {client.name}
+                </span>
               )}
             </li>
           ))}
