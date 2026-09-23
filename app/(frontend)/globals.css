@@ -279,49 +279,38 @@
 
 /* ---------------------------------------------------------------------------
    Welcome splash screen (components/SplashScreen.tsx) — on every load/refresh:
-   the greeting flashes quickly one word at a time in the centre, then a fire
-   hose rises from the bottom and sprays water and the splash is washed up and
-   away to reveal the site.
+   the greeting flashes quickly one small word at a time in the centre
+   (WELCOME in Nunito, then Arabic, Hindi, Malayalam), then fades away.
 --------------------------------------------------------------------------- */
 .splash {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  overflow: hidden;
   display: grid;
   place-items: center;
   background: #ffffff;
   padding: 24px;
 }
 
-/* washed up and away */
-.splash--washing {
-  animation: splashWash 0.6s cubic-bezier(0.6, 0, 0.4, 1) forwards;
-}
-
-@keyframes splashWash {
-  to {
-    transform: translateY(-100%);
-    opacity: 0;
-    visibility: hidden;
-  }
+.splash--leaving {
+  animation: splashFadeOut 0.45s ease forwards;
 }
 
 .splash__word {
   font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
   font-weight: 800;
-  font-size: clamp(1.6rem, 5.5vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.25rem, 3.6vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
   text-align: center;
   color: var(--color-ink-900);
-  animation: splashWord 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: splashWord 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes splashWord {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.96);
+    transform: translateY(8px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -329,112 +318,10 @@
   }
 }
 
-/* --- fire hose + water spray --- */
-.splash__scene {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.splash__hose {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 26px;
-  height: 132px;
-  border-radius: 9px 9px 0 0;
-  background: linear-gradient(90deg, #2b2b2b, #5a5a5a 45%, #2b2b2b);
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
-  transform: translateX(-50%) translateY(120%);
-  animation: hoseRise 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.splash__nozzle {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  width: 36px;
-  height: 20px;
-  transform: translateX(-50%);
-  border-radius: 7px 7px 3px 3px;
-  background: linear-gradient(90deg, #8c6508, #e3c05a 45%, #8c6508);
-  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.25);
-}
-
-@keyframes hoseRise {
+@keyframes splashFadeOut {
   to {
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-.splash__spray {
-  position: absolute;
-  left: 50%;
-  bottom: 128px;
-}
-
-/* Forceful central jet shooting up from the nozzle. */
-.splash__jet {
-  position: absolute;
-  left: 50%;
-  bottom: 128px;
-  width: 16px;
-  height: 78vh;
-  transform: translateX(-50%) scaleY(0);
-  transform-origin: bottom center;
-  border-radius: 50% 50% 8px 8px / 8% 8% 4px 4px;
-  background: linear-gradient(
-    to top,
-    rgba(89, 182, 242, 0.95),
-    rgba(180, 224, 252, 0.8) 45%,
-    rgba(234, 246, 255, 0) 100%
-  );
-  filter: blur(1px);
-  opacity: 0.9;
-  animation: splashJet 0.95s cubic-bezier(0.1, 0.9, 0.3, 1) forwards;
-}
-
-@keyframes splashJet {
-  0% {
-    transform: translateX(-50%) scaleY(0);
-    opacity: 0.4;
-  }
-  22% {
-    transform: translateX(-50%) scaleY(1.06);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) scaleY(1);
-    opacity: 0.85;
-  }
-}
-
-.splash__drop {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #eaf6ff, #59b6f2 60%, #2f8fd6);
-  box-shadow: 0 0 4px rgba(89, 182, 242, 0.5);
-  opacity: 0;
-  transform: translate(-50%, 0);
-  animation-name: splashDrop;
-  /* ease-out → launches fast off the nozzle (high pressure) */
-  animation-timing-function: cubic-bezier(0.05, 0.85, 0.35, 1);
-  animation-iteration-count: infinite;
-}
-
-@keyframes splashDrop {
-  0% {
     opacity: 0;
-    transform: translate(-50%, 0) scale(0.5);
-  }
-  8% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--x)), calc(-1 * var(--rise))) scale(1);
+    visibility: hidden;
   }
 }
 
@@ -443,14 +330,5 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
-  }
-  .splash__hose {
-    animation: none !important;
-    transform: translateX(-50%) translateY(0) !important;
-  }
-  .splash__drop,
-  .splash__jet {
-    animation: none !important;
-    opacity: 0 !important;
   }
 }
