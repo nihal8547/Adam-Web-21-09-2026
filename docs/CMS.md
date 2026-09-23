@@ -68,9 +68,10 @@ Database controls:
 > **Seeing "Application error" or "can't reach its database" at `/admin`?**
 > The admin needs the database running. Run `npm run db:up` (make sure Docker
 > Desktop is started), then `npm run dev`. The error screen now spells this out
-> instead of showing a blank page. If port 5432 is already in use, start the DB
-> on another port: `ADAM_DB_PORT=5544 npm run db:up` and set the same port in
-> `DATABASE_URI` in `.env`.
+> instead of showing a blank page. The dev database uses host port **5437** by
+> default; if that port is already in use, start it on another:
+> `ADAM_DB_PORT=5544 npm run db:up` and set the same port in `DATABASE_URI` in
+> `.env`.
 
 > **Note on ORMs:** Payload manages its own schema (via Drizzle) through the
 > `@payloadcms/db-postgres` adapter — you don't add Prisma or run a separate
