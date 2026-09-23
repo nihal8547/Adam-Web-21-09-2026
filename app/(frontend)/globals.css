@@ -278,40 +278,50 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Welcome splash screen (components/SplashScreen.tsx) — shown on every load /
-   refresh: full white background, the greeting cycles one word at a time in
-   the centre (Welcome in Nunito, then Arabic, Hindi, Malayalam), then the
-   whole splash fades away to reveal the site.
+   Welcome splash screen (components/SplashScreen.tsx) — on every load/refresh:
+   the greeting flashes quickly one word at a time in the centre, then a fire
+   hose rises from the bottom and sprays water and the splash is washed up and
+   away to reveal the site.
 --------------------------------------------------------------------------- */
 .splash {
   position: fixed;
   inset: 0;
   z-index: 9999;
+  overflow: hidden;
   display: grid;
   place-items: center;
   background: #ffffff;
   padding: 24px;
 }
 
-.splash--leaving {
-  animation: splashFadeOut 0.5s ease forwards;
+/* washed up and away */
+.splash--washing {
+  animation: splashWash 0.6s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+
+@keyframes splashWash {
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .splash__word {
   font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
   font-weight: 800;
-  font-size: clamp(2.5rem, 9vw, 5.25rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 5.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   text-align: center;
   color: var(--color-ink-900);
-  animation: splashWord 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: splashWord 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes splashWord {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(0.98);
+    transform: translateY(10px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -319,10 +329,74 @@
   }
 }
 
-@keyframes splashFadeOut {
+/* --- fire hose + water spray --- */
+.splash__scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.splash__hose {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 26px;
+  height: 132px;
+  border-radius: 9px 9px 0 0;
+  background: linear-gradient(90deg, #2b2b2b, #5a5a5a 45%, #2b2b2b);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
+  transform: translateX(-50%) translateY(120%);
+  animation: hoseRise 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash__nozzle {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 36px;
+  height: 20px;
+  transform: translateX(-50%);
+  border-radius: 7px 7px 3px 3px;
+  background: linear-gradient(90deg, #8c6508, #e3c05a 45%, #8c6508);
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes hoseRise {
   to {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.splash__spray {
+  position: absolute;
+  left: 50%;
+  bottom: 128px;
+}
+
+.splash__drop {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #eaf6ff, #59b6f2 60%, #2f8fd6);
+  opacity: 0;
+  transform: translate(-50%, 0);
+  animation-name: splashDrop;
+  animation-timing-function: cubic-bezier(0.2, 0.5, 0.5, 1);
+  animation-iteration-count: infinite;
+}
+
+@keyframes splashDrop {
+  0% {
     opacity: 0;
-    visibility: hidden;
+    transform: translate(-50%, 0) scale(0.5);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--x)), calc(-1 * var(--rise))) scale(1);
   }
 }
 
@@ -331,5 +405,13 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+  .splash__hose {
+    animation: none !important;
+    transform: translateX(-50%) translateY(0) !important;
+  }
+  .splash__drop {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
