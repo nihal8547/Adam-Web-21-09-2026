@@ -110,7 +110,7 @@ export default async function HomePage() {
               <div className="mt-7 grid grid-cols-2 gap-y-6 gap-x-4 sm:grid-cols-3 sm:gap-x-6">
                 {stats.map((s) => (
                   <div key={s.label}>
-                    <div className="font-[var(--font-display)] text-2xl sm:text-3xl font-bold leading-none text-[var(--accent-strong)]">
+                    <div className="font-[var(--font-display)] text-2xl sm:text-3xl font-semibold leading-none text-[var(--accent-strong)]">
                       {s.text ? s.text : `${s.prefix ?? ""}${s.value}${s.suffix ?? ""}`}
                     </div>
                     <div className="mt-1.5 text-[0.85rem] font-semibold text-[var(--subheading)] leading-snug">

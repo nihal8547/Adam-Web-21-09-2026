@@ -122,7 +122,7 @@
     color: var(--heading);
     letter-spacing: -0.02em;
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 600;
     text-wrap: balance;
   }
 
@@ -216,8 +216,24 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.animate-marquee-reverse {
+  animation: marquee-reverse 40s linear infinite;
+}
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee, .animate-marquee-reverse {
     animation: none;
   }
 }

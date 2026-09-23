@@ -64,7 +64,7 @@ export default function Hero({ hero = fallbackHero }: { hero?: HeroData }) {
       {/* Minimal overlaid content, bottom-left */}
       <Container className="relative z-10 w-full pb-16 md:pb-20 lg:pb-24">
         <h1
-          className="hero-fade-1 mt-3 max-w-[18ch] text-2xl md:text-3xl font-bold !text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]"
+          className="hero-fade-1 mt-3 max-w-[18ch] text-2xl md:text-3xl font-semibold !text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]"
           style={{ color: "#ffffff" }}
         >
           {hero.h1}

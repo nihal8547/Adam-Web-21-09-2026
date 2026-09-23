@@ -29,6 +29,7 @@ export type IconName =
   | "close"
   | "chevron-down"
   | "quote"
+  | "search"
   | "star";
 
 const paths: Record<IconName, React.ReactNode> = {
@@ -142,6 +143,12 @@ const paths: Record<IconName, React.ReactNode> = {
   "chevron-down": <path d="M6 9l6 6 6-6" />,
   quote: (
     <path d="M7 7h4v6a4 4 0 01-4 4V15a2 2 0 002-2H7V7zm8 0h4v6a4 4 0 01-4 4V15a2 2 0 002-2h-2V7z" />
+  ),
+  search: (
+    <>
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </>
   ),
   star: <path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.9L12 16.9 6.8 19.2l1-5.9L3.5 9.2l5.9-.9L12 3z" />,
 };

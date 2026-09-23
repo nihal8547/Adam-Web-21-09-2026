@@ -66,7 +66,7 @@ export default function StatCounter({
 
   return (
     <div ref={ref} className="text-center px-2">
-      <div className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-[2.35rem] xl:text-[2.6rem] font-bold leading-none text-[var(--color-brand-700)]">
+      <div className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-[2.35rem] xl:text-[2.6rem] font-semibold leading-none text-[var(--color-brand-700)]">
         {text ? text : `${prefix}${display.toLocaleString("en-US")}${suffix}`}
       </div>
       <div className="mt-2 text-[0.8rem] sm:text-[0.875rem] font-semibold text-[var(--subheading)] leading-snug">

@@ -53,12 +53,15 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+import SmoothScroll from "@/components/SmoothScroll";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={nunito.variable}>
       <body>
         <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
-        <SplashScreen />
+        <SmoothScroll>
+          <SplashScreen />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
@@ -66,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main-content">{children}</main>
         <Footer />
         <WhatsAppWidget />
+        </SmoothScroll>
       </body>
     </html>
   );
