@@ -63,18 +63,17 @@ export default async function HomePage() {
       {/* Stat band — gold-tinted 6-column credentials grid */}
       <section
         id="company-stats"
-        className="border-y border-[var(--color-brand-100)] bg-[linear-gradient(180deg,var(--color-brand-50),var(--color-brand-100))]"
+        className="bg-[var(--color-navy-900)] text-white"
         aria-label="Adam Technical Services key credentials: #1 in Qatar, QCDD, 24/7 Emergency, 1000+ Projects, 100+ Employees, NFPA Compliant"
       >
         <Container className="grid grid-cols-2 gap-y-8 gap-x-4 py-10 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`flex flex-col justify-center ${
-                i < stats.length - 1 ? "lg:border-r lg:border-[var(--color-brand-300)]/35" : ""
-              }`}
+              className={`flex flex-col justify-center ${i < stats.length - 1 ? "lg:border-r lg:border-[var(--color-brand-300)]/35" : ""
+                }`}
             >
-              <StatCounter {...s} />
+              <StatCounter {...s} invert />
             </div>
           ))}
         </Container>
@@ -174,16 +173,21 @@ export default async function HomePage() {
           <ul className="mt-12 grid gap-6 md:grid-cols-3">
             {whatMakesUsBetter.map((card, i) => (
               <Reveal as="li" key={card.title} delay={i * 90}>
-                <div className="flex h-full flex-col rounded-[var(--radius-md)] border border-[var(--border)] border-l-[3px] border-l-[var(--color-brand-500)] bg-[var(--surface)] p-7 shadow-[var(--shadow-card)]">
-                  <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)]">
-                    <Icon name={card.icon as IconName} size={26} />
-                  </span>
-                  <h3 className="text-[1.2rem] font-semibold text-[var(--heading)]">
-                    {card.title}
-                  </h3>
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-[var(--body)]">
-                    {card.desc}
-                  </p>
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-[var(--border)] bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+                  {/* Subtle hover gradient background */}
+                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-[var(--color-brand-50)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  
+                  <div className="relative z-10 flex h-full flex-col">
+                    <span className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--surface-wash)] text-[var(--accent-strong)] transition-all duration-300 group-hover:scale-110 group-hover:bg-[var(--color-brand-500)] group-hover:text-white">
+                      <Icon name={card.icon as IconName} size={28} />
+                    </span>
+                    <h3 className="text-[1.25rem] font-bold text-[var(--heading)] transition-colors group-hover:text-[var(--color-brand-600)]">
+                      {card.title}
+                    </h3>
+                    <p className="mt-3 text-[0.95rem] leading-relaxed text-[var(--body)]">
+                      {card.desc}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -217,7 +221,7 @@ export default async function HomePage() {
         heading={qcddBand.heading}
         body={qcddBand.body}
         primary={{ label: qcddBand.cta.label + " →", href: qcddBand.cta.href }}
-        tone="gold"
+        tone="navy"
       />
 
       {/* Feature blocks */}
@@ -273,7 +277,7 @@ export default async function HomePage() {
                       <h3 className="text-[1.15rem] font-semibold text-white">{p.title}</h3>
                       <p className="mt-1 max-w-[30ch] text-[0.85rem] text-white/85">{p.summary}</p>
                     </div>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[var(--color-ink-900)] transition-transform group-hover:translate-x-1">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white transition-transform group-hover:translate-x-1">
                       <Icon name="arrow-right" size={18} />
                     </span>
                   </div>

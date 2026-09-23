@@ -18,7 +18,7 @@ export default function CTABand({
   body,
   primary,
   secondary,
-  tone = "ink",
+  tone = "navy",
   className,
 }: {
   eyebrow?: string;
@@ -26,17 +26,20 @@ export default function CTABand({
   body?: string;
   primary: CTA;
   secondary?: CTA;
-  tone?: "ink" | "gold";
+  tone?: "ink" | "gold" | "surface" | "navy";
   className?: string;
 }) {
-  const rich = tone === "ink";
+  const isSurface = tone === "surface";
+  // Default all other tones (ink, gold, navy) to the navy style to remove yellow sections
+  const isNavy = !isSurface;
+  
   return (
     <section
       className={cn(
-        "border-y border-[var(--color-brand-100)]",
-        rich
-          ? "bg-[linear-gradient(180deg,var(--color-brand-50),var(--color-brand-100))]"
-          : "bg-[var(--surface-wash)]",
+        !isSurface && !isNavy && "border-y border-[var(--color-brand-100)]",
+        isNavy
+          ? "bg-[var(--color-navy-900)] text-white"
+          : "bg-[var(--surface)]",
         className,
       )}
     >
@@ -44,8 +47,8 @@ export default function CTABand({
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div className="max-w-2xl">
             {eyebrow ? <span className="eyebrow">{eyebrow}</span> : null}
-            <h2 className="mt-2 text-[length:var(--text-2xl)] text-[var(--heading)]">{heading}</h2>
-            {body ? <p className="mt-3 text-[1rem] text-[var(--body)]">{body}</p> : null}
+            <h2 className={cn("mt-2 text-[length:var(--text-2xl)]", isNavy ? "text-white" : "text-[var(--heading)]")}>{heading}</h2>
+            {body ? <p className={cn("mt-3 text-[1rem]", isNavy ? "text-white/80" : "text-[var(--body)]")}>{body}</p> : null}
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
             <Button href={primary.href} variant="primary" size="lg">

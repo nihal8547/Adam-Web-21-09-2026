@@ -15,13 +15,13 @@ const sizes: Record<Size, string> = {
 const variants: Record<Variant, string> = {
   // Gold fill + ink text (NEVER white text on gold — a11y contrast rule).
   primary:
-    "bg-[var(--color-brand-500)] text-[var(--color-ink-900)] hover:bg-[var(--color-brand-600)]",
+    "bg-[var(--color-brand-500)] text-white hover:bg-[var(--color-brand-600)]",
   secondary:
     "border border-[var(--color-ink-900)] text-[var(--color-ink-900)] hover:bg-[var(--color-ink-900)] hover:text-[var(--color-white)] dark:border-[var(--heading)] dark:text-[var(--heading)]",
   ghost:
     "text-[var(--accent-strong)] hover:text-[var(--color-brand-600)] underline-offset-4 hover:underline",
   invert:
-    "bg-[var(--color-white)] text-[var(--color-ink-900)] hover:bg-[var(--color-brand-500)] hover:text-[var(--color-ink-900)]",
+    "bg-[var(--color-white)] text-[var(--color-ink-900)] hover:bg-[var(--color-brand-500)] hover:text-white",
 };
 
 type CommonProps = {

@@ -102,7 +102,7 @@ export default function TestimonialSlider({ items }: { items: Testimonial[] }) {
         <figcaption className="mt-7 flex items-center gap-4">
           <span
             aria-hidden
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[1.1rem] font-bold text-[var(--color-navy-900)]"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[1.1rem] font-bold text-white"
           >
             {active.author.charAt(0)}
           </span>

@@ -27,7 +27,7 @@ export default function ServiceCard({
         className,
       )}
     >
-      <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)] transition-colors group-hover:bg-[var(--color-brand-500)] group-hover:text-[var(--color-ink-900)]">
+      <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)] transition-colors group-hover:bg-[var(--color-brand-500)] group-hover:text-white">
         <Icon name={icon as IconName} size={26} />
       </span>
       <h3 className="text-[1.15rem] font-semibold text-[var(--heading)]">{name}</h3>

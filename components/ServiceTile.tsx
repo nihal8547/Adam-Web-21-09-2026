@@ -69,7 +69,7 @@ export default function ServiceTile({
       />
 
       {/* Gold icon chip */}
-      <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] bg-[color-mix(in_srgb,var(--color-brand-500)_92%,transparent)] text-[var(--color-ink-900)]">
+      <span className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] bg-[color-mix(in_srgb,var(--color-brand-500)_92%,transparent)] text-white">
         <Icon name={icon as IconName} size={22} />
       </span>
 
@@ -85,7 +85,7 @@ export default function ServiceTile({
           <h3 className="text-[1.25rem] font-semibold text-white">{name}</h3>
           <p className="mt-1 max-w-[30ch] text-[0.85rem] text-white/85">{excerpt}</p>
         </div>
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[var(--color-ink-900)] transition-transform group-hover:translate-x-1">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white transition-transform group-hover:translate-x-1">
           <Icon name="arrow-right" size={18} />
         </span>
       </div>

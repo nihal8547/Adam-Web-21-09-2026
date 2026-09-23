@@ -7,13 +7,13 @@
    ================================================================== */
 
 @theme {
-  /* Brand — warm premium gold scale */
-  --color-brand-50: #faf6ec;
-  --color-brand-100: #f3e8cc;
-  --color-brand-300: #e4c97e; /* light gold */
-  --color-brand-500: #c9a24b; /* PRIMARY gold */
-  --color-brand-600: #b08a3a; /* hover / pressed */
-  --color-brand-700: #8a6a2c; /* deep gold */
+  /* Brand — premium navy scale (replacing gold) */
+  --color-brand-50: #f2f5f9;  /* surface-wash */
+  --color-brand-100: #e5eaf2;
+  --color-brand-300: #1e3a68; /* navy-700 */
+  --color-brand-500: #16294f; /* PRIMARY navy (navy-800) */
+  --color-brand-600: #0f1e3d; /* hover / pressed (navy-900) */
+  --color-brand-700: #0a1429; /* deep navy */
 
   /* Navy — premium dark base (used for inverted sections, footer, nav drawer) */
   --color-navy-900: #0f1e3d;
@@ -317,7 +317,7 @@
 }
 
 .splash--leaving {
-  animation: splashFadeOut 0.45s ease forwards;
+  animation: splashSlideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .splash__word {
@@ -342,9 +342,10 @@
   }
 }
 
-@keyframes splashFadeOut {
+@keyframes splashSlideDown {
   to {
     opacity: 0;
+    transform: translateY(100vh);
     visibility: hidden;
   }
 }

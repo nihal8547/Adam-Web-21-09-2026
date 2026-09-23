@@ -123,7 +123,7 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
                     {group.items.map((brand) => (
                       <li
                         key={brand}
-                        className="rounded-[var(--radius-sm)] bg-[var(--color-brand-500)] px-3 py-1.5 text-[0.85rem] font-semibold text-[var(--color-ink-900)]"
+                        className="rounded-[var(--radius-sm)] bg-[var(--color-brand-500)] px-3 py-1.5 text-[0.85rem] font-semibold text-white"
                       >
                         {brand}
                       </li>

@@ -24,7 +24,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             className={cn(
               "rounded-full border px-3.5 py-1.5 text-[0.85rem] font-medium transition-colors",
               category === cat
-                ? "border-[var(--color-brand-500)] bg-[var(--color-brand-500)] text-[var(--color-ink-900)]"
+                ? "border-[var(--color-brand-500)] bg-[var(--color-brand-500)] text-white"
                 : "border-[var(--border)] text-[var(--subheading)] hover:border-[var(--accent)]",
             )}
           >

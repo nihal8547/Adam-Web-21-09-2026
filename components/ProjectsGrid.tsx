@@ -107,7 +107,7 @@ function FilterRow({
           className={cn(
             "rounded-full border px-3.5 py-1.5 text-[0.85rem] font-medium transition-colors",
             value === opt
-              ? "border-[var(--color-brand-500)] bg-[var(--color-brand-500)] text-[var(--color-ink-900)]"
+              ? "border-[var(--color-brand-500)] bg-[var(--color-brand-500)] text-white"
               : "border-[var(--border)] text-[var(--subheading)] hover:border-[var(--accent)]",
           )}
         >

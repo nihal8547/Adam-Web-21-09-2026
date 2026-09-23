@@ -85,7 +85,7 @@ export default function ContactForm({
         )}
         role="status"
       >
-        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-[var(--color-ink-900)]">
+        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white">
           <Icon name="check" size={26} />
         </span>
         <h3 className="mt-4 text-[1.25rem] font-semibold text-[var(--heading)]">Thank you!</h3>

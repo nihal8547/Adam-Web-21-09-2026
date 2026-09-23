@@ -13,6 +13,7 @@ export default function StatCounter({
   suffix = "",
   label,
   durationMs = 1600,
+  invert = false,
 }: {
   value?: number;
   text?: string;
@@ -20,6 +21,7 @@ export default function StatCounter({
   suffix?: string;
   label: string;
   durationMs?: number;
+  invert?: boolean;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [display, setDisplay] = useState(0);
@@ -66,10 +68,10 @@ export default function StatCounter({
 
   return (
     <div ref={ref} className="text-center px-2">
-      <div className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-[2.35rem] xl:text-[2.6rem] font-semibold leading-none text-[var(--color-brand-700)]">
+      <div className={`font-[var(--font-display)] text-3xl sm:text-4xl lg:text-[2.35rem] xl:text-[2.6rem] font-semibold leading-none ${invert ? "text-white" : "text-[var(--color-brand-700)]"}`}>
         {text ? text : `${prefix}${display.toLocaleString("en-US")}${suffix}`}
       </div>
-      <div className="mt-2 text-[0.8rem] sm:text-[0.875rem] font-semibold text-[var(--subheading)] leading-snug">
+      <div className={`mt-2 text-[0.8rem] sm:text-[0.875rem] font-semibold leading-snug ${invert ? "text-white/70" : "text-[var(--subheading)]"}`}>
         {label}
       </div>
     </div>
