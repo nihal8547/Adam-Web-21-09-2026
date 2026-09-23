@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Sora, Inter } from "next/font/google";
+import { Sora, Inter, Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SplashScreen from "@/components/SplashScreen";
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, localBusinessSchema, websiteSchema } from "@/lib/jsonld";
 import { SITE_URL } from "@/lib/seo";
@@ -24,6 +25,14 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Nunito — used for the welcome splash screen shown on first load.
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-nunito",
   display: "swap",
 });
 
@@ -60,9 +69,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={`${sora.variable} ${inter.variable}`}>
+    <html lang="en" dir="ltr" className={`${sora.variable} ${inter.variable} ${nunito.variable}`}>
       <body>
         <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
+        <SplashScreen />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
