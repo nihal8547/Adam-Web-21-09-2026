@@ -76,11 +76,13 @@ export default function ExpertiseShowcase3D({
   eyebrow,
   heading,
   description,
+  className,
 }: {
   models?: CMSModelInfo[] | null;
   eyebrow?: string | null;
   heading?: string | null;
   description?: string | null;
+  className?: string;
 } = {}) {
   const [selectedModel, setSelectedModel] = useState<ModelType>("hvac");
   
@@ -99,7 +101,10 @@ export default function ExpertiseShowcase3D({
   return (
     <section
       id="expertise"
-      className="bg-[var(--surface)] py-16 md:py-20 border-b border-[var(--border)]"
+      className={cn(
+        "bg-[var(--surface)] pt-8 pb-16 md:pt-10 md:pb-20 border-b border-[var(--border)]",
+        className,
+      )}
       aria-label="Specialized Engineering Technology - 3D Equipment Inspection"
     >
       <Container>
