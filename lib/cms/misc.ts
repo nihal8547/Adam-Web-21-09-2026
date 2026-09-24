@@ -17,6 +17,8 @@ export async function getTestimonials(): Promise<Testimonial[]> {
         quote: d.quote,
         author: d.author,
         role: d.role || "",
+        rating: d.rating ?? 5,
+        avatar: mediaUrl(d.avatar),
       }));
     },
     staticTestimonials as unknown as Testimonial[],
@@ -32,7 +34,7 @@ export async function getClients(): Promise<ClientLogo[]> {
         depth: 1,
         sort: "order",
       });
-      return res.docs.map((d: any) => ({ name: d.name, logo: mediaUrl(d.logo) }));
+      return res.docs.map((d: any) => ({ name: d.name, logo: mediaUrl(d.logo), website: d.website || undefined }));
     },
     staticClients as unknown as ClientLogo[],
   );

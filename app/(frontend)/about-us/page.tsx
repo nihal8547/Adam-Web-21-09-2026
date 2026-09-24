@@ -72,17 +72,17 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      {/* Stats — gold-tinted 6-column credentials grid */}
-      <section className="bg-[var(--color-navy-900)] text-white">
+      {/* Stats — 6-column credentials grid */}
+      <section className="bg-white border-y border-[var(--border)] shadow-sm">
         <Container className="grid grid-cols-2 gap-y-8 gap-x-4 py-12 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
           {stats.map((s, i) => (
             <div
               key={s.label}
               className={`flex flex-col justify-center ${
-                i < stats.length - 1 ? "lg:border-r lg:border-[var(--color-brand-300)]/35" : ""
+                i < stats.length - 1 ? "lg:border-r lg:border-[var(--border)]" : ""
               }`}
             >
-              <StatCounter {...s} invert />
+              <StatCounter {...s} />
             </div>
           ))}
         </Container>
@@ -113,7 +113,7 @@ export default async function AboutPage() {
         heading={qcddBand.heading}
         body={qcddBand.body}
         primary={{ label: "Know More →", href: qcddBand.cta.href }}
-        tone="navy"
+        tone="surface"
       />
 
       <CTABand

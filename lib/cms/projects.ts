@@ -22,6 +22,7 @@ function mapDoc(doc: any): Project {
     solution: doc.solution || "",
     outcome: doc.outcome || "",
     servicesUsed: used,
+    featured: Boolean(doc.featured),
     gallery: (doc.gallery ?? [])
       .map((g: any) => ({ src: mediaUrl(g.image), alt: g.alt || doc.title }))
       .filter((g: any) => g.src),
@@ -31,11 +32,17 @@ function mapDoc(doc: any): Project {
 export async function getAllProjects(): Promise<Project[]> {
   return fromCms(
     async (payload) => {
-      const res = await payload.find({ collection: "projects", limit: 100, depth: 1 });
+      const res = await payload.find({ collection: "projects", limit: 100, depth: 1, sort: "order" });
       return res.docs.map(mapDoc);
     },
     staticProjects as unknown as Project[],
   );
+}
+
+export async function getFeaturedProjects(): Promise<Project[]> {
+  const all = await getAllProjects();
+  const featured = all.filter((p) => (p as any).featured);
+  return featured.length ? featured : all.slice(0, 6);
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | undefined> {

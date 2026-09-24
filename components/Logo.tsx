@@ -24,6 +24,7 @@ export default function Logo({
         width={120} 
         height={40} 
         className={cn("object-contain", invert && "brightness-0 invert")}
+        style={{ width: "auto", height: "auto" }}
         priority
       />
     </Link>

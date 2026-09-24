@@ -4,11 +4,13 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SplashScreen from "@/components/SplashScreen";
+import SmoothScroll from "@/components/SmoothScroll";
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, localBusinessSchema, websiteSchema } from "@/lib/jsonld";
 import { SITE_URL } from "@/lib/seo";
 import { site } from "@/content/site";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import { getSiteSettings } from "@/lib/cms/site";
 
 /**
  * The site uses the standard system font stack everywhere (set in globals.css)
@@ -53,23 +55,32 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-import SmoothScroll from "@/components/SmoothScroll";
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Fetch live site settings (falls back to static content/site.ts when CMS is unavailable)
+  const siteSettings = await getSiteSettings();
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={nunito.variable}>
       <body>
         <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
         <SmoothScroll>
-          <SplashScreen />
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <WhatsAppWidget />
+          <SplashScreen words={siteSettings.splashWords} stepMs={siteSettings.splashStepMs} />
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          <Header />
+          <main id="main-content">{children}</main>
+          <Footer site={siteSettings} />
+          <WhatsAppWidget whatsappHref={siteSettings.whatsappHref} />
         </SmoothScroll>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="PP8Aosl3SQkF5Xl5NzKcp";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+            `,
+          }}
+        />
       </body>
     </html>
   );

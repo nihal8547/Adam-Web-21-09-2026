@@ -53,8 +53,8 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 <span className="text-[0.72rem] font-semibold uppercase tracking-wide text-[var(--accent-strong)]">
                   {post.category}
                 </span>
-                <h3 className="mt-2 text-[1.1rem] font-semibold leading-snug text-[var(--heading)]">
-                  {post.title}
+                <h3 className="mt-2 text-[1.1rem] font-semibold leading-snug text-[var(--heading)] transition-colors duration-200 group-hover:text-[var(--color-brand-500)]">
+                  <span className="link-underline">{post.title}</span>
                 </h3>
                 <p className="mt-2 flex-1 text-[0.9rem] text-[var(--body)]">{post.excerpt}</p>
                 <span className="mt-4 text-[0.8rem] text-[var(--body)]">

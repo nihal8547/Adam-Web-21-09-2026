@@ -22,6 +22,7 @@ export type Project = {
   solution: string;
   outcome: string;
   servicesUsed: string[]; // service slugs
+  featured?: boolean;
   gallery: { src: string; alt: string }[];
 };
 

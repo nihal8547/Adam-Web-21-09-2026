@@ -20,6 +20,7 @@ export type IconName =
   | "support"
   | "check"
   | "arrow-right"
+  | "arrow-left"
   | "phone"
   | "mail"
   | "map-pin"
@@ -108,6 +109,12 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <path d="M4 12h16" />
       <path d="M14 6l6 6-6 6" />
+    </>
+  ),
+  "arrow-left": (
+    <>
+      <path d="M20 12H4" />
+      <path d="M10 18l-6-6 6-6" />
     </>
   ),
   phone: (

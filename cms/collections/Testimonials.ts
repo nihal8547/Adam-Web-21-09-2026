@@ -30,6 +30,12 @@ export const Testimonials: CollectionConfig = {
       ],
     },
     { name: "rating", type: "number", min: 1, max: 5, defaultValue: 5 },
+    {
+      name: "avatar",
+      type: "upload",
+      relationTo: "media",
+      admin: { description: "Optional author photo (shown as circular avatar in slider)." },
+    },
     { name: "order", type: "number", admin: { position: "sidebar" } },
   ],
 };

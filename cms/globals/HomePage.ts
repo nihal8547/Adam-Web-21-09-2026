@@ -167,6 +167,64 @@ export const HomePage: GlobalConfig = {
             },
           ],
         },
+        {
+          label: "Certifications",
+          fields: [
+            { name: "certEyebrow", type: "text" },
+            { name: "certHeading", type: "text" },
+            { name: "certDescription", type: "textarea" },
+            {
+              name: "certifications",
+              type: "array",
+              fields: [
+                { name: "badgeCode", type: "text", required: true },
+                { name: "logo", type: "upload", relationTo: "media" },
+              ],
+            },
+            {
+              type: "row",
+              fields: [
+                { name: "certCtaLabel", type: "text", admin: { width: "50%" } },
+                { name: "certCtaHref", type: "text", admin: { width: "50%" } },
+                { name: "certCtaDesc", type: "text", admin: { width: "100%" } },
+              ],
+            },
+          ],
+        },
+        {
+          label: "Project Gallery",
+          fields: [
+            { name: "galleryEyebrow", type: "text" },
+            { name: "galleryHeading", type: "text" },
+            { name: "galleryDescription", type: "textarea" },
+            {
+              name: "galleryImages",
+              type: "array",
+              fields: [
+                { name: "image", type: "upload", relationTo: "media", required: true },
+                { name: "altText", type: "text", required: true },
+              ],
+            },
+          ],
+        },
+        {
+          label: "3D Interactive Showcase",
+          fields: [
+            { name: "showcaseEyebrow", type: "text" },
+            { name: "showcaseHeading", type: "text" },
+            { name: "showcaseDescription", type: "textarea" },
+            {
+              name: "showcaseModels",
+              type: "array",
+              fields: [
+                { name: "modelName", type: "text", required: true },
+                { name: "modelTitle", type: "text", required: true },
+                { name: "modelDescription", type: "textarea" },
+                { name: "modelImage", type: "upload", relationTo: "media" },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

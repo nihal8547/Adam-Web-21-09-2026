@@ -6,10 +6,14 @@ import Hero from "@/components/Hero";
 import SectionHeading from "@/components/SectionHeading";
 import StatCounter from "@/components/StatCounter";
 import ServiceTile from "@/components/ServiceTile";
-import FeatureBlock from "@/components/FeatureBlock";
+import ExpertiseShowcase3D from "@/components/ExpertiseShowcase3D";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import LogoMarquee from "@/components/LogoMarquee";
 import CTABand from "@/components/CTABand";
+import OurWorkSwipeShowcase from "@/components/OurWorkSwipeShowcase";
+import CertificationsSection from "@/components/CertificationsSection";
+import ProjectGalleryInteractive from "@/components/ProjectGalleryInteractive";
+import WhatMakesUsBetterDropdown from "@/components/WhatMakesUsBetterDropdown";
 import Reveal from "@/components/Reveal";
 import Icon, { type IconName } from "@/components/Icon";
 import { Button } from "@/components/Button";
@@ -52,79 +56,157 @@ export default async function HomePage() {
     getTestimonials(),
     getClients(),
   ]);
-  const { stats, whatDrivesUs, whatMakesUsBetter, groupCredibility, qcddBand, homeFeatureBlocks } =
-    home;
-  const showcaseProjects = allProjects.slice(0, 3);
+  const { stats, whatDrivesUs, groupCredibility, qcddBand } = home;
 
   return (
     <>
-      <Hero hero={home.hero} />
+      <Hero
+        eyebrow={home.hero.eyebrow}
+        primaryCta={home.hero.primaryCta}
+        secondaryCta={home.hero.secondaryCta}
+        quickAccess={home.hero.quickAccess}
+      />
 
-      {/* Stat band — gold-tinted 6-column credentials grid */}
+      {/* Stat band — 6-column credentials grid */}
       <section
         id="company-stats"
-        className="bg-[var(--color-navy-900)] text-white"
+        className="bg-white border-y border-[var(--border)] shadow-sm"
         aria-label="Adam Technical Services key credentials: #1 in Qatar, QCDD, 24/7 Emergency, 1000+ Projects, 100+ Employees, NFPA Compliant"
       >
-        <Container className="grid grid-cols-2 gap-y-8 gap-x-4 py-10 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
-          {stats.map((s, i) => (
-            <div
-              key={s.label}
-              className={`flex flex-col justify-center ${i < stats.length - 1 ? "lg:border-r lg:border-[var(--color-brand-300)]/35" : ""
-                }`}
-            >
-              <StatCounter {...s} invert />
-            </div>
-          ))}
+        <Container>
+          <Reveal className="grid grid-cols-2 gap-y-8 gap-x-4 py-10 sm:grid-cols-3 lg:grid-cols-6 lg:gap-2">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`flex flex-col justify-center ${i < stats.length - 1 ? "lg:border-r lg:border-[var(--border)]" : ""
+                  }`}
+              >
+                <StatCounter {...s} />
+              </div>
+            ))}
+          </Reveal>
         </Container>
       </section>
 
-      {/* Who We Are band — image + intro + inline stats */}
-      <section id="about" className="bg-white" aria-labelledby="about-heading">
-        <Container className="py-16 md:py-20">
-          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      {/* Who We Are / What Drives Us band — modern architectural layout */}
+      <section
+        id="about"
+        className="relative overflow-hidden bg-[var(--color-navy-900)] text-white pt-16 pb-24 sm:pb-32 lg:pb-36"
+        aria-labelledby="about-heading"
+      >
+        {/* Subtle decorative background blur */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-10 h-96 w-96 rounded-full bg-[var(--color-brand-500)]/10 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-20 bottom-10 h-80 w-80 rounded-full bg-[var(--color-brand-400)]/5 blur-2xl"
+        />
+
+        <Container className="relative z-10">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1.1fr] lg:gap-16">
+            {/* Visual Column */}
             <Reveal>
-              <div className="relative overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] shadow-[var(--shadow-card)] max-h-[400px] lg:max-h-[450px] flex items-center justify-center">
-                <Image
-                  src="/images/hero-engineering.svg"
-                  alt="QCDD-certified fire protection engineers from Adam Technical Services inspecting a fire system on site in Doha, Qatar"
-                  width={640}
-                  height={450}
-                  className="h-full w-full object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-                <span
+              <div className="group relative">
+                {/* Main Photo Container */}
+                <div className="relative overflow-hidden rounded-[24px] border border-white/15 bg-white/5 shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
+                  <Image
+                    src={home.whoImage || "/images/about-engineering-team.jpg"}
+                    alt="QCDD-certified fire protection engineers from Adam Technical Services inspecting a fire pump room and alarm panel in Doha, Qatar"
+                    width={800}
+                    height={600}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
+                  {/* Subtle gradient vignette */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy-900)]/80 via-transparent to-black/20"
+                  />
+
+                  {/* Top-Right Location Badge */}
+                  <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/45 px-3.5 py-1 text-xs font-semibold text-white shadow-md backdrop-blur-md">
+                    <Icon name="map-pin" size={13} className="text-[var(--color-brand-400)]" />
+                    <span>Doha, Qatar</span>
+                  </div>
+
+                  {/* Bottom Floating Glassmorphic Compliance Card */}
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-sm rounded-2xl border border-white/30 bg-[var(--color-navy-900)]/90 p-4 text-white shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:bg-[var(--color-navy-900)]">
+                    <div className="flex items-center gap-3.5">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-500)] text-white shadow-md">
+                        <Icon name="shield" size={24} />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-wider text-[var(--color-brand-300)]">
+                          <span>Civil Defence Approved</span>
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        </div>
+                        <div className="text-sm font-bold text-white">
+                          QCDD License &amp; NFPA Certified
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative gold edge accent */}
+                <div
                   aria-hidden
-                  className="absolute bottom-0 left-0 h-full w-1.5 bg-[var(--color-brand-500)]"
+                  className="pointer-events-none absolute -bottom-3 -right-3 -z-10 h-full w-full rounded-[26px] border-2 border-[var(--color-brand-400)]/30"
                 />
               </div>
             </Reveal>
+
+            {/* Content Column */}
             <Reveal delay={80}>
-              <SectionHeading eyebrow={whatDrivesUs.eyebrow} title={whatDrivesUs.heading} as="h2" />
-              <div className="mt-4 space-y-4 text-[1.02rem] text-[var(--body)]">
-                {whatDrivesUs.body.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-              <div className="mt-7 grid grid-cols-2 gap-y-6 gap-x-4 sm:grid-cols-3 sm:gap-x-6">
-                {stats.map((s) => (
-                  <div key={s.label}>
-                    <div className="font-[var(--font-display)] text-2xl sm:text-3xl font-semibold leading-none text-[var(--accent-strong)]">
-                      {s.text ? s.text : `${s.prefix ?? ""}${s.value}${s.suffix ?? ""}`}
-                    </div>
-                    <div className="mt-1.5 text-[0.85rem] font-semibold text-[var(--subheading)] leading-snug">
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8">
-                <Button href="/about-us" variant="secondary">
-                  About Us →
-                </Button>
+              <div>
+                <SectionHeading
+                  eyebrow={whatDrivesUs.eyebrow}
+                  title={whatDrivesUs.heading}
+                  as="h2"
+                  invert
+                  eyebrowClassName="!text-[var(--color-brand-400)] [&::after]:!bg-[var(--color-brand-400)]"
+                />
+
+                <div className="mt-5 space-y-3.5 text-[1.02rem] leading-relaxed text-white/80">
+                  {whatDrivesUs.body.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
               </div>
             </Reveal>
           </div>
+        </Container>
+
+        {/* Curved Wave Transition to the White Section Below (Matching Reference Site) */}
+        <div className="absolute -bottom-1 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none rotate-180">
+          <svg
+            viewBox="0 0 1920 272"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-auto min-h-[50px] max-h-[140px] block"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M-34.4998 0H1921L1977 49H1921C1259 -32 388.5 84 -1.99982 236C-392.5 388 -34.4998 0 -34.4998 0Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+      </section>
+
+      {/* Our Projects Section — Directly After About Section with Curved Model & White Background */}
+      <section
+        id="projects"
+        className="relative bg-white py-14 md:py-20 text-slate-900"
+        aria-labelledby="projects-heading"
+      >
+        <Container className="relative">
+          <Reveal>
+            <OurWorkSwipeShowcase projects={allProjects} />
+          </Reveal>
         </Container>
       </section>
 
@@ -153,61 +235,30 @@ export default async function HomePage() {
               </Reveal>
             ))}
           </ul>
-          <div className="mt-10 text-center">
+          <Reveal delay={100} className="mt-10 text-center">
             <Button href="/services" size="lg">
               View all 9 services →
             </Button>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
-      {/* What Makes Us Better — 3 cards */}
-      <section id="why-us" className="bg-[var(--surface)]" aria-labelledby="why-us-heading">
-        <Container className="py-16 md:py-20">
-          <SectionHeading
-            eyebrow="What Makes Us Better"
-            title="Engineering you can rely on"
-            align="center"
-            as="h2"
-          />
-          <ul className="mt-12 grid gap-6 md:grid-cols-3">
-            {whatMakesUsBetter.map((card, i) => (
-              <Reveal as="li" key={card.title} delay={i * 90}>
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-[var(--border)] bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-                  {/* Subtle hover gradient background */}
-                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-[var(--color-brand-50)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  
-                  <div className="relative z-10 flex h-full flex-col">
-                    <span className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--surface-wash)] text-[var(--accent-strong)] transition-all duration-300 group-hover:scale-110 group-hover:bg-[var(--color-brand-500)] group-hover:text-white">
-                      <Icon name={card.icon as IconName} size={28} />
-                    </span>
-                    <h3 className="text-[1.25rem] font-bold text-[var(--heading)] transition-colors group-hover:text-[var(--color-brand-600)]">
-                      {card.title}
-                    </h3>
-                    <p className="mt-3 text-[0.95rem] leading-relaxed text-[var(--body)]">
-                      {card.desc}
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-        </Container>
-      </section>
+      {/* What Makes Us Better — Left Side 3 Icons + Right Side Dropdown Model */}
+      <WhatMakesUsBetterDropdown />
 
       {/* Group credibility quote */}
       <section
         id="group-credibility"
-        className="bg-[var(--surface-alt)]"
+        className="border-t border-[var(--border)] bg-[var(--surface-alt)]"
         aria-label="About Faisal Bin Ejayan Group and Adam Technical Services"
       >
         <Container className="py-16">
           <Reveal className="mx-auto max-w-4xl text-center">
-            <span className="text-[var(--accent)]">
+            <span className="text-[var(--color-brand-500)]">
               <Icon name="quote" size={44} className="mx-auto" />
             </span>
             <blockquote className="mt-4">
-              <p className="text-[length:var(--text-2xl)] font-medium leading-snug text-[var(--heading)]">
+              <p className="text-[length:var(--text-xl)] sm:text-[length:var(--text-2xl)] font-semibold leading-snug text-[var(--color-navy-900)]">
                 {groupCredibility}
               </p>
             </blockquote>
@@ -215,160 +266,43 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* QCDD band — gold */}
+      {/* QCDD band — white */}
       <CTABand
         eyebrow={qcddBand.eyebrow}
         heading={qcddBand.heading}
         body={qcddBand.body}
         primary={{ label: qcddBand.cta.label + " →", href: qcddBand.cta.href }}
-        tone="navy"
+        tone="surface"
       />
 
-      {/* Feature blocks */}
-      <section
-        id="expertise"
-        className="bg-[var(--surface)]"
-        aria-label="HVAC services and water leak detection expertise in Qatar"
-      >
-        <Container className="flex flex-col gap-20 py-16 md:py-24">
-          {homeFeatureBlocks.map((block, i) => (
-            <FeatureBlock key={block.heading} {...block} reverse={i % 2 === 1} />
-          ))}
-        </Container>
-      </section>
 
-      {/* Projects showcase — NAFFCO reference tiles */}
-      <section id="projects" className="bg-[var(--surface-alt)]" aria-labelledby="projects-heading">
-        <Container className="py-16 md:py-20">
-          <SectionHeading
-            eyebrow="Our Work"
-            title="Projects delivered across Qatar"
-            description="Fire protection, HVAC, ACMV and leak-detection work across every sector."
-            align="center"
-            as="h2"
-          />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {showcaseProjects.map((p, i) => (
-              <Reveal as="li" key={p.slug} delay={(i % 3) * 80}>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="group relative isolate flex min-h-[280px] overflow-hidden rounded-[18px] text-white shadow-[var(--shadow-card)] ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)] hover:ring-2 hover:ring-[var(--color-brand-500)]/60"
-                >
-                  <Image
-                    src={p.image}
-                    alt={p.imageAlt}
-                    fill
-                    sizes="(max-width: 520px) 100vw, (max-width: 820px) 50vw, 33vw"
-                    className="-z-20 object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                  />
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -z-10"
-                    style={{
-                      background:
-                        "linear-gradient(0deg, rgba(15,30,61,0.82) 0%, rgba(15,30,61,0.28) 45%, rgba(15,30,61,0.08) 100%)",
-                    }}
-                  />
-                  <span className="absolute right-4 top-4 rounded-full bg-white/15 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-wide">
-                    {p.sector}
-                  </span>
-                  <div className="mt-auto flex w-full items-end justify-between gap-3 p-5">
-                    <div>
-                      <h3 className="text-[1.15rem] font-semibold text-white">{p.title}</h3>
-                      <p className="mt-1 max-w-[30ch] text-[0.85rem] text-white/85">{p.summary}</p>
-                    </div>
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white transition-transform group-hover:translate-x-1">
-                      <Icon name="arrow-right" size={18} />
-                    </span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </ul>
-          <div className="mt-10 text-center">
-            <Button href="/projects" variant="secondary" size="lg">
-              View all projects →
-            </Button>
-          </div>
-        </Container>
-      </section>
 
-      {/* Photo Gallery */}
-      <section className="bg-white" id="gallery" aria-labelledby="gallery-heading">
-        <Container className="py-16 md:py-20">
-          <SectionHeading
-            eyebrow="Project Gallery"
-            title="Fire Protection & MEP Projects in Qatar"
-            description="A visual showcase of fire alarm systems, sprinklers, HVAC, ACMV and MEP installations completed by Adam Technical Services across Doha and Qatar."
-            align="center"
-            as="h2"
-          />
-          <Reveal>
-            <div
-              role="list"
-              className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>div]:mb-4"
-            >
-              {[
-                {
-                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=Fire+Alarm",
-                  alt: "Fire alarm panel installation by Adam Technical Services in Qatar",
-                },
-                {
-                  src: "https://placehold.co/800x900/16294f/c9a24b.webp?text=Sprinkler+System",
-                  alt: "Sprinkler system piping installation in a commercial building, Doha",
-                },
-                {
-                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=HVAC+Unit",
-                  alt: "HVAC rooftop unit installed by Adam Technical Services in Qatar",
-                },
-                {
-                  src: "https://placehold.co/800x700/0f1e3d/c9a24b.webp?text=Pump+Room",
-                  alt: "Fire fighting pump room with QCDD-certified equipment",
-                },
-                {
-                  src: "https://placehold.co/800x600/16294f/c9a24b.webp?text=Leak+Detection",
-                  alt: "Underground water leak detection service using acoustic sensors in Qatar",
-                },
-                {
-                  src: "https://placehold.co/800x900/0f1e3d/c9a24b.webp?text=MEP+Works",
-                  alt: "MEP mechanical electrical plumbing works on a construction site in Doha",
-                },
-                {
-                  src: "https://placehold.co/800x600/0f1e3d/c9a24b.webp?text=ACMV+System",
-                  alt: "ACMV air conditioning and mechanical ventilation system installed in Qatar",
-                },
-                {
-                  src: "https://placehold.co/800x700/16294f/c9a24b.webp?text=Fire+Suppression",
-                  alt: "Fire suppression system installation for industrial facility in Qatar",
-                },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  role="listitem"
-                  className="group relative overflow-hidden rounded-[16px] shadow-[var(--shadow-card)] ring-1 ring-transparent transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[var(--shadow-hover)] hover:ring-2 hover:ring-[var(--color-brand-500)]/60"
-                >
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    width={800}
-                    height={600}
-                    className="w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
-                    unoptimized
-                    loading="lazy"
-                  />
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--color-navy-900)]/90 via-[var(--color-navy-900)]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-                  <span className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-3 p-4 text-[0.82rem] font-medium leading-snug text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    {item.alt}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </Container>
-      </section>
+      {/* 3D Interactive Equipment Inspection Showcase (HVAC & Leak Detection) */}
+      <ExpertiseShowcase3D 
+        models={home.showcaseModels}
+        eyebrow={home.showcaseEyebrow}
+        heading={home.showcaseHeading}
+        description={home.showcaseDescription}
+      />
+
+      {/* Official Certifications & Regulatory Approvals */}
+      <CertificationsSection
+        eyebrow={home.certEyebrow}
+        heading={home.certHeading}
+        description={home.certDescription}
+        cmsCertifications={home.certifications}
+        ctaLabel={home.certCtaLabel}
+        ctaHref={home.certCtaHref}
+        ctaDesc={home.certCtaDesc}
+      />
+
+      {/* Project Gallery - Interactive */}
+      <ProjectGalleryInteractive 
+        images={home.galleryImages as any} 
+        eyebrow={home.galleryEyebrow} 
+        heading={home.galleryHeading} 
+        description={home.galleryDescription} 
+      />
 
       {/* Testimonials */}
       <section
@@ -380,12 +314,13 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="Testimonials"
             title="What our clients say"
+            description="Real feedback from property owners, facility managers, and contractors across Qatar who trust our engineering standards."
             align="center"
             as="h2"
           />
-          <div className="mx-auto mt-12 max-w-3xl">
+          <Reveal delay={80} className="mt-12 w-full">
             <TestimonialSlider items={testimonials} />
-          </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -396,12 +331,14 @@ export default async function HomePage() {
         aria-label="Trusted clients and partners of Adam Technical Services across Qatar"
       >
         <Container className="py-14">
-          <p className="text-center text-[0.85rem] font-semibold uppercase tracking-[0.14em] text-[var(--body)]">
-            Trusted by clients and partners across Qatar
-          </p>
-          <div className="mt-8">
-            <LogoMarquee items={clients} />
-          </div>
+          <Reveal>
+            <p className="text-center text-[0.85rem] font-semibold uppercase tracking-[0.14em] text-[var(--body)]">
+              Trusted by clients and partners across Qatar
+            </p>
+            <div className="mt-8">
+              <LogoMarquee items={clients} />
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -427,8 +364,9 @@ export default async function HomePage() {
             align="center"
             as="h2"
             invert
+            eyebrowClassName="!text-white [&::after]:!bg-white"
           />
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+          <Reveal delay={80} className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
             {[
               {
                 title: "Contact Us",
@@ -448,14 +386,14 @@ export default async function HomePage() {
               <Link
                 key={path.href}
                 href={path.href}
-                className="group relative flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-brand-500)]/40 hover:bg-white/[0.07]"
+                className="group relative flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.07]"
               >
-                <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-brand-500)] text-[var(--color-navy-900)] transition-transform duration-300 group-hover:scale-110">
+                <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-white/30 group-hover:bg-white/20">
                   <Icon name={path.icon} size={26} />
                 </span>
                 <h3 className="mt-5 text-[1.35rem] font-semibold text-white">{path.title}</h3>
                 <p className="mt-2 text-white/70">{path.desc}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-[var(--color-brand-300)]">
+                <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-white transition-colors group-hover:text-white/90">
                   {path.cta}
                   <Icon
                     name="arrow-right"
@@ -465,7 +403,7 @@ export default async function HomePage() {
                 </span>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

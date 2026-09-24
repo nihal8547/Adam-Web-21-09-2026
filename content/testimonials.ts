@@ -7,6 +7,8 @@ export type Testimonial = {
   title: string;
   author: string;
   role: string;
+  rating?: number;
+  avatar?: string;
 };
 
 export const testimonials: Testimonial[] = [

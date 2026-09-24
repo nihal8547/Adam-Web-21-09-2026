@@ -2,8 +2,8 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import Logo from "@/components/Logo";
 import Icon from "@/components/Icon";
-import { site } from "@/content/site";
 import { services } from "@/content/services";
+import type { SiteData } from "@/lib/cms/site";
 
 const quickLinks = [
   { label: "About Us", href: "/about-us" },
@@ -20,8 +20,15 @@ const legalLinks = [
   { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
-export default function Footer() {
+export default function Footer({ site }: { site: SiteData }) {
   const year = new Date().getFullYear();
+  const socialLinks = [
+    { label: "LinkedIn", href: site.social.linkedin },
+    { label: "Facebook", href: site.social.facebook },
+    { label: "Instagram", href: site.social.instagram },
+    { label: "X", href: site.social.x },
+  ].filter((s) => Boolean(s.href));
+
   return (
     <footer className="border-t-[3px] border-[var(--color-brand-500)] bg-[var(--surface-alt)] text-[var(--body)]">
       <Container className="py-14">
@@ -30,29 +37,25 @@ export default function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-[0.9rem] leading-relaxed text-[var(--ink-500)]">
-              QCDD-certified fire protection and MEP contractor in Doha, Qatar — fire alarms, pumps,
-              sprinklers, leak detection, HVAC, ACMV and electrical services, engineered to NFPA
-              standards.
+              {site.description ||
+                "QCDD-certified fire protection and MEP contractor in Doha, Qatar — fire alarms, pumps, sprinklers, leak detection, HVAC, ACMV and electrical services, engineered to NFPA standards."}
             </p>
-            <div className="mt-5 flex items-center gap-3">
-              {[
-                { label: "LinkedIn", href: site.social.linkedin },
-                { label: "Facebook", href: site.social.facebook },
-                { label: "Instagram", href: site.social.instagram },
-                { label: "X", href: site.social.x },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  aria-label={s.label}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink-700)] transition-colors hover:border-[var(--color-brand-500)] hover:text-[var(--accent-strong)]"
-                >
-                  <span className="text-[0.7rem] font-bold">{s.label.slice(0, 2)}</span>
-                </a>
-              ))}
-            </div>
+            {socialLinks.length > 0 && (
+              <div className="mt-5 flex items-center gap-3">
+                {socialLinks.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href!}
+                    aria-label={s.label}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--ink-700)] transition-colors hover:border-[var(--color-brand-500)] hover:text-[var(--accent-strong)]"
+                  >
+                    <span className="text-[0.7rem] font-bold">{s.label.slice(0, 2)}</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Services */}
@@ -108,18 +111,18 @@ export default function Footer() {
                 </span>
               </span>
               <a
-                href={site.phone.href}
+                href={site.phoneHref}
                 className="flex items-center gap-2.5 hover:text-[var(--accent-strong)]"
               >
                 <Icon name="phone" size={17} className="text-[var(--accent-strong)]" />
-                {site.phone.display}
+                {site.phone}
               </a>
               <a
-                href={site.mobile.href}
+                href={site.mobileHref}
                 className="flex items-center gap-2.5 hover:text-[var(--accent-strong)]"
               >
                 <Icon name="phone" size={17} className="text-[var(--accent-strong)]" />
-                {site.mobile.display} (Mobile)
+                {site.mobile} (Mobile)
               </a>
               <a
                 href={`mailto:${site.email}`}
@@ -128,16 +131,18 @@ export default function Footer() {
                 <Icon name="mail" size={17} className="text-[var(--accent-strong)]" />
                 {site.email}
               </a>
-              <span className="flex items-start gap-2.5">
-                <Icon name="clock" size={17} className="mt-0.5 text-[var(--accent-strong)]" />
-                <span>
-                  {site.hours.map((h) => (
-                    <span key={h.days} className="block">
-                      {h.days}: {h.time}
-                    </span>
-                  ))}
+              {site.hours.length > 0 && (
+                <span className="flex items-start gap-2.5">
+                  <Icon name="clock" size={17} className="mt-0.5 text-[var(--accent-strong)]" />
+                  <span>
+                    {site.hours.map((h) => (
+                      <span key={h.days} className="block">
+                        {h.days}: {h.time}
+                      </span>
+                    ))}
+                  </span>
                 </span>
-              </span>
+              )}
             </address>
           </div>
         </div>

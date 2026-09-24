@@ -81,11 +81,21 @@ export default function ServiceTile({
 
       {/* Bottom overlay content */}
       <div className="mt-auto flex w-full items-end justify-between gap-3 p-5">
-        <div>
-          <h3 className="text-[1.25rem] font-semibold text-white">{name}</h3>
-          <p className="mt-1 max-w-[30ch] text-[0.85rem] text-white/85">{excerpt}</p>
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[1.25rem] font-semibold text-white leading-snug">
+            <span className="link-underline">{name}</span>
+          </h3>
+
+          {/* Sub text - revealed only on mouse hover */}
+          <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-hover:mt-2">
+            <div className="overflow-hidden">
+              <p className="max-w-[32ch] text-[0.85rem] leading-relaxed text-white/85">
+                {excerpt}
+              </p>
+            </div>
+          </div>
         </div>
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white transition-transform group-hover:translate-x-1">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-brand-500)] text-white transition-all duration-300 group-hover:translate-x-1 group-hover:scale-105">
           <Icon name="arrow-right" size={18} />
         </span>
       </div>

@@ -27,6 +27,17 @@ export const Projects: CollectionConfig = {
     { name: "title", type: "text", required: true },
     slugField("title"),
     {
+      name: "featured",
+      type: "checkbox",
+      defaultValue: false,
+      admin: { position: "sidebar", description: "Show in the featured projects showcase on the home page." },
+    },
+    {
+      name: "order",
+      type: "number",
+      admin: { position: "sidebar", description: "Sort order (low = first)." },
+    },
+    {
       type: "row",
       fields: [
         {

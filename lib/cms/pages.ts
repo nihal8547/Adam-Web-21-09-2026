@@ -92,3 +92,39 @@ export async function getContactPage(): Promise<ContactExtras> {
     };
   }, fallback);
 }
+
+export type ServicesPageData = {
+  hero: { eyebrow: string; heading: string; description: string };
+  process: { eyebrow: string; heading: string };
+};
+
+export async function getServicesPage(): Promise<ServicesPageData> {
+  const fallback: ServicesPageData = {
+    hero: {
+      eyebrow: "Our Expertise",
+      heading: "Complete Fire Protection & MEP Solutions",
+      description:
+        "From life-safety fire systems to advanced HVAC and electrical infrastructures, we engineer solutions that ensure total compliance, safety, and operational excellence across Qatar.",
+    },
+    process: {
+      eyebrow: "Process Overview",
+      heading: "Our Signature Methodology",
+    },
+  };
+  return fromCms(async (payload) => {
+    const g: any = await payload.findGlobal({ slug: "services-page", depth: 0 });
+    if (!g || !g.heroHeading) return null;
+    return {
+      hero: {
+        eyebrow: g.heroEyebrow || fallback.hero.eyebrow,
+        heading: g.heroHeading || fallback.hero.heading,
+        description: g.heroDescription || fallback.hero.description,
+      },
+      process: {
+        eyebrow: g.processEyebrow || fallback.process.eyebrow,
+        heading: g.processHeading || fallback.process.heading,
+      },
+    };
+  }, fallback);
+}
+

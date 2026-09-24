@@ -18,6 +18,7 @@ import { Testimonials } from "@/cms/collections/Testimonials";
 import { Clients } from "@/cms/collections/Clients";
 import { SiteSettings } from "@/cms/globals/SiteSettings";
 import { HomePage } from "@/cms/globals/HomePage";
+import { ServicesPage } from "@/cms/globals/ServicesPage";
 import { AboutPage, QcddPage, ContactPage } from "@/cms/globals/ContentPages";
 import {
   revalidateAfterChange,
@@ -78,7 +79,7 @@ export default buildConfig({
       withRevalidate,
     ),
   ],
-  globals: [SiteSettings, HomePage, AboutPage, QcddPage, ContactPage].map(withRevalidateGlobal),
+  globals: [SiteSettings, HomePage, ServicesPage, AboutPage, QcddPage, ContactPage].map(withRevalidateGlobal),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({

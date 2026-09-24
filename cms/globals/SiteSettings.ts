@@ -89,6 +89,21 @@ export const SiteSettings: GlobalConfig = {
             { name: "x", type: "text", label: "X / Twitter" },
           ],
         },
+        {
+          label: "Splash Screen",
+          fields: [
+            {
+              name: "splashWords",
+              type: "array",
+              fields: [
+                { name: "word", type: "text", required: true },
+                { name: "lang", type: "text", required: true },
+                { name: "dir", type: "select", options: ["ltr", "rtl"], defaultValue: "ltr", required: true },
+              ]
+            },
+            { name: "splashStepMs", type: "number", defaultValue: 220, admin: { description: "Time each word shows (ms)" } },
+          ]
+        },
       ],
     },
   ],

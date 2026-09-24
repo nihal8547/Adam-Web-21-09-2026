@@ -1,48 +1,51 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { SplashWord } from "@/lib/cms/site";
 
 /**
  * Welcome splash shown on every load / refresh: a full white screen where the
- * greeting flashes quickly one word at a time in the centre — "WELCOME"
- * (Nunito), then Arabic, Hindi and Malayalam — before the splash fades away to
- * reveal the site. Purely decorative (aria-hidden).
+ * greeting flashes quickly one word at a time in the centre — driven by CMS
+ * (SiteSettings → Splash Screen tab) with static fallback.
  */
-const WORDS = [
-  { t: "WELCOME", lang: "en", dir: "ltr" as const },
-  { t: "أهلاً وسهلاً", lang: "ar", dir: "rtl" as const },
-  { t: "स्वागत है", lang: "hi", dir: "ltr" as const },
-  { t: "സ്വാഗതം", lang: "ml", dir: "ltr" as const },
-];
 
-const STEP_MS = 360; // each word flashes quickly
-const FADE_MS = 450; // final fade-out
+const FADE_MS = 450;
 
-export default function SplashScreen() {
+export default function SplashScreen({
+  words,
+  stepMs = 220,
+}: {
+  words: SplashWord[];
+  stepMs?: number;
+}) {
   const [index, setIndex] = useState(0);
   const [show, setShow] = useState(true);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    if (index < WORDS.length - 1) {
-      const next = setTimeout(() => setIndex((i) => i + 1), STEP_MS);
+    if (words.length === 0) {
+      setShow(false);
+      return;
+    }
+    if (index < words.length - 1) {
+      const next = setTimeout(() => setIndex((i) => i + 1), stepMs);
       return () => clearTimeout(next);
     }
-    const fade = setTimeout(() => setLeaving(true), STEP_MS);
-    const done = setTimeout(() => setShow(false), STEP_MS + FADE_MS);
+    const fade = setTimeout(() => setLeaving(true), stepMs);
+    const done = setTimeout(() => setShow(false), stepMs + FADE_MS);
     return () => {
       clearTimeout(fade);
       clearTimeout(done);
     };
-  }, [index]);
+  }, [index, words.length, stepMs]);
 
-  if (!show) return null;
+  if (!show || words.length === 0) return null;
 
-  const word = WORDS[index];
+  const word = words[index];
   return (
     <div className={`splash${leaving ? " splash--leaving" : ""}`} aria-hidden="true">
       <span key={index} className="splash__word" lang={word.lang} dir={word.dir}>
-        {word.t}
+        {word.word}
       </span>
     </div>
   );

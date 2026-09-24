@@ -4,7 +4,7 @@
  * neutral placeholders rendered as generated SVG chips; replace `name` and
  * `logo` with the real client logos before launch (see README).
  */
-export type ClientLogo = { name: string; logo?: string };
+export type ClientLogo = { name: string; logo?: string; website?: string };
 
 export const clients: ClientLogo[] = Array.from({ length: 19 }, (_, i) => ({
   name: `Client ${String(i + 1).padStart(2, "0")}`,
