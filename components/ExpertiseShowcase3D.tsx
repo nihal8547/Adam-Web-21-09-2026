@@ -10,7 +10,7 @@ import { Button } from "@/components/Button";
 import Interactive3DViewer, { ModelType } from "@/components/Interactive3DViewer";
 import { cn } from "@/lib/cn";
 
-export type Media = any;
+export type Media = Record<string, unknown>;
 
 interface ModelInfo {
   type: ModelType;

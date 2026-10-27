@@ -15,10 +15,12 @@ export default function Accordion({
   items,
   className,
   headingLevel = "h3",
+  invert = false,
 }: {
   items: AccordionItem[];
   className?: string;
   headingLevel?: "h2" | "h3" | "h4";
+  invert?: boolean;
 }) {
   const [open, setOpen] = useState<number | null>(0);
   const baseId = useId();
@@ -26,7 +28,13 @@ export default function Accordion({
 
   return (
     <div
-      className={cn("divide-y divide-[var(--border)] border-y border-[var(--border)]", className)}
+      className={cn(
+        "divide-y border-y",
+        invert
+          ? "divide-white/15 border-white/20 text-white"
+          : "divide-[var(--border)] border-[var(--border)]",
+        className,
+      )}
     >
       {items.map((item, i) => {
         const isOpen = open === i;
@@ -41,13 +49,26 @@ export default function Accordion({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                className="flex w-full items-center justify-between gap-4 py-5 text-left cursor-pointer group"
               >
-                <span className="text-[1.05rem] font-semibold text-[var(--heading)]">{item.q}</span>
                 <span
                   className={cn(
-                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border)] text-[var(--accent-strong)] transition-transform",
-                    isOpen && "rotate-180 border-[var(--accent)] bg-[var(--surface-wash)]",
+                    "text-[1.05rem] font-semibold transition-colors",
+                    invert ? "text-white group-hover:text-amber-400" : "text-[var(--heading)] group-hover:text-[var(--color-brand-600)]",
+                  )}
+                >
+                  {item.q}
+                </span>
+                <span
+                  className={cn(
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                    invert
+                      ? isOpen
+                        ? "rotate-180 border-amber-400 bg-amber-400/20 text-amber-300"
+                        : "border-white/20 bg-white/5 text-white/70 group-hover:border-white/40 group-hover:text-white"
+                      : isOpen
+                        ? "rotate-180 border-[var(--accent)] bg-[var(--surface-wash)] text-[var(--accent-strong)]"
+                        : "border-[var(--border)] text-[var(--accent-strong)]",
                   )}
                 >
                   <Icon name="chevron-down" size={18} />
@@ -61,7 +82,12 @@ export default function Accordion({
               hidden={!isOpen}
               className="pb-5 pr-12"
             >
-              <p className="prose-measure text-[0.98rem] leading-relaxed text-[var(--body)]">
+              <p
+                className={cn(
+                  "prose-measure text-[0.98rem] leading-relaxed",
+                  invert ? "text-white/80" : "text-[var(--body)]",
+                )}
+              >
                 {item.a}
               </p>
             </div>

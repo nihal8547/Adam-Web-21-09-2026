@@ -5,7 +5,10 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 
-export type Media = any;
+export interface Media {
+  url?: string | null;
+  [key: string]: unknown;
+}
 
 const fallbackGalleryImages = [
   {

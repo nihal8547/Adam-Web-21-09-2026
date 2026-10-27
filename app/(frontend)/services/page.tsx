@@ -10,6 +10,7 @@ import Icon, { type IconName } from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { servicesItemListSchema } from "@/lib/jsonld";
+import ServiceTile from "@/components/ServiceTile";
 import { getAllServices } from "@/lib/cms/services";
 import { servicesProcess } from "@/content/company";
 
@@ -26,28 +27,37 @@ export default async function ServicesPage() {
   const services = await getAllServices();
   return (
     <>
-      {/* Hero Section - Minimal Professional */}
-      <section className="bg-white pt-24 pb-16 md:pt-32 md:pb-24 border-b border-slate-100">
-        <Container>
+      {/* Hero Section - Architectural Deep Navy + Ambient Glow */}
+      <section className="relative overflow-hidden bg-[var(--color-navy-900)] text-white pt-24 pb-16 md:pt-32 md:pb-20">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--color-brand-500)]/25 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-2xl"
+        />
+
+        <Container className="relative z-10">
           <div className="mb-6">
-            <Breadcrumbs crumbs={[{ name: "Services", path: "/services" }]} />
+            <Breadcrumbs crumbs={[{ name: "Services", path: "/services" }]} invert />
           </div>
           <div className="max-w-4xl">
             <Reveal>
-              <div className="inline-flex items-center gap-2 mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-brand-500)]" />
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
-                  Our Expertise
+              <div className="inline-flex items-center gap-2 mb-4">
+                <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+                  Our Engineering Capabilities
                 </span>
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h1 className="text-4xl sm:text-5xl md:text-[3.5rem] font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                Complete Fire Protection & MEP Solutions
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.15]">
+                Complete Fire Protection &amp; MEP Solutions
               </h1>
             </Reveal>
             <Reveal delay={200}>
-              <p className="mt-6 max-w-2xl text-lg text-slate-600 leading-relaxed">
+              <p className="mt-6 max-w-2xl text-base sm:text-lg text-white/80 leading-relaxed">
                 From life-safety fire systems to advanced HVAC and electrical infrastructures, we engineer solutions that ensure total compliance, safety, and operational excellence across Qatar.
               </p>
             </Reveal>
@@ -55,45 +65,28 @@ export default async function ServicesPage() {
         </Container>
       </section>
 
-      {/* Services Showcase - Minimal Grid */}
-      <section className="bg-slate-50 py-16 md:py-24">
+      {/* Services Showcase — Home Page Model Card Style */}
+      <section className="bg-slate-50 py-16 md:py-24 border-b border-slate-200/80">
         <Container>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((svc, i) => (
-              <Reveal as="div" key={svc.slug} delay={(i % 3) * 80}>
-                <Link
+              <Reveal as="li" key={svc.slug} delay={(i % 3) * 80}>
+                <ServiceTile
+                  name={svc.name}
+                  excerpt={svc.excerpt}
                   href={`/${svc.slug}`}
-                  className="group flex h-full flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/50"
-                >
-                  <div>
-                    {/* Top: Icon */}
-                    <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-[var(--color-navy-900)] transition-colors duration-300 group-hover:bg-[var(--color-brand-50)] group-hover:border-[var(--color-brand-100)] group-hover:text-[var(--color-brand-600)]">
-                      <Icon name={svc.icon as IconName} size={28} />
-                    </div>
-
-                    {/* Text Content */}
-                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[var(--color-brand-600)] transition-colors">
-                      {svc.name}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      {svc.excerpt}
-                    </p>
-                  </div>
-
-                  {/* Bottom: Link Arrow */}
-                  <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-[var(--color-navy-900)] transition-colors group-hover:text-[var(--color-brand-600)]">
-                    <span>Explore Service</span>
-                    <Icon name="arrow-right" size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </div>
-                </Link>
+                  icon={svc.icon}
+                  image={svc.image}
+                  className="h-full min-h-[280px]"
+                />
               </Reveal>
             ))}
-          </div>
+          </ul>
         </Container>
       </section>
 
-      {/* How We Work Section - Clean White */}
-      <section className="bg-white py-16 md:py-24 border-t border-slate-100">
+      {/* How We Work Section */}
+      <section className="bg-white py-16 md:py-24">
         <Container>
           <SectionHeading
             eyebrow="Process Overview"
@@ -112,6 +105,7 @@ export default async function ServicesPage() {
         body="Tell us about your project and our engineers will recommend the right solution."
         primary={{ label: "Get a Free Quote", href: "/request-for-quotation" }}
         secondary={{ label: "Contact Us", href: "/contact-us" }}
+        tone="navy"
       />
     </>
   );

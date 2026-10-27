@@ -40,31 +40,48 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
         ]}
       />
 
-      <Breadcrumbs
-        crumbs={[
-          { name: "Services", path: "/services" },
-          { name: service.name, path: `/${service.slug}` },
-        ]}
-      />
+      {/* Hero with Architectural Deep Navy + Ambient Glow */}
+      <section className="relative overflow-hidden bg-[var(--color-navy-900)] text-white pt-24 pb-16 md:pt-32 md:pb-20">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--color-brand-500)]/25 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-2xl"
+        />
 
-      {/* Hero */}
-      <section className="bg-[var(--surface-alt)]">
-        <Container className="py-14 md:py-16">
-          <span className="eyebrow gold-rule">{service.eyebrow}</span>
-          <h1 className="mt-4 max-w-3xl text-[length:var(--text-4xl)]">{service.h1}</h1>
-          <div className="mt-5 max-w-3xl space-y-4 text-[1.05rem] text-[var(--body)]">
-            {service.intro.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
+        <Container className="relative z-10">
+          <div className="mb-6">
+            <Breadcrumbs
+              crumbs={[
+                { name: "Services", path: "/services" },
+                { name: service.name, path: `/${service.slug}` },
+              ]}
+              invert
+            />
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/request-for-quotation" size="lg">
-              Get a Free Quote
-            </Button>
-            <Button href="/contact-us" variant="secondary" size="lg">
-              Talk to an Engineer
-            </Button>
-          </div>
+          <Reveal>
+            <span className="eyebrow gold-rule !text-amber-400 [&::after]:!bg-amber-400">
+              {service.eyebrow}
+            </span>
+            <h1 className="mt-4 max-w-4xl text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-white leading-tight">
+              {service.h1}
+            </h1>
+            <div className="mt-6 max-w-3xl space-y-4 text-base sm:text-lg text-white/80 leading-relaxed">
+              {service.intro.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3.5">
+              <Button href="/request-for-quotation" size="lg">
+                Get a Free Quote
+              </Button>
+              <Button href="/contact-us" variant="secondary" size="lg" className="border-white/30 text-white hover:bg-white/10 hover:text-white">
+                Talk to an Engineer
+              </Button>
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -78,17 +95,17 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
               {service.included.map((item) => (
                 <li
                   key={item.title}
-                  className="flex gap-3 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-4"
+                  className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-lg"
                 >
-                  <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)]">
-                    <Icon name="check" size={18} />
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-navy-900)] text-amber-400 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                    <Icon name="check" size={20} />
                   </span>
-                  <span>
-                    <span className="block font-semibold text-[var(--heading)]">{item.title}</span>
-                    <span className="block text-[0.9rem] leading-relaxed text-[var(--body)]">
+                  <div>
+                    <span className="block font-bold text-slate-900 text-base">{item.title}</span>
+                    <span className="mt-1 block text-sm leading-relaxed text-slate-600">
                       {item.desc}
                     </span>
-                  </span>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -210,13 +227,13 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
                 <li key={s.slug}>
                   <Link
                     href={`/${s.slug}`}
-                    className="group flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] border-l-[3px] border-l-[var(--color-brand-500)] bg-[var(--surface)] px-4 py-3 text-[0.95rem] font-semibold text-[var(--heading)] transition-colors hover:bg-[var(--surface-wash)]"
+                    className="group flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-5 py-4 text-[0.95rem] font-bold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-400/70 hover:shadow-md"
                   >
-                    {s.name}
+                    <span>{s.name}</span>
                     <Icon
                       name="arrow-right"
                       size={16}
-                      className="text-[var(--accent-strong)] transition-transform group-hover:translate-x-1"
+                      className="text-amber-500 transition-transform duration-300 group-hover:translate-x-1"
                     />
                   </Link>
                 </li>
@@ -227,9 +244,9 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
 
         {/* Sticky sidebar quote form (desktop) */}
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <Reveal className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-card)]">
-            <h2 className="text-[1.2rem] font-semibold text-[var(--heading)]">Request a quote</h2>
-            <p className="mt-1.5 text-[0.9rem] text-[var(--body)]">
+          <Reveal className="rounded-2xl border border-slate-200 bg-white p-7 shadow-xl shadow-slate-200/60 border-t-4 border-t-[var(--color-navy-900)]">
+            <h2 className="text-[1.3rem] font-bold text-slate-900">Request a quote</h2>
+            <p className="mt-1.5 text-[0.9rem] text-slate-600">
               Tell us about your {service.name.toLowerCase()} requirement and we&apos;ll get back to
               you.
             </p>
@@ -246,6 +263,7 @@ export default function ServiceDetailTemplate({ service }: { service: Service })
         body="QCDD-certified design, installation and maintenance — with 24/7 support."
         primary={{ label: "Get a Free Quote", href: "/request-for-quotation" }}
         secondary={{ label: "Call Now", href: "tel:+97441400922" }}
+        tone="navy"
       />
     </>
   );

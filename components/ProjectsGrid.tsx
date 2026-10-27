@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { sectors, type Project } from "@/content/projects";
+import Icon from "@/components/Icon";
 import { cn } from "@/lib/cn";
 
 /**
@@ -42,31 +43,39 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
           <li key={p.slug}>
             <Link
               href={`/projects/${p.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-hover)]"
+              className="group flex h-full flex-col overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400/60 hover:shadow-xl hover:shadow-slate-200/80"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={p.image}
                   alt={p.imageAlt}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="rounded-full bg-[var(--surface-wash)] px-2.5 py-0.5 text-[0.72rem] font-semibold uppercase tracking-wide text-[var(--accent-strong)]">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                <div className="absolute top-3.5 left-3.5">
+                  <span className="rounded-full bg-[var(--color-navy-900)]/90 backdrop-blur-md px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wider text-amber-400 border border-amber-400/30 shadow-md">
                     {p.sector}
                   </span>
-                  <span className="rounded-full border border-[var(--border)] px-2.5 py-0.5 text-[0.72rem] font-medium text-[var(--body)]">
-                    {p.service}
-                  </span>
                 </div>
-                <h3 className="mt-3 text-[1.1rem] font-semibold text-[var(--heading)]">
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                  <span>{p.service}</span>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 group-hover:text-[var(--color-brand-600)] transition-colors leading-snug">
                   {p.title}
                 </h3>
-                <p className="mt-2 flex-1 text-[0.9rem] text-[var(--body)]">{p.summary}</p>
-                <span className="mt-3 text-[0.8rem] text-[var(--body)]">{p.location}</span>
+                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-600 line-clamp-3">{p.summary}</p>
+                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs font-medium text-slate-500">{p.location}</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--color-navy-900)] group-hover:text-amber-500 transition-colors">
+                    <span>View Project</span>
+                    <Icon name="arrow-right" size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </div>
               </div>
             </Link>
           </li>

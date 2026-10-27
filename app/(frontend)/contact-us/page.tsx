@@ -23,13 +23,26 @@ export default async function ContactPage() {
   const internationalWorking = await getContactPage();
   return (
     <>
-      <Breadcrumbs crumbs={[{ name: "Contact Us", path: "/contact-us" }]} />
+      {/* Hero with Architectural Deep Navy + Ambient Glow */}
+      <section className="relative overflow-hidden bg-[var(--color-navy-900)] text-white pt-24 pb-16 md:pt-32 md:pb-20">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--color-brand-500)]/25 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-2xl"
+        />
 
-      <section className="bg-[var(--surface-alt)]">
-        <Container className="py-14 md:py-16">
-          <span className="eyebrow gold-rule">Contact</span>
-          <h1 className="mt-4 max-w-3xl text-[length:var(--text-4xl)]">Get in Touch</h1>
-          <p className="mt-5 max-w-2xl text-[1.05rem] text-[var(--body)]">
+        <Container className="relative z-10">
+          <div className="mb-6">
+            <Breadcrumbs crumbs={[{ name: "Contact Us", path: "/contact-us" }]} invert />
+          </div>
+          <span className="eyebrow gold-rule !text-amber-400 [&::after]:!bg-amber-400">Contact</span>
+          <h1 className="mt-4 max-w-4xl text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-white leading-tight">
+            Get in Touch
+          </h1>
+          <p className="mt-6 max-w-3xl text-base sm:text-lg text-white/80 leading-relaxed">
             Talk to our team about fire protection, HVAC, ACMV or MEP in Qatar. We&apos;ll respond
             quickly — and for emergencies, our 24/7 line is always open.
           </p>
@@ -87,9 +100,9 @@ export default async function ContactPage() {
         </div>
 
         {/* Form */}
-        <Reveal className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-card)] sm:p-8">
-          <h2 className="text-[1.4rem] font-semibold text-[var(--heading)]">Send us a message</h2>
-          <p className="mt-1.5 text-[var(--body)]">
+        <Reveal className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/60 border-t-4 border-t-[var(--color-navy-900)]">
+          <h2 className="text-2xl font-bold text-slate-900">Send us a message</h2>
+          <p className="mt-1.5 text-sm text-slate-600">
             Fields marked <span className="text-[var(--color-alert-600)]">*</span> are required.
           </p>
           <div className="mt-6">
@@ -99,8 +112,8 @@ export default async function ContactPage() {
       </Container>
 
       {/* International way of working */}
-      <section className="bg-[var(--surface-alt)]">
-        <Container className="py-16 md:py-20">
+      <section className="bg-slate-50 py-16 md:py-20 border-t border-slate-200/80">
+        <Container>
           <SectionHeading
             eyebrow={internationalWorking.eyebrow}
             title={internationalWorking.heading}
@@ -110,14 +123,14 @@ export default async function ContactPage() {
           <ul className="mt-12 grid gap-6 md:grid-cols-3">
             {internationalWorking.items.map((item, i) => (
               <Reveal as="li" key={item.title} delay={i * 90}>
-                <div className="flex h-full flex-col rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] p-7 shadow-[var(--shadow-card)]">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] bg-[var(--surface-wash)] text-[var(--accent-strong)]">
+                <div className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-xl">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-navy-900)] text-amber-400 shadow-md transition-transform duration-300 group-hover:scale-105">
                     <Icon name={["grid", "clock", "check"][i] as never} size={24} />
                   </span>
-                  <h3 className="mt-4 text-[1.15rem] font-semibold text-[var(--heading)]">
+                  <h3 className="mt-5 text-xl font-bold text-slate-900">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[var(--body)]">{item.desc}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.desc}</p>
                 </div>
               </Reveal>
             ))}

@@ -12,7 +12,7 @@ import LogoMarquee from "@/components/LogoMarquee";
 import CTABand from "@/components/CTABand";
 import OurWorkSwipeShowcase from "@/components/OurWorkSwipeShowcase";
 import CertificationsSection from "@/components/CertificationsSection";
-import ProjectGalleryInteractive from "@/components/ProjectGalleryInteractive";
+import ProjectGalleryInteractive, { type GalleryItem } from "@/components/ProjectGalleryInteractive";
 import WhatMakesUsBetterDropdown from "@/components/WhatMakesUsBetterDropdown";
 import Reveal from "@/components/Reveal";
 import Icon, { type IconName } from "@/components/Icon";
@@ -298,7 +298,7 @@ export default async function HomePage() {
 
       {/* Project Gallery - Interactive */}
       <ProjectGalleryInteractive 
-        images={home.galleryImages as any} 
+        images={home.galleryImages as unknown as GalleryItem[]} 
         eyebrow={home.galleryEyebrow} 
         heading={home.galleryHeading} 
         description={home.galleryDescription} 

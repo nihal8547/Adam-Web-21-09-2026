@@ -20,23 +20,34 @@ export default async function ProjectsPage() {
   const projects = await getAllProjects();
   return (
     <>
-      <Breadcrumbs crumbs={[{ name: "Projects", path: "/projects" }]} />
+      {/* Hero with Architectural Deep Navy + Ambient Glow */}
+      <section className="relative overflow-hidden bg-[var(--color-navy-900)] text-white pt-24 pb-16 md:pt-32 md:pb-20">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[var(--color-brand-500)]/25 blur-3xl"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-amber-400/10 blur-2xl"
+        />
 
-      <section className="bg-[var(--surface-alt)]">
-        <Container className="py-14 md:py-16">
-          <span className="eyebrow gold-rule">Our Work</span>
-          <h1 className="mt-4 max-w-3xl text-[length:var(--text-4xl)]">
+        <Container className="relative z-10">
+          <div className="mb-6">
+            <Breadcrumbs crumbs={[{ name: "Projects", path: "/projects" }]} invert />
+          </div>
+          <span className="eyebrow gold-rule !text-amber-400 [&::after]:!bg-amber-400">Our Work</span>
+          <h1 className="mt-4 max-w-4xl text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-white leading-tight">
             Projects Delivered Across Qatar
           </h1>
-          <p className="mt-5 max-w-2xl text-[1.05rem] text-[var(--body)]">
+          <p className="mt-6 max-w-3xl text-base sm:text-lg text-white/80 leading-relaxed">
             A selection of fire protection, HVAC, ACMV and leak-detection work across residential,
             commercial, industrial and high-rise sectors. Filter by sector or service to explore.
           </p>
         </Container>
       </section>
 
-      <section className="bg-[var(--surface)]">
-        <Container className="py-16">
+      <section className="bg-slate-50 py-16">
+        <Container>
           <ProjectsGrid projects={projects} />
         </Container>
       </section>
@@ -46,6 +57,7 @@ export default async function ProjectsPage() {
         body="Tell us about your building and requirements — we'll scope the right solution."
         primary={{ label: "Get a Free Quote", href: "/request-for-quotation" }}
         secondary={{ label: "Contact Us", href: "/contact-us" }}
+        tone="navy"
       />
     </>
   );

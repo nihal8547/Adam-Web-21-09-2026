@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/content/projects";
@@ -141,12 +141,16 @@ export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
   function getImageStyle(index: number): React.CSSProperties {
     const minWidth = 1024;
     const maxWidth = 1456;
-    let minGap = 120;
-    let maxGap = 160;
+    let minGap = 135;
+    const maxGap = 195;
     
     // Adjust for smaller screens
-    if (containerWidth < 768) {
-      minGap = 80;
+    if (containerWidth < 640) {
+      minGap = 70;
+    } else if (containerWidth < 768) {
+      minGap = 95;
+    } else if (containerWidth < 1024) {
+      minGap = 120;
     }
 
     let gap = minGap;
@@ -224,12 +228,15 @@ export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
         {/* Left Column: Text Info */}
         <div className="lg:col-span-5 flex flex-col justify-center">
           <div className="flex flex-col">
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--color-brand-500)] mb-0.5">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--color-brand-500)] mb-1">
               Featured Portfolio
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-bold text-slate-900 tracking-tight leading-none">
               Our Projects
             </h2>
+            <p className="mt-3 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+              QCDD-certified life safety, MEP, and HVAC systems engineered across landmark Qatar developments.
+            </p>
           </div>
 
           <div className="mt-6 sm:mt-8 min-h-[220px]">
@@ -249,7 +256,7 @@ export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
                 <h3 className="text-xl sm:text-2xl lg:text-[1.75rem] font-bold text-slate-900 leading-snug">
                   {current.title}
                 </h3>
-                <motion.p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed line-clamp-3 sm:line-clamp-4">
+                <motion.p className="mt-3 text-slate-700 text-sm sm:text-base leading-relaxed line-clamp-3 sm:line-clamp-4">
                   {current.summary.split(" ").map((word, i) => (
                     <motion.span
                       key={i}
@@ -335,11 +342,11 @@ export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
 
         {/* Right Column: 3D Image Carousel */}
         <div 
-          className="lg:col-span-7 relative flex items-center justify-center min-h-[400px] sm:min-h-[480px] lg:min-h-[560px] py-4"
+          className="lg:col-span-7 relative flex items-center justify-center min-h-[440px] sm:min-h-[520px] lg:min-h-[600px] py-4"
           ref={containerRef}
           style={{ perspective: "1000px" }}
         >
-          <div className="relative flex items-center justify-center w-full h-[360px] sm:h-[440px] lg:h-[500px]">
+          <div className="relative flex items-center justify-center w-full h-[400px] sm:h-[480px] lg:h-[540px]">
             {items.map((item, index) => (
               <div
                 key={item.id}
@@ -349,14 +356,14 @@ export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
                   if (isLeft) handlePrev();
                   if (isRight) handleNext();
                 }}
-                className="absolute w-[210px] sm:w-[260px] lg:w-[290px] h-[340px] sm:h-[420px] lg:h-[480px] rounded-[24px] overflow-hidden select-none will-change-transform"
+                className="absolute w-[260px] sm:w-[320px] md:w-[350px] lg:w-[370px] xl:w-[410px] h-[380px] sm:h-[460px] md:h-[490px] lg:h-[510px] xl:h-[530px] rounded-[24px] overflow-hidden select-none will-change-transform"
                 style={getImageStyle(index)}
               >
                 <Image
                   src={item.image}
                   alt={item.imageAlt}
                   fill
-                  sizes="(max-width: 640px) 210px, (max-width: 1024px) 260px, 300px"
+                  sizes="(max-width: 640px) 260px, (max-width: 1024px) 350px, 420px"
                   priority={index === 0}
                   className="object-cover"
                 />

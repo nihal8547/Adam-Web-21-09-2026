@@ -5,8 +5,8 @@
  */
 
 export const site = {
-  legalName: "Adam Technical Services",
-  shortName: "Adam Technical Services",
+  legalName: "Adam Technical Services W.L.L.",
+  shortName: "Adam Technical Services W.L.L.",
   group: "Faisal Bin Ejayan Group And Partners",
   tagline: "Fire Protection, HVAC & ACMV Excellence in Qatar",
   description:
