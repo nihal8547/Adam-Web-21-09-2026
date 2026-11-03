@@ -163,12 +163,12 @@ export default async function HomePage() {
             <Reveal delay={80}>
               <div>
                 <SectionHeading
-                  eyebrow={whatDrivesUs.eyebrow}
-                  title={whatDrivesUs.heading}
-                  as="h2"
-                  invert
-                  eyebrowClassName="!text-[var(--color-brand-400)] [&::after]:!bg-[var(--color-brand-400)]"
-                />
+                    eyebrow={whatDrivesUs.eyebrow}
+                    title={whatDrivesUs.heading}
+                    as="h2"
+                    invert
+                    eyebrowClassName="!text-[var(--color-brand-400)] [&::after]:!bg-[var(--color-brand-400)]"
+                  />
 
                 <div className="mt-5 space-y-3.5 text-[1.02rem] leading-relaxed text-white/80">
                   {whatDrivesUs.body.map((p, i) => (
@@ -198,12 +198,97 @@ export default async function HomePage() {
       </section>
 
       {/* Our Projects Section — Directly After About Section with Curved Model & White Background */}
+      {/* Our Projects Section with Abstract Architectural Graphics on the White Flanks */}
       <section
         id="projects"
-        className="relative bg-white py-14 md:py-20 text-slate-900"
+        className="relative bg-white py-10 md:py-14 text-slate-900 overflow-hidden"
         aria-labelledby="projects-heading"
       >
-        <Container className="relative">
+        {/* Abstract Background Model — Left Side Architectural Arcs & Dot Matrix */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 sm:left-2 lg:left-6 top-1 sm:top-3 w-48 sm:w-64 lg:w-80 h-56 sm:h-72 lg:h-88 z-0 select-none opacity-35 animate-abstract-float"
+        >
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 320 320"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern
+                id="arch-dots-left"
+                width="20"
+                height="20"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="3" cy="3" r="2" fill="#0f1e3d" fillOpacity="0.28" />
+              </pattern>
+              <linearGradient id="fade-left-diag" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="white" stopOpacity="1" />
+                <stop offset="70%" stopColor="white" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="white" stopOpacity="0" />
+              </linearGradient>
+              <mask id="arch-mask-left">
+                <rect width="320" height="320" fill="url(#fade-left-diag)" />
+              </mask>
+            </defs>
+            <rect width="320" height="320" fill="url(#arch-dots-left)" mask="url(#arch-mask-left)" />
+            <circle cx="40" cy="80" r="70" stroke="#c9a24b" strokeWidth="1.5" strokeOpacity="0.45" strokeDasharray="5 3" />
+            <circle cx="40" cy="80" r="110" stroke="#0f1e3d" strokeWidth="1.2" strokeOpacity="0.3" />
+            <circle cx="40" cy="80" r="150" stroke="#c9a24b" strokeWidth="1" strokeOpacity="0.35" strokeDasharray="8 5" />
+            <circle cx="40" cy="80" r="190" stroke="#0f1e3d" strokeWidth="0.8" strokeOpacity="0.2" />
+          </svg>
+        </div>
+
+        {/* Abstract Background Model — Right Side Engineering Waves & Dot Matrix */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 sm:right-2 lg:right-6 top-1 sm:top-3 w-48 sm:w-64 lg:w-80 h-56 sm:h-72 lg:h-88 z-0 select-none opacity-35 animate-abstract-float-reverse"
+        >
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 320 320"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <pattern
+                id="arch-dots-right"
+                width="20"
+                height="20"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="3" cy="3" r="2" fill="#c9a24b" fillOpacity="0.35" />
+              </pattern>
+              <linearGradient id="fade-right-diag" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="white" stopOpacity="1" />
+                <stop offset="70%" stopColor="white" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="white" stopOpacity="0" />
+              </linearGradient>
+              <mask id="arch-mask-right">
+                <rect width="320" height="320" fill="url(#fade-right-diag)" />
+              </mask>
+            </defs>
+            <rect width="320" height="320" fill="url(#arch-dots-right)" mask="url(#arch-mask-right)" />
+            <circle cx="280" cy="80" r="70" stroke="#0f1e3d" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="5 3" />
+            <circle cx="280" cy="80" r="110" stroke="#c9a24b" strokeWidth="1.2" strokeOpacity="0.45" />
+            <circle cx="280" cy="80" r="150" stroke="#0f1e3d" strokeWidth="1" strokeOpacity="0.3" strokeDasharray="8 5" />
+            <circle cx="280" cy="80" r="190" stroke="#c9a24b" strokeWidth="0.8" strokeOpacity="0.22" />
+          </svg>
+        </div>
+
+        {/* Soft Ambient Radial Accents */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-amber-400/5 blur-3xl z-0 animate-abstract-pulse"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-32 bottom-0 h-96 w-96 rounded-full bg-[var(--color-navy-900)]/5 blur-3xl z-0 animate-abstract-pulse"
+        />
+
+        <Container className="relative z-10">
           <Reveal>
             <OurWorkSwipeShowcase projects={allProjects} />
           </Reveal>
@@ -211,8 +296,54 @@ export default async function HomePage() {
       </section>
 
       {/* Services — NAFFCO image tiles (titles are real headings for SEO) */}
-      <section className="bg-[var(--surface-alt)]" id="services" aria-labelledby="services-heading">
-        <Container className="py-16 md:py-20">
+      <section className="relative overflow-hidden bg-[var(--surface-alt)]" id="services" aria-labelledby="services-heading">
+        {/* Dot Abstract Model — Left Blank Side */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 sm:left-4 top-0 sm:top-1 w-52 sm:w-72 lg:w-80 h-52 sm:h-72 lg:h-80 select-none z-0 opacity-35 animate-abstract-float"
+        >
+          <svg className="w-full h-full" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="svc-dots-left" width="18" height="18" patternUnits="userSpaceOnUse">
+                <circle cx="2.5" cy="2.5" r="1.75" fill="#0f1e3d" fillOpacity="0.30" />
+              </pattern>
+              <linearGradient id="svc-fade-left" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="white" stopOpacity="1" />
+                <stop offset="65%" stopColor="white" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="white" stopOpacity="0" />
+              </linearGradient>
+              <mask id="svc-mask-l">
+                <rect width="240" height="240" fill="url(#svc-fade-left)" />
+              </mask>
+            </defs>
+            <rect width="240" height="240" fill="url(#svc-dots-left)" mask="url(#svc-mask-l)" />
+          </svg>
+        </div>
+
+        {/* Dot Abstract Model — Right Blank Side */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 sm:right-4 top-0 sm:top-1 w-52 sm:w-72 lg:w-80 h-52 sm:h-72 lg:h-80 select-none z-0 opacity-35 animate-abstract-float-reverse"
+        >
+          <svg className="w-full h-full" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="svc-dots-right" width="18" height="18" patternUnits="userSpaceOnUse">
+                <circle cx="2.5" cy="2.5" r="1.75" fill="#c9a24b" fillOpacity="0.38" />
+              </pattern>
+              <linearGradient id="svc-fade-right" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="white" stopOpacity="1" />
+                <stop offset="65%" stopColor="white" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="white" stopOpacity="0" />
+              </linearGradient>
+              <mask id="svc-mask-r">
+                <rect width="240" height="240" fill="url(#svc-fade-right)" />
+              </mask>
+            </defs>
+            <rect width="240" height="240" fill="url(#svc-dots-right)" mask="url(#svc-mask-r)" />
+          </svg>
+        </div>
+
+        <Container className="relative z-10 py-16 md:py-20">
           <SectionHeading
             eyebrow="Our Services"
             title="Complete fire protection & MEP capability"
@@ -272,7 +403,7 @@ export default async function HomePage() {
         heading={qcddBand.heading}
         body={qcddBand.body}
         primary={{ label: qcddBand.cta.label + " →", href: qcddBand.cta.href }}
-        tone="surface"
+        backgroundImage="/images/hero-fire-safety.jpg"
       />
 
 
@@ -290,6 +421,7 @@ export default async function HomePage() {
         eyebrow={home.certEyebrow}
         heading={home.certHeading}
         description={home.certDescription}
+        displayMode={home.certDisplayMode}
         cmsCertifications={home.certifications}
         ctaLabel={home.certCtaLabel}
         ctaHref={home.certCtaHref}
@@ -342,67 +474,105 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* Let's Connect */}
+      {/* Let's Connect — Clean Architectural Consultation Model */}
       <section
         id="contact"
-        className="relative overflow-hidden bg-[var(--color-navy-900)]"
+        className="relative bg-[var(--color-navy-900)] text-white py-14 md:py-20 border-t border-white/10"
         aria-labelledby="contact-heading"
       >
-        {/* subtle gold glow accents */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[var(--color-brand-500)]/10 blur-3xl"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[var(--color-brand-500)]/10 blur-3xl"
-        />
-        <Container className="relative py-16 md:py-24">
-          <SectionHeading
-            eyebrow="Let's Connect"
-            title="Two ways to get started"
-            align="center"
-            as="h2"
-            invert
-            eyebrowClassName="!text-white [&::after]:!bg-white"
-          />
-          <Reveal delay={80} className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {[
-              {
-                title: "Contact Us",
-                desc: "Talk to our team about your fire protection, HVAC or MEP requirement.",
-                href: "/contact-us",
-                cta: "Get in touch",
-                icon: "mail" as IconName,
-              },
-              {
-                title: "Explore Careers",
-                desc: "Join a QCDD-certified team building a safer Qatar.",
-                href: "/careers",
-                cta: "View openings",
-                icon: "team" as IconName,
-              },
-            ].map((path) => (
-              <Link
-                key={path.href}
-                href={path.href}
-                className="group relative flex flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.07]"
-              >
-                <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-white/30 group-hover:bg-white/20">
-                  <Icon name={path.icon} size={26} />
-                </span>
-                <h3 className="mt-5 text-[1.35rem] font-semibold text-white">{path.title}</h3>
-                <p className="mt-2 text-white/70">{path.desc}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-white transition-colors group-hover:text-white/90">
-                  {path.cta}
-                  <Icon
-                    name="arrow-right"
-                    size={17}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-                </span>
-              </Link>
-            ))}
+        <Container>
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+              Let&apos;s Connect
+            </span>
+            <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+              Direct Support &amp; Inquiries
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-white/75 leading-relaxed">
+              Connect directly with our engineering team for projects, QCDD certifications, or career opportunities in Qatar.
+            </p>
+          </div>
+
+          <Reveal delay={80} className="mx-auto mt-10 max-w-4xl">
+            <div className="grid md:grid-cols-2 rounded-2xl border border-white/15 bg-white/[0.03] divide-y md:divide-y-0 md:divide-x divide-white/15 overflow-hidden">
+              {/* Column 1: Engineering & Projects */}
+              <div className="p-7 sm:p-9 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                    Client Inquiries
+                  </span>
+                  <h3 className="mt-2 text-xl font-bold text-white">
+                    Engineering &amp; Projects
+                  </h3>
+                  <p className="mt-2.5 text-sm text-white/75 leading-relaxed">
+                    Speak directly with our team for fire protection systems, HVAC engineering, and Civil Defence certification.
+                  </p>
+
+                  <div className="mt-6 pt-5 border-t border-white/10 space-y-1.5 text-sm text-white/80">
+                    <div>
+                      <span className="text-white/50 text-xs uppercase tracking-wider block">Phone:</span>
+                      <a href="tel:+97441400922" className="font-semibold text-white hover:text-amber-400 transition-colors">
+                        +974 4140 0922
+                      </a>
+                    </div>
+                    <div className="pt-2">
+                      <span className="text-white/50 text-xs uppercase tracking-wider block">Email:</span>
+                      <a href="mailto:info@adam.qa" className="font-semibold text-white hover:text-amber-400 transition-colors">
+                        info@adam.qa
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <Link
+                    href="/contact-us"
+                    className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors"
+                  >
+                    <span>Contact our engineers →</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Column 2: Careers & Talent */}
+              <div className="p-7 sm:p-9 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-amber-400">
+                    Join Our Team
+                  </span>
+                  <h3 className="mt-2 text-xl font-bold text-white">
+                    Careers &amp; Opportunities
+                  </h3>
+                  <p className="mt-2.5 text-sm text-white/75 leading-relaxed">
+                    Build your career with a QCDD-certified contractor delivering life safety and MEP infrastructure across Qatar.
+                  </p>
+
+                  <div className="mt-6 pt-5 border-t border-white/10 space-y-1.5 text-sm text-white/80">
+                    <div>
+                      <span className="text-white/50 text-xs uppercase tracking-wider block">Location:</span>
+                      <span className="font-semibold text-white">
+                        Doha, Qatar
+                      </span>
+                    </div>
+                    <div className="pt-2">
+                      <span className="text-white/50 text-xs uppercase tracking-wider block">Availability:</span>
+                      <span className="font-semibold text-white">
+                        Immediate openings for engineers &amp; technicians
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <Link
+                    href="/careers"
+                    className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors"
+                  >
+                    <span>Explore career openings →</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </Container>
       </section>

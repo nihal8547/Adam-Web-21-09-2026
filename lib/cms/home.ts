@@ -57,7 +57,17 @@ export type HomeData = {
   certEyebrow?: string;
   certHeading?: string;
   certDescription?: string;
-  certifications?: { badgeCode: string; logo?: string }[];
+  certDisplayMode?: "both" | "marquee" | "grid";
+  certifications?: {
+    badgeCode: string;
+    title?: string;
+    authority?: string;
+    status?: string;
+    scope?: string;
+    logo?: string;
+    logoUrl?: string;
+    verifyUrl?: string;
+  }[];
   certCtaLabel?: string;
   certCtaHref?: string;
   certCtaDesc?: string;
@@ -174,9 +184,16 @@ export async function getHome(): Promise<HomeData> {
       certEyebrow: g.certEyebrow,
       certHeading: g.certHeading,
       certDescription: g.certDescription,
+      certDisplayMode: g.certDisplayMode || "both",
       certifications: (g.certifications ?? []).map((c: any) => ({
         badgeCode: c.badgeCode,
-        logo: mediaUrl(c.logo),
+        title: c.title,
+        authority: c.authority,
+        status: c.status,
+        scope: c.scope,
+        logo: mediaUrl(c.logo) || c.logoUrl || "",
+        logoUrl: c.logoUrl,
+        verifyUrl: c.verifyUrl,
       })),
       certCtaLabel: g.certCtaLabel,
       certCtaHref: g.certCtaHref,

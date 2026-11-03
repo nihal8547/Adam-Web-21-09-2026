@@ -174,11 +174,60 @@ export const HomePage: GlobalConfig = {
             { name: "certHeading", type: "text" },
             { name: "certDescription", type: "textarea" },
             {
+              name: "certDisplayMode",
+              type: "select",
+              defaultValue: "both",
+              options: [
+                { label: "Both (Marquee + Cards Grid)", value: "both" },
+                { label: "Marquee Strip Only", value: "marquee" },
+                { label: "Detailed Cards Grid Only", value: "grid" },
+              ],
+              admin: {
+                description: "Choose how official certifications and logos are presented on the homepage.",
+              },
+            },
+            {
               name: "certifications",
               type: "array",
+              admin: {
+                description: "Custom official certificates & approval badges. Upload logo images or specify URLs.",
+              },
               fields: [
-                { name: "badgeCode", type: "text", required: true },
-                { name: "logo", type: "upload", relationTo: "media" },
+                {
+                  type: "row",
+                  fields: [
+                    { name: "badgeCode", type: "text", required: true, admin: { width: "50%", description: "e.g. QCDD GRADE A, NFPA MEMBER, ISO 9001:2015" } },
+                    { name: "title", type: "text", admin: { width: "50%", description: "e.g. Qatar Civil Defence Approved Contractor" } },
+                  ],
+                },
+                {
+                  type: "row",
+                  fields: [
+                    { name: "authority", type: "text", admin: { width: "50%", description: "e.g. Ministry of Interior, State of Qatar" } },
+                    { name: "status", type: "text", admin: { width: "50%", description: "e.g. Active & Certified, Code Compliant" } },
+                  ],
+                },
+                {
+                  name: "scope",
+                  type: "textarea",
+                  admin: {
+                    description: "Accreditation scope or compliance standard details.",
+                  },
+                },
+                {
+                  type: "row",
+                  fields: [
+                    { name: "logo", type: "upload", relationTo: "media", admin: { width: "50%", description: "Upload certificate badge or authority logo" } },
+                    { name: "logoUrl", type: "text", admin: { width: "50%", description: "Or direct logo image URL (e.g. /images/...)" } },
+                  ],
+                },
+                {
+                  name: "verifyUrl",
+                  type: "text",
+                  admin: {
+                    description: "Optional verification URL or authority page link (e.g. /qatar-civil-defence-department)",
+                  },
+                },
               ],
             },
             {

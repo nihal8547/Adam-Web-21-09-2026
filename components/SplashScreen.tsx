@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import type { SplashWord } from "@/lib/cms/site";
 
 /**
- * Welcome splash shown on every load / refresh: a full white screen where the
- * greeting flashes quickly one word at a time in the centre — driven by CMS
- * (SiteSettings → Splash Screen tab) with static fallback.
+ * Clean Multilingual Welcome Splash Screen:
+ * Flashes greetings quickly one word at a time in the centre
+ * (English, Arabic, Hindi, Malayalam, etc.), then smoothly fades away to reveal the Hero.
  */
 
 const FADE_MS = 450;
@@ -23,7 +23,7 @@ export default function SplashScreen({
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    if (words.length === 0) {
+    if (!words || words.length === 0) {
       setShow(false);
       return;
     }
@@ -37,13 +37,17 @@ export default function SplashScreen({
       clearTimeout(fade);
       clearTimeout(done);
     };
-  }, [index, words.length, stepMs]);
+  }, [index, words, stepMs]);
 
-  if (!show || words.length === 0) return null;
+  if (!show || !words || words.length === 0) return null;
 
-  const word = words[index];
+  const word = words[index] || words[0];
   return (
-    <div className={`splash${leaving ? " splash--leaving" : ""}`} aria-hidden="true">
+    <div
+      onClick={() => setShow(false)}
+      className={`splash${leaving ? " splash--leaving" : ""}`}
+      aria-hidden="true"
+    >
       <span key={index} className="splash__word" lang={word.lang} dir={word.dir}>
         {word.word}
       </span>

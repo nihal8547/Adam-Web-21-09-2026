@@ -37,10 +37,9 @@
      download). Nunito (--font-nunito, loaded in layout) is used only for the
      welcome splash. */
   --font-standard:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  --font-sans: var(--font-standard);
-  --font-display: var(--font-standard);
+    var(--font-poppins), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-poppins), var(--font-standard);
+  --font-display: var(--font-poppins), var(--font-standard);
   --font-arabic: ui-sans-serif, system-ui, "Segoe UI", Tahoma, Arial, sans-serif;
 
   /* Radii */
@@ -113,10 +112,19 @@
     background-color: var(--surface);
     color: var(--body);
     font-family: var(--font-sans);
+    font-weight: 400; /* Poppins Regular for texts */
     font-size: var(--text-base);
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  p, span, li, a, input, textarea, select, label {
+    font-family: var(--font-sans);
+  }
+
+  p {
+    font-weight: 400; /* Poppins Regular */
   }
 
   h1,
@@ -127,9 +135,9 @@
   h6 {
     font-family: var(--font-display);
     color: var(--heading);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    font-weight: 600 !important; /* Poppins Semi Bold for titles */
     text-wrap: balance;
   }
 
@@ -299,6 +307,51 @@
 }
 .animate-marquee-reverse {
   animation: marquee-reverse 40s linear infinite;
+}
+
+/* Abstract background floating & breathing animations */
+@keyframes abstractFloatSlow {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@keyframes abstractFloatReverse {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes abstractPulseGlow {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+.animate-abstract-float {
+  animation: abstractFloatSlow 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-abstract-float-reverse {
+  animation: abstractFloatReverse 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-abstract-pulse {
+  animation: abstractPulseGlow 6s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 .animate-marquee-reverse:hover {
   animation-play-state: paused;

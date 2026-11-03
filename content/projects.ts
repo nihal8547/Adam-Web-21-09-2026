@@ -36,6 +36,84 @@ export const sectors = [
 
 export const projects: Project[] = [
   {
+    slug: "state-audit-bureau-tower",
+    title: "State Audit Bureau Tower Fire Protection",
+    sector: "Commercial",
+    service: "Fire Protection & Alarm",
+    serviceSlug: "fire-protection-services-qatar",
+    location: "Onaiza, West Bay, Doha",
+    summary:
+      "Elevating safety standards at the State Audit Bureau Tower, our team implemented cutting-edge fire protection solutions, advanced addressable alarms, and certified life-safety systems.",
+    image: "/images/projects/StateAuditBureauTower.jpg",
+    imageAlt: "State Audit Bureau Tower in Doha, Qatar fire protection systems",
+    challenge:
+      "A high-security commercial and government landmark tower in West Bay required high-density addressable fire detection, smoke management, and QCDD-compliant life safety systems without interrupting daily operations.",
+    solution:
+      "We engineered and commissioned an integrated addressable fire alarm system, NFPA 13 sprinkler network, and dedicated stairwell pressurisation controls interfacing directly with the central BMS.",
+    outcome:
+      "Passed Civil Defence inspection with 100% compliance and handed over with an annual maintenance contract (AMC) guaranteeing 24/7 emergency response.",
+    servicesUsed: [
+      "fire-protection-services-qatar",
+      "fire-alarm-system-installation-maintenance",
+      "fire-sprinkler-system-qatar",
+      "fire-fighting-pump-qatar",
+    ],
+    featured: true,
+    gallery: [],
+  },
+  {
+    slug: "abraj-quartier-towers",
+    title: "Abraj Quartier Towers Life Safety & Fit-out",
+    sector: "Residential",
+    service: "Fire Sprinkler & Alarm",
+    serviceSlug: "fire-sprinkler-system-qatar",
+    location: "The Pearl, Qatar",
+    summary:
+      "Elevating safety in luxury living, our team delivered complete QCDD-compliant fire protection, smoke extraction, and hydraulic life-safety systems at Abraj Quartier Towers in The Pearl Qatar.",
+    image: "/images/projects/AbrajQuartierTowers.jpg",
+    imageAlt: "Abraj Quartier Towers at The Pearl, Qatar fire safety fit-out",
+    challenge:
+      "Delivering coordinated fire suppression and ventilation across twin high-rise luxury towers with deep underground parking and complex podium architecture.",
+    solution:
+      "Engineered high-capacity UL/FM certified fire pumps, zoned sprinkler networks, car-park smoke exhaust ventilation, and emergency voice evacuation systems.",
+    outcome:
+      "Attained rapid Civil Defence approval and total life safety coverage for hundreds of luxury residential apartments.",
+    servicesUsed: [
+      "fire-sprinkler-system-qatar",
+      "fire-alarm-system-installation-maintenance",
+      "fire-fighting-pump-qatar",
+      "acmv-system-company-in-qatar",
+    ],
+    featured: true,
+    gallery: [],
+  },
+  {
+    slug: "katara-towers",
+    title: "Katara Towers MEP & Fire Suppression",
+    sector: "High-rise",
+    service: "Fire Protection & HVAC",
+    serviceSlug: "fire-protection-services-qatar",
+    location: "Lusail Marina, Qatar",
+    summary:
+      "Comprehensive fire suppression, chilled water HVAC coordination, and emergency response life-safety infrastructure engineered for Qatar's most iconic crescent architectural landmark.",
+    image: "/images/projects/kataraTower.jpg",
+    imageAlt: "Katara Towers in Lusail Marina, Qatar MEP and fire protection",
+    challenge:
+      "Complex curved architectural geometry and ultra-luxury hospitality standards requiring unobtrusive, ultra-reliable life safety and chilled-water climate conditioning.",
+    solution:
+      "Custom hydraulic calculations, clean agent gas suppression for mission-critical electrical rooms, and precision air distribution integrated with the building automation system.",
+    outcome:
+      "Exceeded NFPA and Civil Defence criteria, supporting flawless hospitality operation for Qatar's flagship architectural landmark.",
+    servicesUsed: [
+      "fire-protection-services-qatar",
+      "hvac-services-qatar",
+      "acmv-system-company-in-qatar",
+      "fire-stop-insulation-technologies-services-qatar",
+    ],
+    featured: true,
+    gallery: [],
+  },
+  {
     slug: "residential-tower-fire-protection-al-sadd",
     title: "Residential Tower Fire Protection, Al Sadd",
     sector: "Residential",
