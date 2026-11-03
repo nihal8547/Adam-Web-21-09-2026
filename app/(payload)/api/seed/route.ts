@@ -1,16 +1,17 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { runSeed } from "@/lib/payload/seed";
+import { pushDevSchema } from "@payloadcms/drizzle";
 
 /**
- * POST /api/seed — one-time migration of the /content data into the CMS.
+ * POST /api/seed — bootstrap schema push and migration of content into CMS.
  * Guarded: requires ?secret=<PAYLOAD_SECRET> (or a SEED_SECRET env if set).
- * Idempotent, so it is safe to re-run. Remove or disable once migrated.
+ * Idempotent, so it is safe to re-run.
  */
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
-export async function POST(req: Request) {
+async function handleSeed(req: Request) {
   const guard = process.env.SEED_SECRET || process.env.PAYLOAD_SECRET || "";
   const secret = new URL(req.url).searchParams.get("secret");
   if (!guard || secret !== guard) {
@@ -18,6 +19,13 @@ export async function POST(req: Request) {
   }
   try {
     const payload = await getPayload({ config });
+    // In production Docker, Payload skips pushDevSchema by default.
+    // Ensure all tables and relations are pushed to PostgreSQL:
+    try {
+      await pushDevSchema(payload.db as any);
+    } catch (schemaErr) {
+      console.warn("[seed] pushDevSchema notice:", schemaErr);
+    }
     const result = await runSeed(payload);
     return Response.json({ ok: true, ...result });
   } catch (err) {
@@ -27,4 +35,12 @@ export async function POST(req: Request) {
       { status: 500 },
     );
   }
+}
+
+export async function GET(req: Request) {
+  return handleSeed(req);
+}
+
+export async function POST(req: Request) {
+  return handleSeed(req);
 }
