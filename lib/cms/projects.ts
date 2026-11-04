@@ -8,21 +8,22 @@ function mapDoc(doc: any): Project {
   const used = (doc.servicesUsed ?? [])
     .map((s: any) => (s && typeof s === "object" ? s.slug : undefined))
     .filter(Boolean);
+  const fallback = staticProjects.find((p) => p.slug === doc.slug);
   return {
     slug: doc.slug,
-    title: doc.title,
-    sector: doc.sector,
-    service: doc.serviceLabel || "",
-    serviceSlug: used[0] || "",
-    location: doc.location || "",
-    summary: doc.summary || "",
-    image: mediaUrl(doc.image) || FALLBACK_IMG,
-    imageAlt: doc.image?.alt || doc.title,
-    challenge: doc.challenge || "",
-    solution: doc.solution || "",
-    outcome: doc.outcome || "",
-    servicesUsed: used,
-    featured: Boolean(doc.featured),
+    title: doc.title || fallback?.title || "",
+    sector: doc.sector || fallback?.sector || "Commercial",
+    service: doc.serviceLabel || fallback?.service || "",
+    serviceSlug: used[0] || fallback?.serviceSlug || "",
+    location: doc.location || fallback?.location || "",
+    summary: doc.summary || fallback?.summary || "",
+    image: mediaUrl(doc.image) || fallback?.image || FALLBACK_IMG,
+    imageAlt: doc.image?.alt || fallback?.imageAlt || doc.title,
+    challenge: doc.challenge || fallback?.challenge || "",
+    solution: doc.solution || fallback?.solution || "",
+    outcome: doc.outcome || fallback?.outcome || "",
+    servicesUsed: used.length ? used : (fallback?.servicesUsed || []),
+    featured: Boolean(doc.featured ?? fallback?.featured),
     gallery: (doc.gallery ?? [])
       .map((g: any) => ({ src: mediaUrl(g.image), alt: g.alt || doc.title }))
       .filter((g: any) => g.src),

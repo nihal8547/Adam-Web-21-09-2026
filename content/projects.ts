@@ -148,7 +148,7 @@ export const projects: Project[] = [
     location: "West Bay, Doha",
     summary:
       "Chilled-water HVAC and fresh-air systems for a commercial office, engineered for comfort and energy efficiency.",
-    image: "/images/project-commercial.svg",
+    image: "/images/hero-hvac.jpg",
     imageAlt: "Commercial office building in West Bay, Doha served by Adam Technical Services HVAC",
     challenge:
       "An office development needed reliable comfort cooling and healthy fresh-air delivery while controlling running cost in Qatar's climate.",
