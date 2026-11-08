@@ -282,7 +282,7 @@ export const HomePage: GlobalConfig = {
                 {
                   name: "title",
                   type: "text",
-                  required: true,
+                  defaultValue: "",
                   admin: {
                     description: "Descriptive image title matching the equipment / engineering project (e.g. UL/FM Certified Fire Fighting Pump Station).",
                   },
