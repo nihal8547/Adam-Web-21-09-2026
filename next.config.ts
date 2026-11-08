@@ -41,12 +41,6 @@ const legacyRedirects = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [],
@@ -62,11 +56,29 @@ const nextConfig: NextConfig = {
     return legacyRedirects;
   },
   async headers() {
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.chatbase.co",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "media-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "connect-src 'self' https://api.resend.com https://www.chatbase.co https://backend.chatbase.co",
+      "frame-src 'self' https://www.chatbase.co",
+      "frame-ancestors 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; ");
+
     const securityHeaders = [
+      { key: "Content-Security-Policy", value: cspDirectives },
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "X-DNS-Prefetch-Control", value: "on" },
+      { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
+      { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
       {
         key: "Strict-Transport-Security",
         value: "max-age=63072000; includeSubDomains; preload",

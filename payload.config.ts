@@ -65,7 +65,21 @@ const withRevalidateGlobal = (g: any) => ({
   },
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.adam.qa";
+const trustedOrigins = Array.from(
+  new Set([
+    siteUrl,
+    "https://adam.qa",
+    "https://www.adam.qa",
+    "https://adamtest.webbea.qa",
+    "http://localhost:3000",
+  ]),
+);
+
 export default buildConfig({
+  serverURL: siteUrl,
+  cors: trustedOrigins,
+  csrf: trustedOrigins,
   admin: {
     user: Users.slug,
     meta: {

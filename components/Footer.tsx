@@ -2,7 +2,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import Logo from "@/components/Logo";
 import Icon from "@/components/Icon";
-import { services } from "@/content/services";
+import { services as staticServices } from "@/content/services";
 import type { SiteData } from "@/lib/cms/site";
 
 const quickLinks = [
@@ -20,7 +20,13 @@ const legalLinks = [
   { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
-export default function Footer({ site }: { site: SiteData }) {
+export default function Footer({
+  site,
+  services = staticServices,
+}: {
+  site: SiteData;
+  services?: { name: string; slug: string }[];
+}) {
   const year = new Date().getFullYear();
   const socialLinks = [
     { label: "LinkedIn", href: site.social.linkedin },

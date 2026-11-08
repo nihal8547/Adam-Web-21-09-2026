@@ -9,7 +9,7 @@ import Icon from "@/components/Icon";
 import { Button } from "@/components/Button";
 import { buildMetadata } from "@/lib/seo";
 import { getProjectBySlug, getAllProjects, getProjectSlugs } from "@/lib/cms/projects";
-import { getService } from "@/content/services";
+import { getAllServices, type CmsService } from "@/lib/cms/services";
 
 export const revalidate = 3600;
 
@@ -36,14 +36,17 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const [project, allServices, allProjects] = await Promise.all([
+    getProjectBySlug(slug),
+    getAllServices(),
+    getAllProjects(),
+  ]);
   if (!project) notFound();
 
   const used = project.servicesUsed
-    .map((s) => getService(s))
-    .filter((s): s is NonNullable<ReturnType<typeof getService>> => Boolean(s));
+    .map((s) => allServices.find((svc) => svc.slug === s))
+    .filter((s): s is CmsService => Boolean(s));
 
-  const allProjects = await getAllProjects();
   const more = allProjects.filter((p) => p.slug !== project.slug).slice(0, 3);
 
   return (

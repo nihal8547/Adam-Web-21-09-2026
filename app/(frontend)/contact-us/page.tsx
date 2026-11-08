@@ -7,7 +7,7 @@ import LazyMap from "@/components/LazyMap";
 import Reveal from "@/components/Reveal";
 import Icon from "@/components/Icon";
 import { buildMetadata } from "@/lib/seo";
-import { site } from "@/content/site";
+import { getSiteSettings } from "@/lib/cms/site";
 import { getContactPage } from "@/lib/cms/pages";
 
 export const revalidate = 3600;
@@ -20,7 +20,10 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function ContactPage() {
-  const internationalWorking = await getContactPage();
+  const [internationalWorking, site] = await Promise.all([
+    getContactPage(),
+    getSiteSettings(),
+  ]);
   return (
     <>
       {/* Hero with Architectural Deep Navy + Ambient Glow */}
@@ -60,12 +63,12 @@ export default async function ContactPage() {
               {site.address.line2}, {site.address.city}, {site.address.country}
             </ContactRow>
             <ContactRow icon="phone" label="Call us">
-              <a href={site.phone.href} className="hover:text-[var(--accent-strong)]">
-                {site.phone.display}
+              <a href={site.phoneHref} className="hover:text-[var(--accent-strong)]">
+                {site.phone}
               </a>
               <br />
-              <a href={site.mobile.href} className="hover:text-[var(--accent-strong)]">
-                {site.mobile.display} (Mobile)
+              <a href={site.mobileHref} className="hover:text-[var(--accent-strong)]">
+                {site.mobile} (Mobile)
               </a>
             </ContactRow>
             <ContactRow icon="mail" label="Email us">
@@ -83,7 +86,7 @@ export default async function ContactPage() {
           </address>
 
           <a
-            href={site.whatsapp.href}
+            href={site.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)] px-4 py-3 font-semibold text-[var(--heading)] transition-colors hover:bg-[var(--surface-wash)]"

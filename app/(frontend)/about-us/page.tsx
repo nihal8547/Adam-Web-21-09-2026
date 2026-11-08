@@ -10,8 +10,8 @@ import Icon from "@/components/Icon";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { faqSchema } from "@/lib/jsonld";
-import { stats, qcddBand } from "@/content/company";
 import { getAboutPage } from "@/lib/cms/pages";
+import { getHome } from "@/lib/cms/home";
 
 export const revalidate = 3600;
 
@@ -23,8 +23,13 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AboutPage() {
-  const about = await getAboutPage();
+  const [about, home] = await Promise.all([
+    getAboutPage(),
+    getHome(),
+  ]);
   const whyChooseUs = about.whyChooseUs;
+  const stats = home.stats;
+  const qcddBand = home.qcddBand;
   return (
     <>
       <JsonLd data={faqSchema(whyChooseUs)} />

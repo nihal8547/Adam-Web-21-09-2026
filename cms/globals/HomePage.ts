@@ -45,12 +45,36 @@ export const HomePage: GlobalConfig = {
               name: "heroImage",
               type: "upload",
               relationTo: "media",
-              admin: { description: "Poster image / hero background." },
+              admin: { description: "Poster image / fallback background image." },
+            },
+            {
+              name: "heroVideoFile",
+              type: "upload",
+              relationTo: "media",
+              admin: { description: "Upload hero background video (.mp4, .webm). Takes priority if provided." },
             },
             {
               name: "heroVideo",
               type: "text",
-              admin: { description: "Optional /public path to a background video (.mp4)." },
+              admin: { description: "Or external / custom path to a background video (e.g. /video.mp4)." },
+            },
+            {
+              name: "heroSlides",
+              type: "array",
+              labels: { singular: "Additional Slide", plural: "Additional Rotating Slides" },
+              admin: {
+                description:
+                  "Optional extra rotating slides. Slide 1 is automatically fed by Hero H1, Sub, Image & Video above.",
+              },
+              fields: [
+                { name: "line1", type: "text", required: true, admin: { description: "Heading line 1" } },
+                { name: "line2", type: "text", admin: { description: "Heading line 2 (optional)" } },
+                { name: "sub", type: "textarea", admin: { description: "Description text" } },
+                { name: "image", type: "upload", relationTo: "media", admin: { description: "Slide background image (poster if video is used)" } },
+                { name: "imagePath", type: "text", admin: { description: "Or public path, e.g. /images/hero-fire-safety.jpg" } },
+                { name: "videoFile", type: "upload", relationTo: "media", admin: { description: "Optional background video upload (.mp4, .webm) for this slide" } },
+                { name: "videoPath", type: "text", admin: { description: "Or external / public video path for this slide" } },
+              ],
             },
             {
               name: "quickAccess",
@@ -243,15 +267,35 @@ export const HomePage: GlobalConfig = {
         {
           label: "Project Gallery",
           fields: [
-            { name: "galleryEyebrow", type: "text" },
-            { name: "galleryHeading", type: "text" },
-            { name: "galleryDescription", type: "textarea" },
+            { name: "galleryEyebrow", type: "text", defaultValue: "Project Portfolio" },
+            { name: "galleryHeading", type: "text", defaultValue: "Fire Protection & MEP Engineering Gallery in Qatar" },
+            { name: "galleryDescription", type: "textarea", defaultValue: "Visual showcase of QCDD approved fire alarms, sprinkler systems, pump rooms, HVAC installations, and underground leak detection projects across Doha and Qatar." },
             {
               name: "galleryImages",
               type: "array",
+              labels: { singular: "Gallery Image", plural: "Gallery Images" },
+              admin: {
+                description:
+                  "Project gallery items. Provide an image-specific Title and SEO-based Alt text for each photo.",
+              },
               fields: [
+                {
+                  name: "title",
+                  type: "text",
+                  required: true,
+                  admin: {
+                    description: "Descriptive image title matching the equipment / engineering project (e.g. UL/FM Certified Fire Fighting Pump Station).",
+                  },
+                },
+                {
+                  name: "altText",
+                  type: "text",
+                  required: true,
+                  admin: {
+                    description: "SEO-based Alt text describing the image for Google Image Search (e.g. QCDD certified fire pump station installation in Doha Qatar).",
+                  },
+                },
                 { name: "image", type: "upload", relationTo: "media", required: true },
-                { name: "altText", type: "text", required: true },
               ],
             },
           ],

@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Container from "@/components/Container";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import CTABand from "@/components/CTABand";
 import Reveal from "@/components/Reveal";
-import Icon, { type IconName } from "@/components/Icon";
-import JsonLd from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
-import { servicesItemListSchema } from "@/lib/jsonld";
 import ServiceTile from "@/components/ServiceTile";
 import { getAllServices } from "@/lib/cms/services";
+import { getServicesPage } from "@/lib/cms/pages";
 import { servicesProcess } from "@/content/company";
 
 export const revalidate = 3600;
@@ -24,7 +21,10 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function ServicesPage() {
-  const services = await getAllServices();
+  const [services, pageData] = await Promise.all([
+    getAllServices(),
+    getServicesPage(),
+  ]);
   return (
     <>
       {/* Hero Section - Architectural Deep Navy + Ambient Glow */}
@@ -47,18 +47,18 @@ export default async function ServicesPage() {
               <div className="inline-flex items-center gap-2 mb-4">
                 <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
-                  Our Engineering Capabilities
+                  {pageData.hero.eyebrow}
                 </span>
               </div>
             </Reveal>
             <Reveal delay={100}>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.15]">
-                Complete Fire Protection &amp; MEP Solutions
+                {pageData.hero.heading}
               </h1>
             </Reveal>
             <Reveal delay={200}>
               <p className="mt-6 max-w-2xl text-base sm:text-lg text-white/80 leading-relaxed">
-                From life-safety fire systems to advanced HVAC and electrical infrastructures, we engineer solutions that ensure total compliance, safety, and operational excellence across Qatar.
+                {pageData.hero.description}
               </p>
             </Reveal>
           </div>
@@ -89,8 +89,8 @@ export default async function ServicesPage() {
       <section className="bg-white py-16 md:py-24">
         <Container>
           <SectionHeading
-            eyebrow="Process Overview"
-            title="Our Signature Methodology"
+            eyebrow={pageData.process.eyebrow}
+            title={pageData.process.heading}
             align="center"
             as="h2"
           />

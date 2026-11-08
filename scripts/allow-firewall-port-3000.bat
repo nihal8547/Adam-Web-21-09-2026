@@ -12,6 +12,6 @@ powershell -Command "New-NetFirewallRule -DisplayName 'NextJS Port 3000' -Direct
 
 echo.
 echo [SUCCESS] Port 3000 is now allowed through Windows Firewall!
-echo Your local network users can now visit: http://192.168.1.130:3000
+echo Your local network users can now visit: http://localhost:3000 (or your local machine IP:3000)
 echo.
 pause

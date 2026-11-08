@@ -22,7 +22,18 @@ export const Media: CollectionConfig = {
   upload: {
     // Absolute path on disk; overridable via env for the production volume.
     staticDir: process.env.PAYLOAD_MEDIA_DIR || path.resolve(dirname, "../../media"),
-    mimeTypes: ["image/*", "application/pdf"],
+    // Disallow arbitrary or executable SVG uploads to prevent Stored XSS.
+    // Allow safe images, documents (PDF), and hero video formats (MP4, WebM, MOV).
+    mimeTypes: [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/avif",
+      "application/pdf",
+      "video/mp4",
+      "video/webm",
+      "video/quicktime",
+    ],
     imageSizes: [
       { name: "thumbnail", width: 400, height: undefined, position: "centre" },
       { name: "card", width: 768, height: undefined },
@@ -30,6 +41,21 @@ export const Media: CollectionConfig = {
       { name: "hero", width: 1920, height: undefined },
     ],
     focalPoint: true,
+  },
+  hooks: {
+    beforeValidate: [
+      ({ req, operation }) => {
+        if ((operation === "create" || operation === "update") && req.file) {
+          const isVideo = req.file.mimetype?.startsWith("video/");
+          const maxBytes = isVideo ? 50 * 1024 * 1024 : 10 * 1024 * 1024; // 50MB for videos, 10MB for images/docs
+          if (req.file.size > maxBytes) {
+            throw new Error(
+              `File size exceeds maximum allowed limit of ${isVideo ? "50MB" : "10MB"}.`,
+            );
+          }
+        }
+      },
+    ],
   },
   fields: [
     {

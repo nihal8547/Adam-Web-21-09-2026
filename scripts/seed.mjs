@@ -30,11 +30,16 @@ if (!secret) {
   process.exit(1);
 }
 
-const url = `${base}/api/seed?secret=${encodeURIComponent(secret)}`;
+const url = `${base}/api/seed`;
 console.log(`Seeding via ${base}/api/seed ...`);
 
 try {
-  const res = await fetch(url, { method: "POST" });
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secret}`,
+    },
+  });
   const body = await res.json().catch(() => ({}));
   if (!res.ok || body.ok === false) {
     console.error(`Seed failed (HTTP ${res.status}):`, body.error || body);

@@ -7,19 +7,42 @@ import type { CollectionConfig } from "payload";
  */
 export const Users: CollectionConfig = {
   slug: "users",
-  auth: true,
+  auth: {
+    tokenExpiration: 7200, // 2 hours
+    maxLoginAttempts: 5,
+    lockTime: 15 * 60 * 1000, // 15 minutes lockout
+    cookies: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    },
+    forgotPassword: {
+      expiration: 1800, // 30 minutes reset token expiration
+      minRequestInterval: 60, // Minimum 60s between reset requests
+    },
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "email", "role"],
     group: "Admin",
   },
   access: {
-    // Only admins can create/update/delete other users.
+    // Only logged in users can access admin panel
     admin: ({ req: { user } }) => Boolean(user),
+    // Only admins can create or delete users
     create: ({ req: { user } }) => user?.role === "admin",
     delete: ({ req: { user } }) => user?.role === "admin",
-    update: ({ req: { user } }) => user?.role === "admin",
-    read: ({ req: { user } }) => Boolean(user),
+    // Admins can update any user; users can update their own profile
+    update: ({ req: { user } }) => {
+      if (user?.role === "admin") return true;
+      if (user?.id) return { id: { equals: user.id } };
+      return false;
+    },
+    // Admins can list all users; non-admins can only read their own user record
+    read: ({ req: { user } }) => {
+      if (user?.role === "admin") return true;
+      if (user?.id) return { id: { equals: user.id } };
+      return false;
+    },
   },
   fields: [
     { name: "name", type: "text", required: true },
@@ -33,7 +56,8 @@ export const Users: CollectionConfig = {
         { label: "Editor", value: "editor" },
       ],
       access: {
-        // Only admins can change roles.
+        // Only admins can set or change roles (prevent privilege escalation)
+        create: ({ req: { user } }) => user?.role === "admin",
         update: ({ req: { user } }) => user?.role === "admin",
       },
     },

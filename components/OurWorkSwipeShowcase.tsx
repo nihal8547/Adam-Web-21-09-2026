@@ -17,7 +17,7 @@ const CYCLE_DURATION = 5500; // 5.5 seconds per project cycle
 export default function OurWorkSwipeShowcase({ projects = [] }: Props) {
   // Take exactly maximum 4 projects, matching the Project Page details 1:1
   const items: Project[] = useMemo(() => {
-    let source = projects && projects.length > 0 ? projects : fallbackStaticProjects;
+    const source = projects && projects.length > 0 ? projects : fallbackStaticProjects;
     // Prefer featured projects or first valid projects
     const featured = source.filter((p) => p && p.title && p.featured);
     const nonFeatured = source.filter((p) => p && p.title && !p.featured);

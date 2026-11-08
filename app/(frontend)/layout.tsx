@@ -11,6 +11,7 @@ import { SITE_URL } from "@/lib/seo";
 import { site } from "@/content/site";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { getSiteSettings } from "@/lib/cms/site";
+import { getAllServices } from "@/lib/cms/services";
 
 /**
  * The site uses the standard system font stack everywhere (set in globals.css)
@@ -64,7 +65,10 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Fetch live site settings (falls back to static content/site.ts when CMS is unavailable)
-  const siteSettings = await getSiteSettings();
+  const [siteSettings, allServices] = await Promise.all([
+    getSiteSettings(),
+    getAllServices(),
+  ]);
 
   return (
     <html lang="en" dir="ltr" className={`${nunito.variable} ${poppins.variable}`}>
@@ -77,7 +81,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </a>
           <Header />
           <main id="main-content">{children}</main>
-          <Footer site={siteSettings} />
+          <Footer site={siteSettings} services={allServices} />
           <WhatsAppWidget whatsappHref={siteSettings.whatsappHref} />
         </SmoothScroll>
 

@@ -80,12 +80,18 @@ export default function GlobalError({
           </div>
 
           <h1 style={{ fontSize: 24, margin: "16px 0 8px", lineHeight: 1.25 }}>
-            {isDbError
-              ? "The CMS can’t reach its database"
-              : "Something went wrong loading the admin"}
+            {process.env.NODE_ENV === "production"
+              ? "Service Temporarily Unavailable"
+              : isDbError
+                ? "The CMS can’t reach its database"
+                : "Something went wrong loading the admin"}
           </h1>
 
-          {isDbError ? (
+          {process.env.NODE_ENV === "production" ? (
+            <p style={{ color: "#4a4a44", lineHeight: 1.6, marginTop: 0 }}>
+              An unexpected error occurred. Please try refreshing the page or try again in a few moments.
+            </p>
+          ) : isDbError ? (
             <>
               <p style={{ color: "#4a4a44", lineHeight: 1.6, marginTop: 0 }}>
                 The admin panel needs a running PostgreSQL database. It looks like{" "}
@@ -114,22 +120,28 @@ export default function GlobalError({
             </p>
           )}
 
-          <pre
-            style={{
-              marginTop: 16,
-              padding: "12px 14px",
-              background: "#faf9f6",
-              border: "1px solid #ececE6",
-              borderRadius: 8,
-              fontSize: 12.5,
-              color: "#6a6a62",
-              overflowX: "auto",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {msg || "Unknown error"}
-            {error?.digest ? `\n(digest: ${error.digest})` : ""}
-          </pre>
+          {process.env.NODE_ENV !== "production" ? (
+            <pre
+              style={{
+                marginTop: 16,
+                padding: "12px 14px",
+                background: "#faf9f6",
+                border: "1px solid #ececE6",
+                borderRadius: 8,
+                fontSize: 12.5,
+                color: "#6a6a62",
+                overflowX: "auto",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {msg || "Unknown error"}
+              {error?.digest ? `\n(digest: ${error.digest})` : ""}
+            </pre>
+          ) : error?.digest ? (
+            <p style={{ fontSize: 12, color: "#8a8a80", marginTop: 12 }}>
+              Error Reference ID: {error.digest}
+            </p>
+          ) : null}
 
           <button
             type="button"

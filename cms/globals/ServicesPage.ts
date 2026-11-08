@@ -15,16 +15,16 @@ export const ServicesPage: GlobalConfig = {
         {
           label: "Hero Section",
           fields: [
-            { name: "heroEyebrow", type: "text", defaultValue: "Our Expertise" },
-            { name: "heroHeading", type: "text", required: true, defaultValue: "Complete Fire Protection & MEP Solutions" },
-            { name: "heroDescription", type: "textarea", required: true, defaultValue: "From life-safety fire systems to advanced HVAC and electrical infrastructures, we engineer solutions that ensure total compliance, safety, and operational excellence across Qatar." },
+            { name: "heroEyebrow", type: "text", defaultValue: "QCDD Approved Contractor · NFPA Compliant" },
+            { name: "heroHeading", type: "text", required: true, defaultValue: "Fire Protection, MEP Engineering & Leak Detection Services in Qatar" },
+            { name: "heroDescription", type: "textarea", required: true, defaultValue: "Turnkey Qatar Civil Defence Department (QCDD) approved fire alarm installation, automatic sprinkler systems, fire pumps, underground pipe leak detection, and commercial HVAC engineering across Doha and Qatar." },
           ],
         },
         {
           label: "Process Section",
           fields: [
-            { name: "processEyebrow", type: "text", defaultValue: "Process Overview" },
-            { name: "processHeading", type: "text", defaultValue: "Our Signature Methodology" },
+            { name: "processEyebrow", type: "text", defaultValue: "Execution Methodology" },
+            { name: "processHeading", type: "text", defaultValue: "QCDD-Compliant Engineering & Handover Process" },
           ],
         },
       ],

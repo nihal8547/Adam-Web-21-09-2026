@@ -5,7 +5,9 @@ import ContactForm from "@/components/ContactForm";
 import TrustStrip from "@/components/TrustStrip";
 import Icon from "@/components/Icon";
 import { buildMetadata } from "@/lib/seo";
-import { site } from "@/content/site";
+import { getSiteSettings } from "@/lib/cms/site";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Request a Quotation | Adam Technical Services",
@@ -21,7 +23,8 @@ const points = [
   "Clear, itemised quotations — no surprises",
 ];
 
-export default function RfqPage() {
+export default async function RfqPage() {
+  const site = await getSiteSettings();
   return (
     <>
       {/* Hero with Architectural Deep Navy + Ambient Glow */}
@@ -69,11 +72,11 @@ export default function RfqPage() {
               Prefer to talk to an engineer?
             </p>
             <a
-              href={site.phone.href}
+              href={site.phoneHref}
               className="mt-2 flex items-center gap-2.5 text-xl font-bold text-slate-900 hover:text-amber-500 transition-colors"
             >
               <Icon name="phone" size={20} className="text-amber-500" />
-              {site.phone.display}
+              {site.phone}
             </a>
           </div>
 

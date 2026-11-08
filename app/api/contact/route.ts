@@ -15,10 +15,25 @@ export const runtime = "nodejs";
 
 const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 5;
+const MAX_MAP_ENTRIES = 5_000;
 const hits = new Map<string, number[]>();
+
+function pruneOldHits(now: number) {
+  if (hits.size > MAX_MAP_ENTRIES) {
+    for (const [key, timestamps] of hits.entries()) {
+      const valid = timestamps.filter((t) => now - t < WINDOW_MS);
+      if (valid.length === 0) {
+        hits.delete(key);
+      } else {
+        hits.set(key, valid);
+      }
+    }
+  }
+}
 
 function rateLimited(ip: string): boolean {
   const now = Date.now();
+  pruneOldHits(now);
   const arr = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
   arr.push(now);
   hits.set(ip, arr);
@@ -27,11 +42,18 @@ function rateLimited(ip: string): boolean {
 
 function clientIp(req: Request): string {
   const fwd = req.headers.get("x-forwarded-for");
-  return fwd ? fwd.split(",")[0]!.trim() : "unknown";
+  const rawIp = fwd ? fwd.split(",")[0]!.trim() : "unknown";
+  // Sanitize IP representation to prevent memory key ballooning
+  return rawIp.slice(0, 45).replace(/[^a-zA-Z0-9:.]/g, "");
 }
 
 function esc(s: string): string {
   return s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c] ?? c);
+}
+
+function sanitizeHeader(val: string): string {
+  // Strip carriage return and newline characters to prevent CRLF header injection
+  return val.replace(/[\r\n\t]+/g, " ").trim();
 }
 
 export async function POST(req: Request) {
@@ -62,13 +84,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Thanks!" }, { status: 200 });
   }
 
-  const name = String(form.get("name") ?? "").trim();
-  const email = String(form.get("email") ?? "").trim();
-  const phone = String(form.get("phone") ?? "").trim();
-  const message = String(form.get("message") ?? "").trim();
-  const service = String(form.get("service") ?? "").trim();
-  const variant = String(form.get("variant") ?? "contact").trim();
-  const subjectPrefix = String(form.get("subjectPrefix") ?? "").trim();
+  // Extract with strict length boundaries to prevent Denial of Service / buffer bloat
+  const name = sanitizeHeader(String(form.get("name") ?? "").slice(0, 100));
+  const email = sanitizeHeader(String(form.get("email") ?? "").slice(0, 100));
+  const phone = sanitizeHeader(String(form.get("phone") ?? "").slice(0, 30));
+  const message = String(form.get("message") ?? "").slice(0, 5000).trim();
+  const service = sanitizeHeader(String(form.get("service") ?? "").slice(0, 100));
+  const variant = sanitizeHeader(String(form.get("variant") ?? "contact").slice(0, 30));
+  const subjectPrefix = sanitizeHeader(String(form.get("subjectPrefix") ?? "").slice(0, 100));
   const cv = form.get("cv");
 
   if (!name || !email || !phone || !message) {
@@ -78,12 +101,29 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Please enter a valid email address." }, { status: 400 });
   }
 
+  let cvNote = "";
+  if (cv && typeof cv === "object" && "name" in cv && (cv as File).name) {
+    const file = cv as File;
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxFileSize) {
+      return NextResponse.json(
+        { message: "CV file size exceeds the 5MB limit. Please attach a smaller file." },
+        { status: 400 },
+      );
+    }
+    const fileName = sanitizeHeader(file.name.slice(0, 100));
+    const dangerousExts = /\.(exe|bat|cmd|sh|php|js|vbs|ps1|svg|htm|html|dll|py|jar)$/i;
+    if (dangerousExts.test(fileName)) {
+      return NextResponse.json(
+        { message: "Invalid file type. Only PDF and document files are accepted." },
+        { status: 400 },
+      );
+    }
+    cvNote = `\nCV attached: ${fileName} (${Math.round(file.size / 1024)} KB)`;
+  }
+
   const label = variant === "rfq" ? "RFQ" : variant === "careers" ? "Job Application" : "Contact";
   const subject = `[${label}] ${subjectPrefix || service || "Website enquiry"} — ${name}`;
-  const cvNote =
-    cv && typeof cv === "object" && "name" in cv && (cv as File).name
-      ? `\nCV attached: ${(cv as File).name} (${Math.round((cv as File).size / 1024)} KB)`
-      : "";
 
   const text = [
     `Type: ${label}`,
@@ -122,12 +162,14 @@ export async function POST(req: Request) {
       });
       if (!resp.ok) throw new Error(`Resend responded ${resp.status}`);
     } else {
-      // No provider configured — log so nothing is lost in dev/preview.
-      console.info("[contact] (no email provider configured)\n", subject, "\n", text);
+      // Safe operational logging without exposing customer PII (GDPR / Privacy defense)
+      console.info(
+        `[contact] Submission received: type=${label}, variant=${variant}, emailDomain=${email.split("@")[1] || "unknown"}`,
+      );
     }
     return NextResponse.json({ message: "Received" }, { status: 200 });
   } catch (err) {
-    console.error("[contact] delivery failed:", err);
+    console.error("[contact] delivery failed:", err instanceof Error ? err.message : "Unknown error");
     return NextResponse.json(
       { message: "We couldn't send your message right now. Please call us or try again." },
       { status: 502 },

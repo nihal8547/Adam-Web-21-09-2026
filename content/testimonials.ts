@@ -62,7 +62,7 @@ export const testimonials: Testimonial[] = [
     role: "Retail Operations Head",
   },
   {
-    title: "Best AMC in Qatar",
+    title: "Certified Civil Defence AMC in Qatar",
     quote:
       "Their annual maintenance contract gives us complete peace of mind. Regular inspections, fast response on any issues and all documentation ready for Civil Defence — we wouldn't go anywhere else.",
     author: "Priya S.",

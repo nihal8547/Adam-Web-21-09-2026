@@ -35,6 +35,13 @@ yarn-error.log*
 /media
 /public/media
 
+# database and media backups
+/backups
+backups/
+*.sql
+*.sql.gz
+*.tgz
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

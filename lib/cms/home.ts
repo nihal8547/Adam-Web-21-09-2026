@@ -12,6 +12,14 @@ import {
 
 export type HeroCta = { label: string; href: string };
 export type HeroQuickAccess = { icon: string; label: string; sub: string; href: string };
+export type HeroSlide = {
+  line1: string;
+  line2?: string;
+  sub: string;
+  image: string;
+  alt?: string;
+  video?: string;
+};
 
 export type HomeData = {
   hero: {
@@ -22,6 +30,7 @@ export type HomeData = {
     secondaryCta: HeroCta;
     quickAccess: HeroQuickAccess[];
     media: { video: string; poster: string; posterAlt: string };
+    slides?: HeroSlide[];
   };
   whoImage?: string;
   stats: { value?: number; text?: string; prefix?: string; suffix?: string; label: string }[];
@@ -126,10 +135,20 @@ export async function getHome(): Promise<HomeData> {
             }))
           : fallback.hero.quickAccess,
         media: {
-          video: g.heroVideo || "",
+          video: mediaUrl(g.heroVideoFile) || g.heroVideo || "",
           poster: mediaUrl(g.heroImage) || fallback.hero.media.poster,
           posterAlt: g.heroImage?.alt || fallback.hero.media.posterAlt,
         },
+        slides: (g.heroSlides ?? []).length > 0
+          ? (g.heroSlides as any[]).map((s: any) => ({
+              line1: s.line1,
+              line2: s.line2 || "",
+              sub: s.sub || "",
+              image: mediaUrl(s.image) || s.imagePath || "/images/hero-bg.jpg",
+              alt: s.image?.alt || s.line1,
+              video: mediaUrl(s.videoFile) || s.videoPath || undefined,
+            }))
+          : undefined,
       },
       whoImage: mediaUrl(g.whoImage),
       stats: (g.stats ?? fallback.stats).map((s: any) => ({

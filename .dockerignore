@@ -4,6 +4,10 @@ node_modules
 .github
 media
 public/media
+backups
+*.sql
+*.sql.gz
+*.tgz
 .env
 .env.*
 !.env.example

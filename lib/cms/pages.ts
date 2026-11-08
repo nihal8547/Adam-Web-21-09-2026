@@ -101,14 +101,14 @@ export type ServicesPageData = {
 export async function getServicesPage(): Promise<ServicesPageData> {
   const fallback: ServicesPageData = {
     hero: {
-      eyebrow: "Our Expertise",
-      heading: "Complete Fire Protection & MEP Solutions",
+      eyebrow: "QCDD Approved Contractor · NFPA Compliant",
+      heading: "Fire Protection, MEP Engineering & Leak Detection Services in Qatar",
       description:
-        "From life-safety fire systems to advanced HVAC and electrical infrastructures, we engineer solutions that ensure total compliance, safety, and operational excellence across Qatar.",
+        "Turnkey Qatar Civil Defence Department (QCDD) approved fire alarm installation, automatic sprinkler systems, fire pumps, underground pipe leak detection, and commercial HVAC engineering across Doha and Qatar.",
     },
     process: {
-      eyebrow: "Process Overview",
-      heading: "Our Signature Methodology",
+      eyebrow: "Execution Methodology",
+      heading: "QCDD-Compliant Engineering & Handover Process",
     },
   };
   return fromCms(async (payload) => {

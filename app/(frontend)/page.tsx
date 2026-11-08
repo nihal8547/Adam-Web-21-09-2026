@@ -15,7 +15,7 @@ import CertificationsSection from "@/components/CertificationsSection";
 import ProjectGalleryInteractive, { type GalleryItem } from "@/components/ProjectGalleryInteractive";
 import WhatMakesUsBetterDropdown from "@/components/WhatMakesUsBetterDropdown";
 import Reveal from "@/components/Reveal";
-import Icon, { type IconName } from "@/components/Icon";
+import Icon from "@/components/Icon";
 import { Button } from "@/components/Button";
 import { buildMetadata } from "@/lib/seo";
 import { getFeaturedServices } from "@/lib/cms/services";
@@ -26,25 +26,25 @@ import { getTestimonials, getClients } from "@/lib/cms/misc";
 export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Adam Technical Services | Fire Protection & MEP in Qatar",
+  title: "QCDD Approved Fire Protection & MEP Contractor in Qatar | Adam",
   description:
-    "QCDD-certified fire protection company in Qatar. Fire alarms, pumps, sprinklers, leak detection, HVAC & ACMV — designed, installed & maintained to NFPA standards.",
+    "QCDD approved fire protection and MEP contractor in Qatar. Turnkey fire alarm systems, fire pumps, sprinklers, underground leak detection, HVAC, and 24/7 AMC across Doha.",
   path: "/",
   keywords: [
-    "top fire protection company in Qatar",
-    "fire protection company in Qatar",
+    "QCDD approved fire fighting company in Qatar",
+    "fire protection contractor in Qatar",
     "fire fighting company in Qatar",
     "QCDD approved fire protection Qatar",
-    "fire alarm system Qatar",
-    "fire fighting pump Qatar",
-    "fire sprinkler system Qatar",
+    "fire alarm system installation Qatar",
+    "fire fighting pump maintenance Qatar",
+    "automatic fire sprinkler system Qatar",
     "underground water leak detection Qatar",
-    "HVAC company in Qatar",
+    "commercial HVAC company in Qatar",
     "AC service and maintenance Qatar",
-    "MEP company in Qatar",
-    "ACMV company Qatar",
-    "annual maintenance contract AMC Qatar",
-    "fire protection company in Doha",
+    "MEP contractor in Qatar",
+    "ACMV ventilation contractor Qatar",
+    "fire protection annual maintenance contract AMC Qatar",
+    "Civil Defence approved fire contractor Doha",
   ],
 });
 
@@ -62,9 +62,13 @@ export default async function HomePage() {
     <>
       <Hero
         eyebrow={home.hero.eyebrow}
+        h1={home.hero.h1}
+        sub={home.hero.sub}
+        media={home.hero.media}
         primaryCta={home.hero.primaryCta}
         secondaryCta={home.hero.secondaryCta}
         quickAccess={home.hero.quickAccess}
+        slides={home.hero.slides}
       />
 
       {/* Stat band — 6-column credentials grid */}

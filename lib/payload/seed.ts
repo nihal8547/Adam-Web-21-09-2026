@@ -326,6 +326,20 @@ export async function runSeed(payload: Payload) {
       secondaryCtaLabel: hero.secondaryCta.label,
       secondaryCtaHref: hero.secondaryCta.href,
       heroVideo: hero.media.video,
+      heroSlides: [
+        {
+          line1: "Turnkey MEP & Mechanical Engineering in Qatar",
+          line2: "Commercial HVAC, Chilled Water & ACMV Solutions",
+          sub: "Specialized mechanical, electrical and plumbing infrastructure built to NFPA standards and Qatar regulations.",
+          alt: "Commercial MEP and industrial HVAC chilled-water plant installation in Qatar",
+        },
+        {
+          line1: "Underground Water Pipeline Leak Detection in Qatar",
+          line2: "Acoustic & Thermal Non-Destructive Inspection",
+          sub: "Pinpoint underground pipe leak location across commercial compounds and industrial networks in Doha without digging.",
+          alt: "Acoustic and thermal non-destructive water leak detection inspection in Doha Qatar",
+        },
+      ],
       quickAccess: hero.quickAccess.map((q) => ({
         icon: q.icon,
         label: q.label,
@@ -361,6 +375,10 @@ export async function runSeed(payload: Payload) {
         ctaLabel: b.cta.label,
         ctaHref: b.cta.href,
       })),
+      galleryEyebrow: "Project Portfolio",
+      galleryHeading: "Fire Protection & MEP Engineering Gallery in Qatar",
+      galleryDescription:
+        "Visual showcase of QCDD approved fire alarms, sprinkler systems, pump rooms, HVAC installations, and underground leak detection projects across Doha and Qatar.",
     },
   });
 
@@ -402,6 +420,19 @@ export async function runSeed(payload: Payload) {
         title: i.title,
         desc: i.desc,
       })),
+    },
+  });
+
+  // 14. Services page global.
+  await payload.updateGlobal({
+    slug: "services-page",
+    data: {
+      heroEyebrow: "QCDD Approved Contractor · NFPA Compliant",
+      heroHeading: "Fire Protection, MEP Engineering & Leak Detection Services in Qatar",
+      heroDescription:
+        "Turnkey Qatar Civil Defence Department (QCDD) approved fire alarm installation, automatic sprinkler systems, fire pumps, underground pipe leak detection, and commercial HVAC engineering across Doha and Qatar.",
+      processEyebrow: "Execution Methodology",
+      processHeading: "QCDD-Compliant Engineering & Handover Process",
     },
   });
   result.globals = true;

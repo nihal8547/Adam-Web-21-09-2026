@@ -961,12 +961,14 @@ export const featuredServices = services.filter((s) => s.featured).slice(0, 6);
  */
 export const serviceSecondaryKeywords: Record<string, string[]> = {
   "fire-protection-services-qatar": [
-    "top fire protection company in Qatar",
+    "QCDD approved fire fighting contractor Qatar",
+    "fire protection contractor in Qatar",
     "fire fighting company in Qatar",
     "QCDD approved fire protection Qatar",
     "fire safety company Qatar",
     "fire protection company in Doha",
     "annual maintenance contract AMC Qatar",
+    "NFPA fire protection contractor Doha",
   ],
   "fire-alarm-system-installation-maintenance": [
     "fire alarm maintenance Qatar",

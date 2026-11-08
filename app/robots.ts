@@ -28,8 +28,12 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow: ["/api/"] },
-      ...aiCrawlers.map((userAgent) => ({ userAgent, allow: "/", disallow: ["/api/"] })),
+      { userAgent: "*", allow: "/", disallow: ["/api/", "/admin/", "/admin/*"] },
+      ...aiCrawlers.map((userAgent) => ({
+        userAgent,
+        allow: "/",
+        disallow: ["/api/", "/admin/", "/admin/*"],
+      })),
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
     host: SITE_URL,
