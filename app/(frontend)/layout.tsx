@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,19 +17,6 @@ import { getAllServices } from "@/lib/cms/services";
  * — no render-blocking webfont request. Nunito is loaded only for the welcome
  * splash screen shown on load.
  */
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-nunito",
-  display: "swap",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,7 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   ]);
 
   return (
-    <html lang="en" dir="ltr" className={`${nunito.variable} ${poppins.variable}`}>
+    <html lang="en" dir="ltr">
       <body>
         <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
         <SmoothScroll>
