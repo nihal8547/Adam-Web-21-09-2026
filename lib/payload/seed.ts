@@ -314,9 +314,11 @@ export async function runSeed(payload: Payload) {
   });
   result.siteSettings = true;
 
-  // 10. Home page global.
-  await payload.updateGlobal({
-    slug: "home",
+  // 10. Home page global. Only populate if not already configured in CMS.
+  const existingHome: any = await payload.findGlobal({ slug: "home", depth: 0 }).catch(() => null);
+  if (!existingHome || !existingHome.heroH1) {
+    await payload.updateGlobal({
+      slug: "home",
     data: {
       heroEyebrow: hero.eyebrow,
       heroH1: hero.h1,
@@ -381,6 +383,7 @@ export async function runSeed(payload: Payload) {
         "Visual showcase of QCDD approved fire alarms, sprinkler systems, pump rooms, HVAC installations, and underground leak detection projects across Doha and Qatar.",
     },
   });
+  }
 
   // 11. About page global.
   await payload.updateGlobal({

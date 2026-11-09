@@ -2,6 +2,7 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { runSeed } from "@/lib/payload/seed";
 import { pushDevSchema } from "@payloadcms/drizzle";
+import { revalidatePath } from "next/cache";
 import crypto from "crypto";
 
 /**
@@ -56,6 +57,11 @@ async function handleSeed(req: Request) {
       console.warn("[seed] pushDevSchema notice:", schemaErr);
     }
     const result = await runSeed(payload);
+    try {
+      revalidatePath("/", "layout");
+    } catch (revalErr) {
+      console.warn("[seed] revalidatePath warning:", revalErr);
+    }
     return Response.json({ ok: true, ...result });
   } catch (err) {
     console.error("[seed] failed:", err);
