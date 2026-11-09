@@ -110,9 +110,104 @@ const staticHome = (): HomeData => ({
 
 export async function getHome(): Promise<HomeData> {
   return fromCms(async (payload) => {
-    const g: any = await payload.findGlobal({ slug: "home", depth: 1 });
+    const g: any = await payload.findGlobal({ slug: "home", depth: 2 });
     if (!g || !g.heroH1) return null;
     const fallback = staticHome();
+
+    // Helper to resolve an upload relationship whether it came back as a populated object or a raw ID
+    const resolveMediaDoc = async (value: unknown): Promise<any> => {
+      if (!value) return null;
+      if (typeof value === "object") return value;
+      if (typeof value === "number" || typeof value === "string") {
+        try {
+          return await payload.findByID({ collection: "media", id: value });
+        } catch {
+          return null;
+        }
+      }
+      return null;
+    };
+
+    const resolvedHeroVideo = (await resolveMediaDoc(g.heroVideoFile)) || g.heroVideoFile;
+    const resolvedHeroPoster = (await resolveMediaDoc(g.heroImage)) || g.heroImage;
+    const resolvedWhoImage = (await resolveMediaDoc(g.whoImage)) || g.whoImage;
+
+    const resolvedSlides = (g.heroSlides ?? []).length > 0
+      ? await Promise.all(
+          (g.heroSlides as any[]).map(async (s: any) => {
+            const imgDoc = await resolveMediaDoc(s.image);
+            const vidDoc = await resolveMediaDoc(s.videoFile);
+            return {
+              line1: s.line1,
+              line2: s.line2 || "",
+              sub: s.sub || "",
+              image: mediaUrl(imgDoc) || s.imagePath || "/images/hero-bg.jpg",
+              alt: imgDoc?.alt || s.line1,
+              video: mediaUrl(vidDoc) || s.videoPath || undefined,
+            };
+          }),
+        )
+      : undefined;
+
+    const resolvedFeatureBlocks = await Promise.all(
+      (g.featureBlocks ?? []).map(async (b: any, i: number) => {
+        const imgDoc = await resolveMediaDoc(b.image);
+        return {
+          eyebrow: b.eyebrow || "",
+          heading: b.heading,
+          body: (b.body ?? []).map((p: any) => p.paragraph),
+          bullets: (b.bullets ?? []).map((v: any) => v.value),
+          cta: { label: b.ctaLabel || "", href: b.ctaHref || "#" },
+          image: mediaUrl(imgDoc) || fallback.homeFeatureBlocks[i]?.image || "/images/feature-hvac.svg",
+          imageAlt: imgDoc?.alt || b.heading,
+        };
+      }),
+    );
+
+    const resolvedGalleryImages = await Promise.all(
+      (g.galleryImages ?? []).map(async (item: any) => {
+        const imgDoc = await resolveMediaDoc(item.image);
+        const resolvedUrl = mediaUrl(imgDoc) || (typeof item.image === "string" ? item.image : "");
+        const fallbackAlt = imgDoc?.alt || item.title || "Adam Technical Services Qatar Project";
+        return {
+          id: item.id,
+          title: item.title || item.altText || fallbackAlt,
+          altText: item.altText || fallbackAlt,
+          image: imgDoc || (resolvedUrl ? { url: resolvedUrl, alt: fallbackAlt } : null),
+          src: resolvedUrl,
+        };
+      }),
+    );
+
+    const resolvedShowcaseModels = await Promise.all(
+      (g.showcaseModels ?? []).map(async (m: any) => {
+        const imgDoc = await resolveMediaDoc(m.modelImage);
+        return {
+          id: m.id,
+          modelName: m.modelName,
+          modelTitle: m.modelTitle,
+          modelDescription: m.modelDescription,
+          modelImage: mediaUrl(imgDoc) || (typeof m.modelImage === "string" ? m.modelImage : undefined),
+        };
+      }),
+    );
+
+    const resolvedCertifications = await Promise.all(
+      (g.certifications ?? []).map(async (c: any) => {
+        const logoDoc = await resolveMediaDoc(c.logo);
+        return {
+          badgeCode: c.badgeCode,
+          title: c.title,
+          authority: c.authority,
+          status: c.status,
+          scope: c.scope,
+          logo: mediaUrl(logoDoc) || c.logoUrl || "",
+          logoUrl: c.logoUrl,
+          verifyUrl: c.verifyUrl,
+        };
+      }),
+    );
+
     return {
       hero: {
         eyebrow: g.heroEyebrow || fallback.hero.eyebrow,
@@ -135,22 +230,13 @@ export async function getHome(): Promise<HomeData> {
             }))
           : fallback.hero.quickAccess,
         media: {
-          video: mediaUrl(g.heroVideoFile) || g.heroVideo || "",
-          poster: mediaUrl(g.heroImage) || fallback.hero.media.poster,
-          posterAlt: g.heroImage?.alt || fallback.hero.media.posterAlt,
+          video: mediaUrl(resolvedHeroVideo) || g.heroVideo || "",
+          poster: mediaUrl(resolvedHeroPoster) || fallback.hero.media.poster,
+          posterAlt: resolvedHeroPoster?.alt || fallback.hero.media.posterAlt,
         },
-        slides: (g.heroSlides ?? []).length > 0
-          ? (g.heroSlides as any[]).map((s: any) => ({
-              line1: s.line1,
-              line2: s.line2 || "",
-              sub: s.sub || "",
-              image: mediaUrl(s.image) || s.imagePath || "/images/hero-bg.jpg",
-              alt: s.image?.alt || s.line1,
-              video: mediaUrl(s.videoFile) || s.videoPath || undefined,
-            }))
-          : undefined,
+        slides: resolvedSlides,
       },
-      whoImage: mediaUrl(g.whoImage),
+      whoImage: mediaUrl(resolvedWhoImage),
       stats: (g.stats ?? fallback.stats).map((s: any) => ({
         value: s.value ?? undefined,
         text: s.text || undefined,
@@ -182,21 +268,12 @@ export async function getHome(): Promise<HomeData> {
           href: g.qcddCtaHref || fallback.qcddBand.cta.href,
         },
       },
-      homeFeatureBlocks: (g.featureBlocks ?? []).map((b: any, i: number) => ({
-        eyebrow: b.eyebrow || "",
-        heading: b.heading,
-        body: (b.body ?? []).map((p: any) => p.paragraph),
-        bullets: (b.bullets ?? []).map((v: any) => v.value),
-        cta: { label: b.ctaLabel || "", href: b.ctaHref || "#" },
-        image:
-          mediaUrl(b.image) || fallback.homeFeatureBlocks[i]?.image || "/images/feature-hvac.svg",
-        imageAlt: b.image?.alt || b.heading,
-      })),
-      showcaseModels: g.showcaseModels,
+      homeFeatureBlocks: resolvedFeatureBlocks,
+      showcaseModels: resolvedShowcaseModels,
       showcaseEyebrow: g.showcaseEyebrow,
       showcaseHeading: g.showcaseHeading,
       showcaseDescription: g.showcaseDescription,
-      galleryImages: g.galleryImages,
+      galleryImages: resolvedGalleryImages,
       galleryEyebrow: g.galleryEyebrow,
       galleryHeading: g.galleryHeading,
       galleryDescription: g.galleryDescription,
@@ -204,16 +281,7 @@ export async function getHome(): Promise<HomeData> {
       certHeading: g.certHeading,
       certDescription: g.certDescription,
       certDisplayMode: g.certDisplayMode || "both",
-      certifications: (g.certifications ?? []).map((c: any) => ({
-        badgeCode: c.badgeCode,
-        title: c.title,
-        authority: c.authority,
-        status: c.status,
-        scope: c.scope,
-        logo: mediaUrl(c.logo) || c.logoUrl || "",
-        logoUrl: c.logoUrl,
-        verifyUrl: c.verifyUrl,
-      })),
+      certifications: resolvedCertifications,
       certCtaLabel: g.certCtaLabel,
       certCtaHref: g.certCtaHref,
       certCtaDesc: g.certCtaDesc,

@@ -94,9 +94,38 @@ export default function ExpertiseShowcase3D({
   description?: string | null;
   className?: string;
 } = {}) {
-  const [activeTab, setActiveTab] = useState<string>("hvac");
+  const items: TechItem[] =
+    models && models.length > 0
+      ? models.map((m, idx) => {
+          let imgSrc = "/images/hero-hvac.jpg";
+          if (typeof m.modelImage === "string" && m.modelImage) {
+            imgSrc = m.modelImage;
+          } else if (typeof m.modelImage === "object" && m.modelImage !== null) {
+            imgSrc = (m.modelImage as { url?: string })?.url || imgSrc;
+          }
+          return {
+            id: `model-${idx}`,
+            label: m.modelName || `Model ${idx + 1}`,
+            category: "Engineering Model",
+            title: m.modelTitle || m.modelName,
+            description:
+              m.modelDescription ||
+              "Engineered precision equipment certified to Qatar Civil Defence standards.",
+            image: imgSrc,
+            imageAlt: m.modelTitle || m.modelName,
+            href: "/services",
+            metrics: [
+              { value: "QCDD", label: "Approved Standard" },
+              { value: "24/7", label: "Engineering AMC" },
+              { value: "100%", label: "Tested & Certified" },
+            ],
+          };
+        })
+      : TECH_ITEMS;
 
-  const current = TECH_ITEMS.find((item) => item.id === activeTab) || TECH_ITEMS[0];
+  const [activeTab, setActiveTab] = useState<string>(items[0]?.id || "hvac");
+
+  const current = items.find((item) => item.id === activeTab) || items[0] || TECH_ITEMS[0];
 
   return (
     <section
@@ -168,8 +197,8 @@ export default function ExpertiseShowcase3D({
           />
 
           {/* Minimal Tab Switcher — clean text tabs, no bulky cards or strange buttons */}
-          <div className="mt-8 flex items-center justify-center gap-2 p-1 rounded-xl bg-slate-100 border border-slate-200/80">
-            {TECH_ITEMS.map((item) => {
+          <div className="mt-8 flex items-center justify-center gap-2 p-1 rounded-xl bg-slate-100 border border-slate-200/80 flex-wrap">
+            {items.map((item) => {
               const isActive = item.id === activeTab;
               return (
                 <button
@@ -210,6 +239,7 @@ export default function ExpertiseShowcase3D({
                     fill
                     sizes="(max-width: 1024px) 100vw, 58vw"
                     priority
+                    unoptimized
                     className="object-cover"
                   />
                   <div

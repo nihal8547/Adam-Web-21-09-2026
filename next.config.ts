@@ -43,7 +43,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [],
+    remotePatterns: [
+      { protocol: "https", hostname: "**" },
+      { protocol: "http", hostname: "localhost" },
+      { protocol: "http", hostname: "127.0.0.1" },
+    ],
     // The bundled placeholder artwork is first-party SVG. Replace with raster
     // photography before launch; the CSP below neutralises any embedded script.
     dangerouslyAllowSVG: true,

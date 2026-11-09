@@ -33,7 +33,7 @@ function mapDoc(doc: any): Project {
 export async function getAllProjects(): Promise<Project[]> {
   return fromCms(
     async (payload) => {
-      const res = await payload.find({ collection: "projects", limit: 100, depth: 1, sort: "order" });
+      const res = await payload.find({ collection: "projects", limit: 100, depth: 2, sort: "order" });
       return res.docs.map(mapDoc);
     },
     staticProjects as unknown as Project[],
@@ -53,7 +53,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
       collection: "projects",
       where: { slug: { equals: slug } },
       limit: 1,
-      depth: 1,
+      depth: 2,
     });
     return res.docs[0] ? mapDoc(res.docs[0]) : undefined;
   }, fallback);

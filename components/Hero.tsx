@@ -142,6 +142,7 @@ function Hero({
               fill
               sizes="100vw"
               priority={idx === 0}
+              unoptimized
               className="object-cover object-center"
             />
           )}
