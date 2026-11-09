@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
-import { normalizeMediaUrl } from "@/lib/cms/client";
+import { normalizeMediaUrl } from "@/lib/media";
 
 export interface Media {
   url?: string | null;
