@@ -76,24 +76,8 @@ function Hero({
       return [primarySlide, ...slides];
     }
 
-    // Default synchronized service showcase slides
-    return [
-      primarySlide,
-      {
-        image: "/images/hero-fire-safety.jpg",
-        alt: "Commercial MEP and industrial HVAC chilled-water plant installation in Qatar",
-        line1: "Turnkey MEP & Mechanical Engineering in Qatar",
-        line2: "Commercial HVAC, Chilled Water & ACMV Solutions",
-        sub: "Specialized mechanical, electrical and plumbing infrastructure built to NFPA standards and Qatar regulations.",
-      },
-      {
-        image: "/images/hero-hvac.jpg",
-        alt: "Acoustic and thermal non-destructive water leak detection inspection in Doha Qatar",
-        line1: "Underground Water Pipeline Leak Detection in Qatar",
-        line2: "Acoustic & Thermal Non-Destructive Inspection",
-        sub: "Pinpoint underground pipe leak location across commercial compounds and industrial networks in Doha without digging.",
-      },
-    ];
+    // Default: Single authoritative primary hero slide from CMS
+    return [primarySlide];
   }, [h1, sub, media, slides]);
 
   useEffect(() => {
@@ -206,7 +190,7 @@ function Hero({
             {primaryCta?.label && (
               <Link
                 href={primaryCta.href || "/request-for-quotation"}
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--color-brand-500)] px-5 py-2.5 text-xs sm:text-sm font-bold text-[var(--color-navy-950)] shadow-lg transition-all hover:bg-[var(--color-brand-400)] hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-lg bg-amber-500 hover:bg-amber-400 px-5 py-2.5 text-xs sm:text-sm font-bold text-slate-950 shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 {primaryCta.label}
               </Link>

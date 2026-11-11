@@ -328,20 +328,7 @@ export async function runSeed(payload: Payload) {
       secondaryCtaLabel: hero.secondaryCta.label,
       secondaryCtaHref: hero.secondaryCta.href,
       heroVideo: hero.media.video,
-      heroSlides: [
-        {
-          line1: "Turnkey MEP & Mechanical Engineering in Qatar",
-          line2: "Commercial HVAC, Chilled Water & ACMV Solutions",
-          sub: "Specialized mechanical, electrical and plumbing infrastructure built to NFPA standards and Qatar regulations.",
-          alt: "Commercial MEP and industrial HVAC chilled-water plant installation in Qatar",
-        },
-        {
-          line1: "Underground Water Pipeline Leak Detection in Qatar",
-          line2: "Acoustic & Thermal Non-Destructive Inspection",
-          sub: "Pinpoint underground pipe leak location across commercial compounds and industrial networks in Doha without digging.",
-          alt: "Acoustic and thermal non-destructive water leak detection inspection in Doha Qatar",
-        },
-      ],
+      heroSlides: [],
       quickAccess: hero.quickAccess.map((q) => ({
         icon: q.icon,
         label: q.label,
