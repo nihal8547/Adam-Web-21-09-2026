@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Payload } from "payload";
 import { services, serviceSecondaryKeywords } from "@/content/services";
 import { site } from "@/content/site";
